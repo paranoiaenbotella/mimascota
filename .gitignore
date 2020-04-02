@@ -1,0 +1,6 @@
+# Ignoring directories.
+/.idea/
+
+# Ignoring files.
+/*.sublime-project
+/*.sublime-workspace
