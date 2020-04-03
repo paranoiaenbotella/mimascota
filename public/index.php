@@ -30,5 +30,5 @@ switch ($_SERVER["REQUEST_URI"]) {
 
 //Instanciar clases
 require_once($fichero);
-$instancia = new clase();
+$instancia = new $clase();
 $instancia-> $accion();
