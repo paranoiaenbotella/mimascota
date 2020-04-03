@@ -4,9 +4,10 @@ require_once(dirname(__DIR__) . "/Modelo.php");
 
 class Rol extends Modelo
 {
-    public $id;
-
-    public $nombre;
+    public function insertarRol($nombre)
+    {
+        return $this->ejecutarConsulta("INSERT INTO `roles` (`nombre`) VALUE ('$nombre')");
+    }
 
     public function leerPorId($id)
     {

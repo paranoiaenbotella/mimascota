@@ -25,9 +25,14 @@ class Modelo
         }
     }
 
-    public function ejecutarConsulta($consulta)
+    protected function ejecutarConsulta($consulta)
     {
-        return $this->conexion->query($consulta)->fetch_assoc();
+        $resultado = $this->conexion->query($consulta);
+        if (is_bool($resultado)) {
+            return $resultado;
+        } else {
+            return $resultado->fetch_assoc();
+        }
     }
 
     public function __construct()
