@@ -1,0 +1,37 @@
+<?php
+
+class Modelo
+{
+    private $basededatos = "mimascota";
+
+    /**
+     * @var \mysqli
+     */
+    private $conexion;
+
+    private $contrasena = "mimascota";
+
+    private $host = "localhost";
+
+    private $puerto = 3306;
+
+    private $usuario = "mimascota";
+
+    private function conectarse()
+    {
+        $this->conexion = new mysqli($this->host, $this->usuario, $this->contrasena, $this->basededatos, $this->puerto);
+        if ($this->conexion->errno !== 0) {
+            exit("No me he podido conectar a la base de datos.");
+        }
+    }
+
+    public function ejecutarConsulta($consulta)
+    {
+        return $this->conexion->query($consulta)->fetch_assoc();
+    }
+
+    public function __construct()
+    {
+        $this->conectarse();
+    }
+}
