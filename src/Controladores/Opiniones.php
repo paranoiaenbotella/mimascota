@@ -2,6 +2,6 @@
 
 class Opiniones {
 	public function inicio(){
-		requiere_once(dirname(__DIR__)."/Vistas/Opiniones/Inicio.php");
+		require_once(dirname(__DIR__)."/Vistas/Opiniones/Inicio.php");
 	}
 }

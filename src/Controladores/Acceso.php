@@ -1,7 +1,7 @@
 <?php  
 
-class Inicio {
+class Acceso {
 	public function inicio(){
-		requiere_once(dirname(__DIR__)."/Vistas/Acceso/Identificacion.php");
+		require_once(dirname(__DIR__)."/Vistas/Acceso/Identificacion.php");
 	}
 }
