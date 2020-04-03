@@ -4,3 +4,4 @@
 # Ignoring files.
 /*.sublime-project
 /*.sublime-workspace
+/config/basededatos.php

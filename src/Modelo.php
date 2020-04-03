@@ -2,20 +2,17 @@
 
 class Modelo
 {
-    private $basededatos = "mimascota";
+    private $basededatos;
 
-    /**
-     * @var \mysqli
-     */
     private $conexion;
 
-    private $contrasena = "mimascota";
+    private $contrasena;
 
-    private $host = "localhost";
+    private $host;
 
-    private $puerto = 3306;
+    private $puerto;
 
-    private $usuario = "mimascota";
+    private $usuario;
 
     private function conectarse()
     {
@@ -37,6 +34,17 @@ class Modelo
 
     public function __construct()
     {
+        $credenciales = require(dirname(__DIR__) . "/config/basededatos.php");
+        $this->basededatos = $credenciales["basededatos"];
+        $this->contrasena = $credenciales["contrasena"];
+        $this->host = $credenciales["host"];
+        $this->puerto = $credenciales["puerto"];
+        $this->usuario = $credenciales["usuario"];
         $this->conectarse();
+    }
+
+    public function __destruct()
+    {
+        $this->conexion->close();
     }
 }

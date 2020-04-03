@@ -7,7 +7,7 @@ class Inicio
     public function inicio()
     {
         $rol = new Rol();
-        $rol1 = $rol->insertarRol("Mika");
+        $rol5 = $rol->leerPorId(5);
         require_once(dirname(__DIR__) . "/Vistas/Inicio/Inicio.php");
     }
 }
