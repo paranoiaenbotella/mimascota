@@ -12,11 +12,17 @@ switch ($_SERVER["REQUEST_URI"]) {
 		$clase = "Perfil";
 		$accion = "inicio";
 		break;
-	case "/acceso":
+	case "/identificacion":
 		$fichero = dirname(__DIR__)."/src/Controladores/Acceso.php";
 		$clase = "Acceso";
-		$accion = "inicio";
+		$accion = "identificar";
 		break;
+	case "/registro":
+		$fichero = dirname(__DIR__)."/src/Controladores/Acceso.php";
+		$clase = "Acceso";
+		$accion = "registrar";
+		break;
+
 	case "/opiniones":
 		$fichero = dirname(__DIR__)."/src/Controladores/Opiniones.php";
 		$clase = "Opiniones";
