@@ -1,13 +1,12 @@
 <?php
 
-require_once(dirname(__DIR__) . "/Modelos/Rol.php");
+require_once(dirname(__DIR__) . "/Modelos/Usuario.php");
 
 class Inicio
 {
     public function inicio()
     {
-        $rol = new Rol();
-        $rol1 = $rol->verPorId(1);
-        require_once(dirname(__DIR__) . "/Vistas/Inicio/Inicio.php");
+        $usuario = new Usuario();
+        $usuario->insertarPropietario("Mika", "Heya", "mikahe@tutanota.de", "123456", "foto.png");
     }
 }

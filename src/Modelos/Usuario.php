@@ -11,6 +11,20 @@ class Usuario extends Modelo
         );
     }
 
+    public function insertarCuidador($nobmre, $apellidos, $email, $contrasena, $imagen)
+    {
+        $cuidadorConsulta = "SELECT `id` FROM `roles` WHERE `nombre` = 'Cuidador'";
+        $cuidador = $this->ejecutarConsulta($cuidadorConsulta);
+        return $this->insertarUsuario($nobmre, $apellidos, $email, $contrasena, $imagen, $cuidador["id"]);
+    }
+
+    public function insertarPropietario($nombre, $apellidos, $email, $contrasena, $imagen)
+    {
+        $propietarioConsulta = "SELECT `id` FROM `roles` WHERE `nombre`= 'Propietario'";
+        $propietario = $this->ejecutarConsulta($propietarioConsulta);
+        return $this->insertarUsuario($nombre, $apellidos, $email, $contrasena, $imagen, $propietario["id"]);
+    }
+
     public function leerPorId($id)
     {
         return $this->ejecutarConsulta("SELECT * FROM `usuarios` WHERE `id` = $id");
