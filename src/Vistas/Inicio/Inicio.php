@@ -5,6 +5,6 @@
         <title>MiMascota</title>
     </head>
     <body>
-        <pre><?php var_dump($rol5); ?></pre>
+        <?php var_dump($rol1) ?>
     </body>
 </html>

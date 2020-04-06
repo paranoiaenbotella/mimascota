@@ -6,5 +6,6 @@
 	</head>
 	<body>
 		<p>Página de inicio del perfil del usuario.</p>
+
 	</body>
 </html>
