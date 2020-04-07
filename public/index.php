@@ -36,8 +36,8 @@ switch ($_SERVER["REQUEST_URI"]) {
         $accion = "inicio";
         break;
     case "/animales/tipos/crear":
-        $fichero = dirname(__DIR__) . "/src/Controladores/Animales.php";
-        $clase = "Animales";
+        $fichero = dirname(__DIR__) . "/src/Controladores/Animales/Tipos.php";
+        $clase = "AnimalesTipos";
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $accion = "crearTipoPost";
         } else {
