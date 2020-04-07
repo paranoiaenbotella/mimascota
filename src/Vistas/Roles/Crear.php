@@ -5,10 +5,10 @@
         <title>MiMascota</title>
     </head>
     <body>
-        <p>Crear tipos de tarifas</p>
+        <p>Crear roles</p>
         <form method="POST">
-            <label for="nombre">Tipo de tarifa:</label>
-            <input id="nombre" name="nombre" placeholder="Tipo de Tarifa" type="text">
+            <label for="nombre">Tipo rol:</label>
+            <input id="nombre" name="nombre" placeholder="Tipo rol" type="text">
             <input type="submit" value="Submit">
         </form>
     </body>

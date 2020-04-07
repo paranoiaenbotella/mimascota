@@ -13,12 +13,12 @@ switch ($_SERVER["REQUEST_URI"]) {
     case "/perfil":
         $fichero = dirname(__DIR__) . "/src/Controladores/Perfil.php";
         $clase = "Perfil";
-        $accion = "inicio";
+        $accion = "getInicio";
         break;
     case "/editar":
         $fichero = dirname(__DIR__) . "/src/Controladores/Perfil.php";
         $clase = "Perfil";
-        $accion = "editar";
+        $accion = "getEditar";
         break;
     case "/identificacion":
         $fichero = dirname(__DIR__) . "/src/Controladores/Acceso.php";
@@ -30,27 +30,36 @@ switch ($_SERVER["REQUEST_URI"]) {
         $clase = "Acceso";
         $accion = "registrar";
         break;
+    case "/roles/crear";
+        $fichero = dirname(__DIR__) . "/src/Controladores/Roles.php";
+        $clase = "Roles";
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $accion = "postCrear";
+        } else {
+            $accion = "getCrear";
+        }
+        break;
     case "/opiniones":
         $fichero = dirname(__DIR__) . "/src/Controladores/Opiniones.php";
         $clase = "Opiniones";
-        $accion = "inicio";
+        $accion = "getInicio";
         break;
     case "/animales/tipos/crear":
         $fichero = dirname(__DIR__) . "/src/Controladores/Animales/Tipos.php";
         $clase = "AnimalesTipos";
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            $accion = "crearTipoPost";
+            $accion = "postCrear";
         } else {
-            $accion = "crearTipoGet";
+            $accion = "getCrear";
         }
         break;
     case "/tarifas/tipos/crear":
         $fichero = dirname(__DIR__) . "/src/Controladores/Tarifas/Tipos.php";
         $clase = "TarifasTipo";
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            $accion = "crearTipoPost";
+            $accion = "postCrear";
         } else {
-            $accion = "crearTipoGet";
+            $accion = "getCrear";
         }
         break;
     default:

@@ -5,12 +5,12 @@ require_once(dirname(__DIR__) . "/../Modelos/TarifaTipo.php");
 
 class TarifasTipo
 {
-    public function crearTipoGet()
+    public function getCrear()
     {
         require_once(dirname(__DIR__) . "/../Vistas/Tarifas/Tipos/Crear.php");
     }
 
-    public function crearTipoPost()
+    public function postCrear()
     {
         if (empty($_POST["nombre"])) {
             echo("No se ha definido el nombre del tipo de tarifa.");

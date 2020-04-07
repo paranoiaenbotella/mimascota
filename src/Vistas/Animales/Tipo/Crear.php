@@ -5,7 +5,7 @@
         <title>MiMascota</title>
     </head>
     <body>
-        <p>Editar animales</p>
+        <p>Crear tipos de animales</p>
         <form method="POST">
             <label for="nombre">Tipo de animal:</label>
             <input id="nombre" name="nombre" placeholder="Tipo de Animal" type="text">
