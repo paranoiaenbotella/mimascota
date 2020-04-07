@@ -8,7 +8,7 @@ switch ($_SERVER["REQUEST_URI"]) {
     case '/':
         $fichero = dirname(__DIR__) . "/src/Controladores/Inicio.php";
         $clase = "Inicio";
-        $accion = "inicio";
+        $accion = "getInicio";
         break;
     case "/perfil":
         $fichero = dirname(__DIR__) . "/src/Controladores/Perfil.php";
