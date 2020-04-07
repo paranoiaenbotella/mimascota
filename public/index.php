@@ -1,4 +1,4 @@
-<?php  
+<?php
 /**
  * redireccionar las peticiones hacia los controladores
  *identificando los recursos pedidos por los usuarios
@@ -28,25 +28,22 @@ switch ($_SERVER["REQUEST_URI"]) {
 		break;
 	case "/registro":
 		$fichero = dirname(__DIR__)."/src/Controladores/Acceso.php";
-		$clase = "Acceso";
-		$accion = "registrar";
-		break;
-
-	case "/opiniones":
-		$fichero = dirname(__DIR__)."/src/Controladores/Opiniones.php";
-		$clase = "Opiniones";
-		$accion = "inicio";
-		break;
-
-	case "/animales/tipo":
-		$fichero = dirname(__DIR__)."/src/Controladores/Animales.php";
-		$clase = "Animales";
-		$accion = "crearTipo";
-		break;
-	
-	default:
-		echo ("Error 404 - Página no encontrada");
-		break;
+        $clase = "Acceso";
+        $accion = "registrar";
+        break;
+    case "/opiniones":
+        $fichero = dirname(__DIR__) . "/src/Controladores/Opiniones.php";
+        $clase = "Opiniones";
+        $accion = "inicio";
+        break;
+    case "/animales/tipos/crear":
+        $fichero = dirname(__DIR__) . "/src/Controladores/Animales.php";
+        $clase = "Animales";
+        $accion = "crearTipo";
+        break;
+    default:
+        echo("Error 404 - Página no encontrada");
+        break;
 }
 
 //Instanciar clases
