@@ -7,7 +7,7 @@ class Perfil {
 		require_once(dirname(__DIR__)."/Vistas/Perfil/Inicio.php");
 	}
 
-	public function editarPerfil(){
+	public function editar(){
 
 		require_once(dirname(__DIR__)."/Vistas/Perfil/Editar.php");
 
