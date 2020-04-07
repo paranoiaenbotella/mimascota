@@ -7,8 +7,8 @@
     <body>
         <p>Editar animales</p>
         <form method="POST">
-            <label for="tipoAnimal">Tipo de animal:</label>
-            <input id="tipoAnimal" name="tipoAnimal" placeholder="Tipo de Animal" type="text">
+            <label for="nombre">Tipo de animal:</label>
+            <input id="nombre" name="nombre" placeholder="Tipo de Animal" type="text">
             <input type="submit" value="Submit">
         </form>
     </body>

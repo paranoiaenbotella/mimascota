@@ -38,7 +38,11 @@ switch ($_SERVER["REQUEST_URI"]) {
     case "/animales/tipos/crear":
         $fichero = dirname(__DIR__) . "/src/Controladores/Animales.php";
         $clase = "Animales";
-        $accion = "crearTipo";
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $accion = "crearTipoPost";
+        } else {
+            $accion = "crearTipoGet";
+        }
         break;
     default:
         echo("Error 404 - Página no encontrada");
