@@ -1,33 +1,32 @@
 <?php
+
 /**
  * redireccionar las peticiones hacia los controladores
  *identificando los recursos pedidos por los usuarios
  */
 switch ($_SERVER["REQUEST_URI"]) {
-	case '/':
-		$fichero = dirname(__DIR__)."/src/Controladores/Inicio.php";
-		$clase = "Inicio";
-		$accion = "inicio";
-		break;
-	case "/perfil":
-		$fichero = dirname(__DIR__)."/src/Controladores/Perfil.php";
-		$clase = "Perfil";
-		$accion = "inicio";
-		break;
-
-	case "/editar":
-		$fichero = dirname(__DIR__)."/src/Controladores/Perfil.php";
-		$clase = "Perfil";
-		$accion = "editarPerfil";
-		break;
-
-	case "/identificacion":
-		$fichero = dirname(__DIR__)."/src/Controladores/Acceso.php";
-		$clase = "Acceso";
-		$accion = "identificar";
-		break;
-	case "/registro":
-		$fichero = dirname(__DIR__)."/src/Controladores/Acceso.php";
+    case '/':
+        $fichero = dirname(__DIR__) . "/src/Controladores/Inicio.php";
+        $clase = "Inicio";
+        $accion = "inicio";
+        break;
+    case "/perfil":
+        $fichero = dirname(__DIR__) . "/src/Controladores/Perfil.php";
+        $clase = "Perfil";
+        $accion = "inicio";
+        break;
+    case "/editar":
+        $fichero = dirname(__DIR__) . "/src/Controladores/Perfil.php";
+        $clase = "Perfil";
+        $accion = "editarPerfil";
+        break;
+    case "/identificacion":
+        $fichero = dirname(__DIR__) . "/src/Controladores/Acceso.php";
+        $clase = "Acceso";
+        $accion = "identificar";
+        break;
+    case "/registro":
+        $fichero = dirname(__DIR__) . "/src/Controladores/Acceso.php";
         $clase = "Acceso";
         $accion = "registrar";
         break;
@@ -45,8 +44,7 @@ switch ($_SERVER["REQUEST_URI"]) {
         echo("Error 404 - Página no encontrada");
         break;
 }
-
 //Instanciar clases
 require_once($fichero);
 $instancia = new $clase();
-$instancia-> $accion();
+$instancia->$accion();
