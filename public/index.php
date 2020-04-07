@@ -44,6 +44,15 @@ switch ($_SERVER["REQUEST_URI"]) {
             $accion = "crearTipoGet";
         }
         break;
+    case "/tarifas/tipos/crear":
+        $fichero = dirname(__DIR__) . "/src/Controladores/Tarifas/Tipos.php";
+        $clase = "TarifasTipo";
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $accion = "crearTipoPost";
+        } else {
+            $accion = "crearTipoGet";
+        }
+        break;
     default:
         echo("Error 404 - Página no encontrada");
         break;
