@@ -1,7 +1,8 @@
 <?php  
-
-// redireccionar las peticiones hacia los controladores
-// identificando los recursos pedidos por los usuarios
+/**
+ * redireccionar las peticiones hacia los controladores
+ *identificando los recursos pedidos por los usuarios
+ */
 switch ($_SERVER["REQUEST_URI"]) {
 	case '/':
 		$fichero = dirname(__DIR__)."/src/Controladores/Inicio.php";
@@ -35,6 +36,12 @@ switch ($_SERVER["REQUEST_URI"]) {
 		$fichero = dirname(__DIR__)."/src/Controladores/Opiniones.php";
 		$clase = "Opiniones";
 		$accion = "inicio";
+		break;
+
+	case "/animales/tipo":
+		$fichero = dirname(__DIR__)."/src/Controladores/Animales.php";
+		$clase = "Animales";
+		$accion = "crearTipo";
 		break;
 	
 	default:

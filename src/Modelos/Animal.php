@@ -1,7 +1,10 @@
 <?php
 
 require_once(dirname(__DIR__) . "/Modelo.php");
-
+/**
+*La clase realiza las operaciones en la 
+*base de datos relacionadas con los animales
+*/
 class Animal extends Modelo
 {
     public function insertarAnimal($idAnimalesTipo, $idUsuario, $nombre)
