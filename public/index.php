@@ -2,7 +2,7 @@
 
 /**
  * redireccionar las peticiones hacia los controladores
- * identificando los recursos pedidos por los usuarios
+ * según las URI's introducidas en la barra de navegación
  */
 switch ($_SERVER["REQUEST_URI"]) {
     case '/':
@@ -39,6 +39,11 @@ switch ($_SERVER["REQUEST_URI"]) {
             $accion = "getCrear";
         }
         break;
+    case "/roles":
+        $fichero = dirname(__DIR__) . "/src/Controladores/Roles.php";
+        $clase = "Roles";
+        $accion = "getListar";
+        break;
     case "/opiniones":
         $fichero = dirname(__DIR__) . "/src/Controladores/Opiniones.php";
         $clase = "Opiniones";
@@ -53,6 +58,11 @@ switch ($_SERVER["REQUEST_URI"]) {
             $accion = "getCrear";
         }
         break;
+        case "/animales/tipos":
+        $fichero = dirname(__DIR__) . "/src/Controladores/Animales/Tipos.php";
+        $clase = "AnimalesTipos";
+        $accion = "getListar";
+        break;
     case "/tarifas/tipos/crear":
         $fichero = dirname(__DIR__) . "/src/Controladores/Tarifas/Tipos.php";
         $clase = "TarifasTipo";
@@ -61,6 +71,11 @@ switch ($_SERVER["REQUEST_URI"]) {
         } else {
             $accion = "getCrear";
         }
+        break;
+    case "/tarifas/tipos":
+        $fichero = dirname(__DIR__) . "/src/Controladores/Tarifas/Tipos.php";
+        $clase = "TarifasTipo";
+        $accion = "getListar";
         break;
     default:
         echo("Error 404 - Página no encontrada");

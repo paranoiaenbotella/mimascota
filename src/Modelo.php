@@ -23,12 +23,16 @@ class Modelo
     }
 
     protected function ejecutarConsulta($consulta)
-    {
+    {   
+        $tabla = [];
         $resultado = $this->conexion->query($consulta);
         if (is_bool($resultado)) {
             return $resultado;
         } else {
-            return $resultado->fetch_assoc();
+                while($fila = $resultado->fetch_assoc()){
+                    $tabla[] = $fila;
+                }
+                    return $tabla;
         }
     }
 
