@@ -1,21 +1,34 @@
 <!DOCTYPE html>
 <html lang="es">
-	<head>
-		<meta charset="utf-8">
-		<title>MiMascota</title>
-	</head>
-	<body>
-		<p>Introduzca datos.</p>
-			<?php if ($usuario1 === true): ?>
-            <p>¡Usuario registrado!</p>
-        	<?php else: ?>
-            <p>¡Usuario no registrado!</p>
-        	<?php endif; ?>
-
-        	<?php if ($direccion1 === true): ?>
-            <p>¡Se añadió la dirección al usuario!</p>
-        	<?php else: ?>
-            <p>¡Dirección no añadida!</p>
-        	<?php endif; ?>
-	</body>
+    <head>
+        <meta charset="utf-8">
+        <title>MiMascota</title>
+    </head>
+    <body>
+        <form method="POST" novalidate>
+            <div>
+                <label for="nombre">Nombre:</label>
+                <input id="nombre" name="nombre" type="text">
+            </div>
+            <div>
+                <label for="appellidos">Apellidos:</label>
+                <input id="appellidos" name="apellidos" type="text">
+            </div>
+            <div>
+                <label for="email">Correo Electronico:</label>
+                <input id="email" name="email" type="email">
+            </div>
+            <div>
+                <label for="contrasena">Contraseña:</label>
+                <input id="contrasena" name="contrasena" type="password">
+            </div>
+            <div>
+                <label for="contrasena-verificada">Verificar Contraseña:</label>
+                <input id="contrasena-verificada" name="contrasena-verificada" type="password">
+            </div>
+            <div>
+                <input type="submit" value="Registrarse">
+            </div>
+        </form>
+    </body>
 </html>
