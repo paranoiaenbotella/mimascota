@@ -24,13 +24,13 @@ class Modelo
 
     protected function ejecutarConsulta($consulta)
     {
-        $tabla = [];
         $resultado = $this->conexion->query($consulta);
         if (is_bool($resultado)) {
             return $resultado;
         } else {
+            $tabla = [];
             while ($fila = $resultado->fetch_assoc()) {
-                $tabla[] = $fila;
+                array_push($tabla, $fila);
             }
             return $tabla;
         }
