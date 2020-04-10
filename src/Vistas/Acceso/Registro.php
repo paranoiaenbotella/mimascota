@@ -27,6 +27,13 @@
                 <input id="contrasena-verificada" name="contrasena-verificada" type="password">
             </div>
             <div>
+                <select name="rol" id="rol">
+                    <?php foreach ($roles as $rol): ?>
+                        <option value="<?php echo($rol->obtenerId()); ?>"><?php echo($rol->obtenerNombre()); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div>
                 <input type="submit" value="Registrarse">
             </div>
         </form>

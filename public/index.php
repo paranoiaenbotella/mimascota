@@ -28,7 +28,11 @@ switch ($_SERVER["REQUEST_URI"]) {
     case "/registro":
         $fichero = dirname(__DIR__) . "/src/Controladores/Acceso.php";
         $clase = "Acceso";
-        $accion = "registrar";
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $accion = "postRegistro";
+        } else {
+            $accion = "getRegistro";
+        }
         break;
     case "/roles/crear";
         $fichero = dirname(__DIR__) . "/src/Controladores/Roles.php";

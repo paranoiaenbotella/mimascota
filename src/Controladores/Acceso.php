@@ -1,5 +1,7 @@
 <?php
 
+require_once(dirname(__DIR__) . "/Modelos/Usuario.php");
+
 class Acceso
 {
     public function getIdentificar()
@@ -7,8 +9,10 @@ class Acceso
         require_once(dirname(__DIR__) . "/Vistas/Acceso/Identificacion.php");
     }
 
-    public function getRegistrar()
+    public function getRegistro()
     {
+        $roles = new Rol();
+        $roles = $roles->listarRoles();
         require_once(dirname(__DIR__) . "/Vistas/Acceso/Registro.php");
     }
 
@@ -16,7 +20,11 @@ class Acceso
     {
     }
 
-    public function postRegistrar()
+    public function postRegistro()
     {
+        $usuario = new Usuario();
+        $usuario->definirEmail($_POST["email"]);
+        $usuario->definirContrasena($_POST["contrasena"], $_POST["contrasena-verificada"]);
+        var_dump($usuario, $_POST);
     }
 }
