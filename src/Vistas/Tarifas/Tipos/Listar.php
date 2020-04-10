@@ -5,7 +5,7 @@
         <title>MiMascota</title>
     </head>
     <body>
-        <table class= "listarRegistros">
+        <table>
             <caption>Lista con los tipos de tarifas registrados en la base de datos</caption>
             <thead>
                 <tr>
@@ -14,13 +14,12 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
-                foreach ($tipoTarifa as $valor) { ?>
-                <tr>
-                    <td><?php echo  $valor['id'];?></td>
-                    <td><?php echo  $valor['nombre'];?></td>
-                </tr>
-                <?php } ?>
+                <?php foreach ($tipoTarifa as $valor): ?>
+                    <tr>
+                        <td><?php echo($valor['id']); ?></td>
+                        <td><?php echo($valor['nombre']); ?></td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </body>
