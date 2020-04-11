@@ -27,6 +27,7 @@
                 <input id="contrasena-verificada" name="contrasena-verificada" type="password">
             </div>
             <div>
+                <label for="rol">Rol:</label>
                 <select name="rol" id="rol">
                     <?php foreach ($roles as $rol): ?>
                         <option value="<?php echo($rol->obtenerId()); ?>"><?php echo($rol->obtenerNombre()); ?></option>
