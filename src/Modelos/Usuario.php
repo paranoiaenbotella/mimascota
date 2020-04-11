@@ -2,6 +2,10 @@
 
 require_once(dirname(__DIR__) . "/Modelo.php");
 
+/**
+ * La clase contiene las operaciones contra la BD, los métodos
+ * que definen, obtienen y validan los datos.
+ */
 class Usuario extends Modelo
 {
     private $apellidos;
@@ -13,6 +17,10 @@ class Usuario extends Modelo
     private $imagen;
 
     private $nombre;
+
+ /**
+ * Métodos para validar datos
+ */
 
     private function comprobarContrasenaLongitud($contrasena)
     {
@@ -37,6 +45,10 @@ class Usuario extends Modelo
         return sha1($contrasena);
     }
 
+/**
+ * Métodos para definir y obtener datos
+ */
+
     public function definirContrasena($contrasena, $contrasenaVerificada)
     {
         try {
@@ -50,7 +62,7 @@ class Usuario extends Modelo
 
     public function definirEmail($email)
     {
-        $emailValido = filter_var($nombre, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $emailValido = filter_var($email, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if ($emailValido === false) {
             throw new Exception("El correo electrónico proporcionado no es válido.");
         } else {
@@ -58,7 +70,86 @@ class Usuario extends Modelo
         }
     }
 
-    public function insertar()
+    public function definirNombre($nombre)
+    {
+        $nombreValido = filter_var($nombre, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if ($nombreValido === false) {
+            throw new Exception("El nombre introducido no es valido");
+        
+        }   else {
+            $this->nombre = $nombreValido;
+        }
+    }
+
+    public function definirApellidos($apellidos)
+    {
+        $apellidosValidos = filter_var($apellidos, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if ($apellidosValidos === false) {
+            throw new Exception("Los apellidos introducidos no son validos");
+        
+        }   else {
+            $this->apellidos = $apellidosValidos;
+        }
+    }
+    public function definirImagen($imagen)
+    {
+        $imagenValida = filter_var($imagen, FILTER_SANITIZE_URL);
+        if ($imagenValida === false) {
+            throw new Exception("La ruta de la imagen es incorrecta");
+        
+        }   else {
+            $this->imagen = $imagenValida;
+        }
+    }
+
+    public function obtenerContrasena()
+    {
+        if (is_null($this->contrasena)) {
+            throw new Exception("La contraseña no está definida.");
+        } else {
+            return $this->contrasena;
+        }
+    }
+
+    public function obtenerEmail()
+    {
+        if (is_null($this->email)) {
+            throw new Exception("El correo electrónico no está definido.");
+        } else {
+            return $this->email;
+        }
+    }
+
+    public function obtenerNombre(){
+        if (is_null($this->nombre)){
+        throw new Exception("El nombre no esta definido");
+        
+        }   else {
+            return $this->nombre;
+        }
+
+    public function obtenerApellidos(){
+        if (is_null($this->apellidos)){
+        throw new Exception("Los apellidos no estan definidos");
+        
+        }   else {
+            return $this->apellidos;
+        }
+
+    public function obtenerImagen(){
+        if (is_null($this->imgen)){
+        throw new Exception("Ruta de la imagen no definida");
+        
+        }   else {
+            return $this->imagen;
+        }
+
+
+/**
+ * Métodos que realizan las operaciones requeridas 
+ * por la aplicación en la BD.
+ */
+        public function insertar()
     {
         return $this->ejecutarConsulta(
             "INSERT INTO `usuarios` (`id_roles`, `email`, `contrasena`, `nombre`, `apellidos`) VALUE ($this->rol, '$this->email', '$this->contrasena', '$this->nombre', '$this->apellidos')"
@@ -110,21 +201,4 @@ class Usuario extends Modelo
         return $this->ejecutarConsulta("SELECT * FROM `usuarios` WHERE `id` = $id");
     }
 
-    public function obtenerContrasena()
-    {
-        if (is_null($this->contrasena)) {
-            throw new Exception("La contraseña no está definida.");
-        } else {
-            return $this->contrasena;
-        }
-    }
-
-    public function obtenerEmail()
-    {
-        if (is_null($this->email)) {
-            throw new Exception("El correo electrónico no está definido.");
-        } else {
-            return $this->email;
-        }
-    }
 }
