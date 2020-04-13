@@ -75,7 +75,7 @@ class Usuario extends Modelo
         $nombreValido = filter_var($nombre, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if ($nombreValido === false) {
             throw new Exception("El nombre introducido no es valido");
-        
+
         }   else {
             $this->nombre = $nombreValido;
         }
@@ -86,7 +86,6 @@ class Usuario extends Modelo
         $apellidosValidos = filter_var($apellidos, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if ($apellidosValidos === false) {
             throw new Exception("Los apellidos introducidos no son validos");
-        
         }   else {
             $this->apellidos = $apellidosValidos;
         }
@@ -96,7 +95,6 @@ class Usuario extends Modelo
         $imagenValida = filter_var($imagen, FILTER_SANITIZE_URL);
         if ($imagenValida === false) {
             throw new Exception("La ruta de la imagen es incorrecta");
-        
         }   else {
             $this->imagen = $imagenValida;
         }
@@ -120,36 +118,38 @@ class Usuario extends Modelo
         }
     }
 
-    public function obtenerNombre(){
-        if (is_null($this->nombre)){
-        throw new Exception("El nombre no esta definido");
-        
-        }   else {
+    public function obtenerNombre()
+    {
+        if (is_null($this->nombre)) {
+            throw new Exception("El nombre no esta definido");
+        } else {
             return $this->nombre;
         }
+    }
 
-    public function obtenerApellidos(){
-        if (is_null($this->apellidos)){
-        throw new Exception("Los apellidos no estan definidos");
-        
-        }   else {
+    public function obtenerApellidos()
+    {
+        if (is_null($this->apellidos)) {
+            throw new Exception("Los apellidos no estan definidos");
+        } else {
             return $this->apellidos;
         }
+    }
 
-    public function obtenerImagen(){
-        if (is_null($this->imgen)){
-        throw new Exception("Ruta de la imagen no definida");
-        
-        }   else {
+    public function obtenerImagen()
+    {
+        if (is_null($this->imgen)) {
+            throw new Exception("Ruta de la imagen no definida");
+        } else {
             return $this->imagen;
         }
+    }
 
-
-/**
- * Métodos que realizan las operaciones requeridas 
- * por la aplicación en la BD.
- */
-        public function insertar()
+    /**
+     * Métodos que realizan las operaciones requeridas
+     * por la aplicación en la BD.
+     */
+    public function insertar()
     {
         return $this->ejecutarConsulta(
             "INSERT INTO `usuarios` (`id_roles`, `email`, `contrasena`, `nombre`, `apellidos`) VALUE ($this->rol, '$this->email', '$this->contrasena', '$this->nombre', '$this->apellidos')"
