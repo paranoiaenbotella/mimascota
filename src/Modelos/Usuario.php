@@ -108,7 +108,7 @@ class Usuario extends Modelo
         if ($rol instanceof Rol) {
             $this->rol = $rol->obtenerId();
         } else {
-            throw new Exception("");
+            throw new Exception("El parametro facilitado no es una instancia de la clase Rol");
         }
         return $this;
     }
@@ -125,11 +125,7 @@ class Usuario extends Modelo
         $consulta->bind_param("issss", $this->rol, $this->email, $this->contrasena, $this->nombre, $this->apellidos);
         $resultado = $consulta->execute();
         $consulta->close();
-        if ($resultado) {
-            var_dump("Todo se ha guardado correctamente.");
-        } else {
-            var_dump("No se ha guardado el usuario.");
-        }
+        return $resultado;
     }
 
     public function insertarCuidador(
