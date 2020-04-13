@@ -1,10 +1,7 @@
-<?php  
-
-require_once(dirname(__DIR__) . "/Modelos/Perfil/Inicio.php");
-require_once(dirname(__DIR__) . "/Modelos/Perfil/Editar.php");
+<?php
 
 /**
- * Mediante esta clase se controla las operaciones relacionadas con la creacion 
+ * Mediante esta clase se controla las operaciones relacionadas con la creacion
  * y edicion del perfil del usuario facilitandose para ello la interfaz correspondiente
  */
 class Perfil {
