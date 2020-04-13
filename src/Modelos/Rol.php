@@ -12,6 +12,11 @@ class Rol extends Modelo
 
     private $nombre;
 
+    private function definirId($id)
+    {
+        $this->id = (int)$id;
+    }
+
     /**
      * Métodos para definir y obtener datos
      */
@@ -45,8 +50,9 @@ class Rol extends Modelo
         $resultado = $this->conexion->query("SELECT * FROM `roles` ORDER BY `id`");
         while ($fila = $resultado->fetch_assoc()) {
             $rol = new Rol();
-            $rol->id = $fila["id"];
-            $rol->nombre = $fila["nombre"];
+            $rol->definirId($fila["id"]);
+            $rol->definirNombre($fila["nombre"]);
+            var_dump($rol);
             array_push($roles, $rol);
         }
         return $roles;
