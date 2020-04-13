@@ -4,8 +4,6 @@ class Modelo
 {
     private $basededatos;
 
-    private $conexion;
-
     private $contrasena;
 
     private $host;
@@ -13,6 +11,8 @@ class Modelo
     private $puerto;
 
     private $usuario;
+
+    protected $conexion;
 
     private function conectarse()
     {
