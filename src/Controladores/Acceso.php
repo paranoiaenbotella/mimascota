@@ -1,5 +1,6 @@
 <?php
 
+require_once(dirname(__DIR__) . "/Modelos/Rol.php");
 require_once(dirname(__DIR__) . "/Modelos/Usuario.php");
 
 class Acceso
@@ -22,9 +23,15 @@ class Acceso
 
     public function postRegistro()
     {
+        $rol = new Rol();
+        $rol = $rol->leerPorId($_POST["rol"]);
         $usuario = new Usuario();
-        $usuario->definirEmail($_POST["email"]);
-        $usuario->definirContrasena($_POST["contrasena"], $_POST["contrasena-verificada"]);
+        $usuario->definirEmail($_POST["email"])
+            ->definirContrasena($_POST["contrasena"], $_POST["contrasena-verificada"])
+            ->definirApellidos($_POST["apellidos"])
+            ->definirNombre($_POST["nombre"])
+            ->definirRol($rol)
+            ->insertar();
         var_dump($usuario, $_POST);
     }
 }

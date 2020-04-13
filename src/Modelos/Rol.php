@@ -41,18 +41,30 @@ class Rol extends Modelo
 
     public function leerPorId($id)
     {
-        return $this->ejecutarConsulta("SELECT * FROM `roles` WHERE `id` = $id");
+        $consulta = $this->conexion->prepare("SELECT * FROM `roles` WHERE `id` = ?");
+        $consulta->bind_param("i", $id);
+        $consulta->execute();
+        $resultado = $consulta->get_result();
+        $consulta->close();
+        if (empty($resultado->num_rows)) {
+            throw new Exception("Rol no encontrado");
+        } else {
+            $fila = $resultado->fetch_assoc();
+            $rol = new Rol();
+            $rol->definirId($fila["id"]);
+            $rol->definirNombre($fila["nombre"]);
+            return $rol;
+        }
     }
 
     public function listarRoles()
     {
         $roles = [];
-        $resultado = $this->conexion->query("SELECT * FROM `roles` ORDER BY `id`");
+        $resultado = $this->conexion->query("SELECT * FROM `roles` WHERE `nombre` != 'Administrador' ORDER BY `id`");
         while ($fila = $resultado->fetch_assoc()) {
             $rol = new Rol();
             $rol->definirId($fila["id"]);
             $rol->definirNombre($fila["nombre"]);
-            var_dump($rol);
             array_push($roles, $rol);
         }
         return $roles;

@@ -18,10 +18,11 @@ class Usuario extends Modelo
 
     private $nombre;
 
- /**
- * Métodos para validar datos
- */
+    private $rol;
 
+    /**
+     * Métodos para validar datos
+     */
     private function comprobarContrasenaLongitud($contrasena)
     {
         if (strlen($contrasena) < 8) {
@@ -45,10 +46,19 @@ class Usuario extends Modelo
         return sha1($contrasena);
     }
 
-/**
- * Métodos para definir y obtener datos
- */
+    public function definirApellidos($apellidos)
+    {
+        if (empty($apellidos)) {
+            throw new Exception("Los apellidos introducidos no son validos");
+        } else {
+            $this->apellidos = filter_var($apellidos, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        }
+        return $this;
+    }
 
+    /**
+     * Métodos para definir y obtener datos
+     */
     public function definirContrasena($contrasena, $contrasenaVerificada)
     {
         try {
@@ -58,6 +68,7 @@ class Usuario extends Modelo
         } catch (Exception $exception) {
             var_dump($exception);
         }
+        return $this;
     }
 
     public function definirEmail($email)
@@ -68,6 +79,17 @@ class Usuario extends Modelo
         } else {
             $this->email = $emailValido;
         }
+        return $this;
+    }
+
+    public function definirImagen($imagen)
+    {
+        $imagenValida = filter_var($imagen, FILTER_SANITIZE_URL);
+        if ($imagenValida === false) {
+            throw new Exception("La ruta de la imagen es incorrecta");
+        } else {
+            $this->imagen = $imagenValida;
+        }
     }
 
     public function definirNombre($nombre)
@@ -75,74 +97,20 @@ class Usuario extends Modelo
         $nombreValido = filter_var($nombre, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if ($nombreValido === false) {
             throw new Exception("El nombre introducido no es valido");
-
-        }   else {
+        } else {
             $this->nombre = $nombreValido;
         }
+        return $this;
     }
 
-    public function definirApellidos($apellidos)
+    public function definirRol($rol)
     {
-        $apellidosValidos = filter_var($apellidos, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ($apellidosValidos === false) {
-            throw new Exception("Los apellidos introducidos no son validos");
-        }   else {
-            $this->apellidos = $apellidosValidos;
-        }
-    }
-    public function definirImagen($imagen)
-    {
-        $imagenValida = filter_var($imagen, FILTER_SANITIZE_URL);
-        if ($imagenValida === false) {
-            throw new Exception("La ruta de la imagen es incorrecta");
-        }   else {
-            $this->imagen = $imagenValida;
-        }
-    }
-
-    public function obtenerContrasena()
-    {
-        if (is_null($this->contrasena)) {
-            throw new Exception("La contraseña no está definida.");
+        if ($rol instanceof Rol) {
+            $this->rol = $rol->obtenerId();
         } else {
-            return $this->contrasena;
+            throw new Exception("");
         }
-    }
-
-    public function obtenerEmail()
-    {
-        if (is_null($this->email)) {
-            throw new Exception("El correo electrónico no está definido.");
-        } else {
-            return $this->email;
-        }
-    }
-
-    public function obtenerNombre()
-    {
-        if (is_null($this->nombre)) {
-            throw new Exception("El nombre no esta definido");
-        } else {
-            return $this->nombre;
-        }
-    }
-
-    public function obtenerApellidos()
-    {
-        if (is_null($this->apellidos)) {
-            throw new Exception("Los apellidos no estan definidos");
-        } else {
-            return $this->apellidos;
-        }
-    }
-
-    public function obtenerImagen()
-    {
-        if (is_null($this->imgen)) {
-            throw new Exception("Ruta de la imagen no definida");
-        } else {
-            return $this->imagen;
-        }
+        return $this;
     }
 
     /**
@@ -151,9 +119,17 @@ class Usuario extends Modelo
      */
     public function insertar()
     {
-        return $this->ejecutarConsulta(
-            "INSERT INTO `usuarios` (`id_roles`, `email`, `contrasena`, `nombre`, `apellidos`) VALUE ($this->rol, '$this->email', '$this->contrasena', '$this->nombre', '$this->apellidos')"
+        $consulta = $this->conexion->prepare(
+            "INSERT INTO `usuarios` (`id_roles`, `email`, `contrasena`, `nombre`, `apellidos`) VALUES (?, ?, ?, ?, ?)"
         );
+        $consulta->bind_param("issss", $this->rol, $this->email, $this->contrasena, $this->nombre, $this->apellidos);
+        $resultado = $consulta->execute();
+        $consulta->close();
+        if ($resultado) {
+            var_dump("Todo se ha guardado correctamente.");
+        } else {
+            var_dump("No se ha guardado el usuario.");
+        }
     }
 
     public function insertarCuidador(
@@ -201,4 +177,48 @@ class Usuario extends Modelo
         return $this->ejecutarConsulta("SELECT * FROM `usuarios` WHERE `id` = $id");
     }
 
+    public function obtenerApellidos()
+    {
+        if (is_null($this->apellidos)) {
+            throw new Exception("Los apellidos no estan definidos");
+        } else {
+            return $this->apellidos;
+        }
+    }
+
+    public function obtenerContrasena()
+    {
+        if (is_null($this->contrasena)) {
+            throw new Exception("La contraseña no está definida.");
+        } else {
+            return $this->contrasena;
+        }
+    }
+
+    public function obtenerEmail()
+    {
+        if (is_null($this->email)) {
+            throw new Exception("El correo electrónico no está definido.");
+        } else {
+            return $this->email;
+        }
+    }
+
+    public function obtenerImagen()
+    {
+        if (is_null($this->imgen)) {
+            throw new Exception("Ruta de la imagen no definida");
+        } else {
+            return $this->imagen;
+        }
+    }
+
+    public function obtenerNombre()
+    {
+        if (is_null($this->nombre)) {
+            throw new Exception("El nombre no esta definido");
+        } else {
+            return $this->nombre;
+        }
+    }
 }
