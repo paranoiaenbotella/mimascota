@@ -1,5 +1,9 @@
 <?php
 
+session_start();
+if (!key_exists("invitado", $_SESSION)) {
+    $_SESSION["invitado"] = true;
+}
 /**
  * redireccionar las peticiones hacia los controladores
  * según las URI's introducidas en la barra de navegación
@@ -23,7 +27,11 @@ switch ($_SERVER["REQUEST_URI"]) {
     case "/identificacion":
         $fichero = dirname(__DIR__) . "/src/Controladores/Acceso.php";
         $clase = "Acceso";
-        $accion = "identificar";
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $accion = "postIdentificar";
+        } else {
+            $accion = "getIdentificar";
+        }
         break;
     case "/registro":
         $fichero = dirname(__DIR__) . "/src/Controladores/Acceso.php";

@@ -6,7 +6,10 @@ class Inicio
 {
     public function getInicio()
     {
-        $usuario = new Usuario();
-        $usuario->insertarPropietario("Mika", "Heya", "mikahe@tutanota.de", "123456", "foto.png");
+        if ($_SESSION["invitado"]) {
+            var_dump("Eres un invitado.");
+        } else {
+            var_dump("Bienvenido.");
+        }
     }
 }

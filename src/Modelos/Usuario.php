@@ -59,7 +59,7 @@ class Usuario extends Modelo
     /**
      * Métodos para definir y obtener datos
      */
-    public function definirContrasena($contrasena, $contrasenaVerificada)
+    public function crearContrasena($contrasena, $contrasenaVerificada)
     {
         try {
             $this->comprobarContrasenaLongitud($contrasena);
@@ -171,6 +171,23 @@ class Usuario extends Modelo
     public function leerPorId($id) // TODO: Este método necesita ser refactorizado o eliminado.
     {
         return $this->ejecutarConsulta("SELECT * FROM `usuarios` WHERE `id` = $id");
+    }
+
+    public function listarPorEmail($email)
+    {
+        $consulta = $this->conexion->prepare("SELECT * FROM `usuarios` WHERE `email` = ?");
+        $consulta->bind_param("s", $email);
+        $consulta->execute();
+        $resultado = $consulta->get_result();
+        $consulta->close();
+        $usuario = new Usuario();
+        if ($resultado->num_rows > 0) {
+            $datos = $resultado->fetch_assoc();
+            $usuario->definirNombre($datos["nombre"])
+                ->definirApellidos($datos["apellidos"])
+                ->definirContrasena($datos["contrasena"]);
+        }
+        return $usuario;
     }
 
     public function obtenerApellidos()
