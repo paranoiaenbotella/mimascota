@@ -36,8 +36,9 @@ class Roles
             echo("No se ha definido el nombre del rol.");
         } else {
             $rol = new Rol();
-            if ($rol->insertarRol($_POST["nombre"])) {
-                header("Location: /roles/crear");
+            $rol->definirNombre($_POST["nombre"]);
+            if ($rol->insertar()) {
+                header("Location: /roles");
             } else {
                 echo("No se ha podido crear el rol.");
             }
