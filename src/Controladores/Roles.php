@@ -23,7 +23,7 @@ class Roles
     public function getListar()
     {
         $rol = new Rol();
-        $nombreRol = $rol->listarRoles();
+        $roles = $rol->listarRoles();
         require_once(dirname(__DIR__) . "/Vistas/Roles/Listar.php");
     }
 
