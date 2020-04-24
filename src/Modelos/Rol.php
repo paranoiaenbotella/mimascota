@@ -12,14 +12,21 @@ class Rol extends Modelo
 
     private $nombre;
 
+/**
+ * Se define y se fuerza que el tipo 
+ * de la $id sea Int
+ */
     private function definirId($id)
     {
         $this->id = (int)$id;
     }
 
-    /**
-     * Método para definir el nombre de rol
-     */
+/**
+ * Método para definir el nombre de rol
+ * Si la $nombre es vacio se lanza nueva
+ * excepción, si no, al nombre se le aplica
+ * el filtro de saneamiento y se retorna
+ */
     public function definirNombre($nombre)
     {
         if (empty($nombre)) {
@@ -29,9 +36,19 @@ class Rol extends Modelo
         }
         return $this;
     }
-    /**
-     * Método que inserta un rol en la BD
-     */
+
+/**
+ * Método que inserta un rol en la BD
+ * Paso 1 - A la $consulta se le asigna 
+ * la conexion a la BD y la consulta preparada 
+ * de insertar utilizando prepare().
+ * Paso 2 - Se vincula el parametro a la $consulta
+ * mediante (bind_param) 
+ * Paso 3 - Se le asigna a $result el resultado
+ * de la ejecución de la consulta.
+ * Paso 4 - Se cierra la consulta
+ * Paso 5 - Se retorna el $result. 
+ */
     public function insertar()
     {
         $consulta = $this->conexion->prepare("INSERT INTO `roles` (`nombre`) VALUE (?)");
@@ -40,9 +57,24 @@ class Rol extends Modelo
         $consulta->close();
         return $result;
     }
-    /**
-     * Método que lista un rol por el ID facilitado
-     */
+
+/**
+ * Método que lista un rol por el ID facilitado
+ * Paso 1 - Asignar a $consulta la consulta preparada
+ * Paso 2 - Vincular el parametro a la $consulta
+ * Paso 3 - Ejecutar la consulta
+ * Paso 4 - Asignar a $resultado el resultado de la ejecución.
+ * Paso 5 - Cerrar la consulta. 
+ * Paso 6 - Verificar si el número de filas resultante 
+ * de la consulta es vacio o no. 
+ * Si es vacio se lanza nueva excepción.
+ * Si no, $fila es un array asociativo con 
+ * el resultado como elementos.
+ * Paso 7 - Se instancia un objeto $rol
+ * Paso 8 - Se define los elementos de $rol
+ * mediante los metodos creados para ello
+ * Paso 9 - Se retorna el objeto $rol.
+ */
     public function leerPorId($id)
     {
         $consulta = $this->conexion->prepare("SELECT * FROM `roles` WHERE `id` = ?");
@@ -60,14 +92,21 @@ class Rol extends Modelo
             return $rol;
         }
     }
-    /**
-     * Método que lista todos los roles
-     * menos el de Administrador
-     */
+
+/**
+ * Método que lista todos los roles
+ * menos el de Administrador
+ * Se declara $roles como un array de arrays
+ * Se asigna a $resultado la consulta a la BD
+ * Mientras la $fila contenga resultados 
+ * se instancia un objeto $rol se asigna valores
+ * a sus propiedades y se guarda en el array $roles.
+ * La función retorna el array $roles.
+ */
     public function listarRoles()
     {
         $roles = [];
-        $resultado = $this->conexion->query("SELECT * FROM `roles`");
+        $resultado = $this->conexion->query("SELECT * FROM `roles` WHERE `nombre` != 'Administrador' ORDER BY `id`");
         while ($fila = $resultado->fetch_assoc()) {
             $rol = new Rol();
             $rol->definirId($fila["id"]);
@@ -76,9 +115,12 @@ class Rol extends Modelo
         }
         return $roles;
     }
-    /**
-     * Métodos para obtener datos
-     */
+
+/**
+ * Método para obtener el id
+ * Si el id es nulo se lanza una nueva excepción
+ * si no, se retorna el id.
+ */
     public function obtenerId()
     {
         if (is_null($this->id)) {
@@ -88,6 +130,11 @@ class Rol extends Modelo
         }
     }
 
+/**
+ * Método para obtener el nombre
+ * Si el nombre es nulo se lanza una nueva excepción
+ * si no, se retorna el nombre.
+ */
     public function obtenerNombre()
     {
         if (is_null($this->nombre)) {

@@ -40,7 +40,7 @@ class Acceso
             ->crearContrasena($_POST["contrasena"], $_POST["contrasena-verificada"])
             ->definirApellidos($_POST["apellidos"])
             ->definirNombre($_POST["nombre"])
-            ->definirRol($rol);
+            ->crearRol($rol);
         if ($usuario->insertar()) {
             header("Location: /identificacion");
         } else {

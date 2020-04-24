@@ -1,13 +1,27 @@
 <?php
-
+/**
+ *requiere_once, instrucción de incluir el archivo Modelo.php,
+ *se verifica una vez dicha inclusión.
+ *dirname(__DIR__) . "/Modelo.php", dirección completa del archivo.
+ */
 require_once(dirname(__DIR__) . "/Modelo.php");
 
 /**
  * La clase contiene las operaciones contra la BD, los métodos
  * que definen, obtienen y validan los datos.
+ * La clase Usuario extiende la clase Modelo.
+ * Es decir Usuario es hija de Modelo,por lo cual
+ * hereda sus atributos y métodos. 
  */
+
 class Usuario extends Modelo
 {
+/**
+ * Declaración de propiedades de la clase.
+ * Las propiedades son privadas, por lo cual para
+ * acceder a ellas se crearan los métodos definir y obtener
+ */
+
     private $apellidos;
 
     private $contrasena;
@@ -20,9 +34,24 @@ class Usuario extends Modelo
 
     private $rol;
 
-    /**
-     * Métodos para validar datos
-     */
+    private $id;
+
+/**
+ * Se define y se fuerza que el tipo 
+ * de la $id sea Int
+ */
+    private function definirId($id)
+    {
+        $this->id = (int)$id;
+    }
+
+/**
+  * Método que comprueba la longitud de la contraseña
+  * Si la contraseña tiene la longitud menor que 8, 
+  * se lanza una excepción mostrando el mensaje, si no, 
+  * retornara un verdadero. Las excepciones paran la ejecución
+  * del script.
+  */
     private function comprobarContrasenaLongitud($contrasena)
     {
         if (strlen($contrasena) < 8) {
@@ -32,6 +61,12 @@ class Usuario extends Modelo
         }
     }
 
+/**
+ * Comprueba que la contraseña y la confirmación son la misma.
+ * Si la contraseña y la repetición de la misma son idénticas 
+ * retorna verdadero, si no, lanza una excepción mostrando el 
+ * mensaje.
+ */
     private function comprobarContrasenaVerificacion($contrasena, $contrasenaVerificada)
     {
         if ($contrasena === $contrasenaVerificada) {
@@ -41,11 +76,21 @@ class Usuario extends Modelo
         }
     }
 
+/**
+ * Firma la contraseña utilizando el algoritmo
+ * sha1.
+ */
     private function firmarContrasena($contrasena)
     {
         return sha1($contrasena);
     }
 
+/**
+ * Definir apellidos
+ * Si la variable $apellidos esta vacia se lanza una
+ * excepción. Se le aplica a $apellidos un filtro de 
+ * saneamiento. 
+ */
     public function definirApellidos($apellidos)
     {
         if (empty($apellidos)) {
@@ -56,9 +101,12 @@ class Usuario extends Modelo
         return $this;
     }
 
-    /**
-     * Métodos para definir los datos
-     */
+/**
+ * Método para crear la contraseña
+ * se utiliza un bloque try para capturar posibles
+ * excepciones al ejecutar los métodos de verificación
+ *  y de la firma de contraseña finalmente retornandola 
+ */
     public function crearContrasena($contrasena, $contrasenaVerificada)
     {
         try {
@@ -71,6 +119,46 @@ class Usuario extends Modelo
         return $this;
     }
 
+public function definirContrasena($contrasena){
+    $contrasenaValida = filter_var($contrasena, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    if ($contrasenaValida === false){
+        throw new Exception("Contraseña no valida");       
+    } else {
+        $this->contrasena = $contrasenaValida;
+    }
+}
+
+    public function listarPorEmail($email)
+    {
+        $consulta = $this->conexion->prepare("SELECT * FROM `usuarios` WHERE `email` = ?");
+        $consulta->bind_param("s", $email);
+        $consulta->execute();
+        $resultado = $consulta->get_result();
+        $consulta->close();
+        if (empty($resultado->num_rows)) {
+            throw new Exception("Email no encontrado");
+        } else {
+            $fila = $resultado->fetch_assoc();
+            $usuario = new Usuario();
+            $usuario->definirEmail($fila["email"]);
+            $usuario->definirId($fila["id"]);
+            $usuario->definirNombre($fila["nombre"]);
+            $usuario->definirApellidos($fila["apellidos"]);
+            $usuario->definirContrasena($fila["contrasena"]);
+            $usuario->definirImagen($fila["imagen"]);
+            $usuario->definirRol($fila["id_roles"]);
+            return $usuario;
+        }
+    }
+
+/**
+ * Definir email
+ * Se le aplica al email un filtro de saneamiento y
+ * el resultado se guarda en la variable $emailValido
+ * Si el resultado es identico a false se lanza una 
+ * excepción. Si no, el valor del email es el resultado
+ * del saneamiento. 
+ */
     public function definirEmail($email)
     {
         $emailValido = filter_var($email, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -82,6 +170,10 @@ class Usuario extends Modelo
         return $this;
     }
 
+/**
+ * Definir imagen.
+ * El filtro aplicado es de saneamiento de una url
+ */
     public function definirImagen($imagen)
     {
         $imagenValida = filter_var($imagen, FILTER_SANITIZE_URL);
@@ -92,6 +184,11 @@ class Usuario extends Modelo
         }
     }
 
+/**
+ * Definir nombre.
+ * El filtro aplicado es de saneamiento codifica
+ * el código y el navegador no lo interpreta.
+ */
     public function definirNombre($nombre)
     {
         $nombreValido = filter_var($nombre, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -103,19 +200,42 @@ class Usuario extends Modelo
         return $this;
     }
 
-    public function definirRol($rol)
+/**
+ * Crear rol para el registro
+ * Si existe una instancia de Rol
+ * al objeto rol se le asigna el 
+ * resultado del método obtenerId()
+ * si no, se lanza una nueva excepción
+ * la función retornara la clase Usuario
+ */
+    public function crearRol($rol)
     {
         if ($rol instanceof Rol) {
             $this->rol = $rol->obtenerId();
         } else {
-            throw new Exception("El parametro facilitado no es una instancia de la clase Rol");
+            throw new Exception("El parámetro facilitado no es una instancia de la clase Rol");
         }
         return $this;
     }
 
-    /**
-     * Método que inserta usuarios en la BD
-     */
+/**
+ * Se define y se fuerza que el tipo 
+ * de la $id sea Int
+ */
+    public function definirRol($rol){
+        $this->rol = (int)$rol;
+    }
+
+/**
+ * Método que inserta usuarios en la BD
+ * A la variable $consulta se le asigna la consulta
+ * a la BD en este caso la inserción de datos.
+ * A la $consulta de se vincula 5 parámetros (uno de tipo
+ * Int y 4 de tipo String, mediante bind_param() 
+ * A la $resultado se le asigna la ejecución de la consulta
+ * Se cierra la consulta mediante close();
+ * Se retorna el resultado de la ejecución de la consulta
+ */
     public function insertar()
     {
         $consulta = $this->conexion->prepare(
@@ -127,31 +247,40 @@ class Usuario extends Modelo
         return $resultado;
     }
 
-    /**
-     * Método que lista los usuarios de la BD
-     */
+/**
+ * Método que lista los usuarios de la BD
+ */
     public function listarUsuarios()
     {
         
     }
-        /**
-     * Método que lista el usuario con el ID facilitado
-     */
+
+ /**
+  * Método que lista el usuario con el ID facilitado
+  */
     public function leerPorId($id) // TODO: Este método necesita ser refactorizado o eliminado.
     {
         return $this->ejecutarConsulta("SELECT * FROM `usuarios` WHERE `id` = $id");
     }
 
-
+/**
+ * Método para obtener apellidos
+ * Si apellidos es nulo se lanza una nueva excepción
+ * si no, se retorna apellidos.
+ */
     public function obtenerApellidos()
     {
         if (is_null($this->apellidos)) {
-            throw new Exception("Los apellidos no estan definidos");
+            throw new Exception("Los apellidos no están definidos");
         } else {
             return $this->apellidos;
         }
     }
-
+/**
+ * Método para obtener la contraseña
+ * Si la contraseña  es nulo se lanza una nueva excepción
+ * si no, se retorna la contraseña.
+ */
     public function obtenerContrasena()
     {
         if (is_null($this->contrasena)) {
@@ -161,6 +290,11 @@ class Usuario extends Modelo
         }
     }
 
+/**
+ * Método para obtener el email
+ * Si el email es nulo se lanza una nueva excepción
+ * si no, se retorna el email.
+ */
     public function obtenerEmail()
     {
         if (is_null($this->email)) {
@@ -170,6 +304,11 @@ class Usuario extends Modelo
         }
     }
 
+/**
+ * Método para obtener el imagen
+ * Si el imagen es nulo se lanza una nueva excepción
+ * si no, se retorna el imagen.
+ */
     public function obtenerImagen()
     {
         if (is_null($this->imagen)) {
@@ -179,6 +318,11 @@ class Usuario extends Modelo
         }
     }
 
+/**
+ * Método para obtener el nombre
+ * Si el nombre es nulo se lanza una nueva excepción
+ * si no, se retorna el nombre.
+ */
     public function obtenerNombre()
     {
         if (is_null($this->nombre)) {
@@ -187,4 +331,19 @@ class Usuario extends Modelo
             return $this->nombre;
         }
     }
+
+/**
+ * Método para obtener el id
+ * Si el id es nulo se lanza una nueva excepción
+ * si no, se retorna el id.
+ */
+    public function obtenerId()
+    {
+        if (is_null($this->id)) {
+            throw new Exception("El identificador del usuario no está definido.");
+        } else {
+            return $this->id;
+        }
+    }
+
 }
