@@ -19,6 +19,16 @@ class Acceso
 
     public function postIdentificar()
     {
+        $usuario = new Usuario();
+        $cuenta = $usuario->listarPorEmail($_POST["email"]);
+        try {
+            if ($cuenta->obtenerContrasena() === sha1($_POST["contrasena"])) {
+                $_SESSION["invitado"] = false;
+                header("Location: /");
+            }
+        } catch (Exception $exception) {
+            header("Location: /identificacion");
+        }
     }
 
     public function postRegistro()
@@ -27,7 +37,7 @@ class Acceso
         $rol = $rol->leerPorId($_POST["rol"]);
         $usuario = new Usuario();
         $usuario->definirEmail($_POST["email"])
-            ->definirContrasena($_POST["contrasena"], $_POST["contrasena-verificada"])
+            ->crearContrasena($_POST["contrasena"], $_POST["contrasena-verificada"])
             ->definirApellidos($_POST["apellidos"])
             ->definirNombre($_POST["nombre"])
             ->definirRol($rol);

@@ -59,7 +59,7 @@ class Usuario extends Modelo
     /**
      * Métodos para definir los datos
      */
-    public function definirContrasena($contrasena, $contrasenaVerificada)
+    public function crearContrasena($contrasena, $contrasenaVerificada)
     {
         try {
             $this->comprobarContrasenaLongitud($contrasena);
@@ -142,9 +142,7 @@ class Usuario extends Modelo
         return $this->ejecutarConsulta("SELECT * FROM `usuarios` WHERE `id` = $id");
     }
 
-    /**
-     * Métodos para obtener los datos
-     */
+
     public function obtenerApellidos()
     {
         if (is_null($this->apellidos)) {

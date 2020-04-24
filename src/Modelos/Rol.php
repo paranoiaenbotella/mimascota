@@ -67,7 +67,7 @@ class Rol extends Modelo
     public function listarRoles()
     {
         $roles = [];
-        $resultado = $this->conexion->query("SELECT * FROM `roles` WHERE `nombre` != 'Administrador' ORDER BY `id`");
+        $resultado = $this->conexion->query("SELECT * FROM `roles`");
         while ($fila = $resultado->fetch_assoc()) {
             $rol = new Rol();
             $rol->definirId($fila["id"]);

@@ -2,10 +2,10 @@
 <html lang="es">
     <head>
         <meta charset="utf-8">
-        <title>MiMascota</title>
+        <title>MiMascota.com</title>
     </head>
     <body>
-        <table class= "listarRegistros">
+        <table>
             <caption>Lista con los tipos de roles registrados en la base de datos</caption>
             <thead>
                 <tr>
@@ -14,13 +14,12 @@
                 </tr>
             </thead>
             <tbody>
-               <?php
-                foreach ($nombreRol as $valor) { ?>
-                <tr>
-                    <td><?php echo  $valor['id'];?></td>
-                    <td><?php echo  $valor['nombre'];?></td>
-                </tr>
-                <?php } ?> 
+                <?php foreach ($roles as $rol): ?>
+                    <tr>
+                        <td><?php echo $rol->obtenerId(); ?></td>
+                        <td><?php echo $rol->obtenerNombre(); ?></td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </body>
