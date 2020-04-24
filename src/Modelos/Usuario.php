@@ -57,7 +57,7 @@ class Usuario extends Modelo
     }
 
     /**
-     * Métodos para definir y obtener datos
+     * Métodos para definir los datos
      */
     public function definirContrasena($contrasena, $contrasenaVerificada)
     {
@@ -114,8 +114,7 @@ class Usuario extends Modelo
     }
 
     /**
-     * Métodos que realizan las operaciones requeridas
-     * por la aplicación en la BD.
+     * Método que inserta usuarios en la BD
      */
     public function insertar()
     {
@@ -128,51 +127,24 @@ class Usuario extends Modelo
         return $resultado;
     }
 
-    public function insertarCuidador(
-        $nobmre,
-        $apellidos,
-        $email,
-        $contrasena,
-        $imagen
-    ) // TODO: Este métido necesita ser refactorizado o eliminado.
+    /**
+     * Método que lista los usuarios de la BD
+     */
+    public function listarUsuarios()
     {
-        $cuidadorConsulta = "SELECT `id` FROM `roles` WHERE `nombre` = 'Cuidador'";
-        $cuidador = $this->ejecutarConsulta($cuidadorConsulta);
-        return $this->insertarUsuario($nobmre, $apellidos, $email, $contrasena, $imagen, $cuidador["id"]);
+        
     }
-
-    public function insertarPropietario(
-        $nombre,
-        $apellidos,
-        $email,
-        $contrasena,
-        $imagen
-    ) // TODO: Este métido necesita ser refactorizado o eliminado.
-    {
-        $propietarioConsulta = "SELECT `id` FROM `roles` WHERE `nombre`= 'Propietario'";
-        $propietario = $this->ejecutarConsulta($propietarioConsulta);
-        return $this->insertarUsuario($nombre, $apellidos, $email, $contrasena, $imagen, $propietario["id"]);
-    }
-
-    public function insertarUsuario(
-        $nombre,
-        $apellidos,
-        $email,
-        $contrasena,
-        $imagen,
-        $idRol
-    ) // TODO: Este métido necesita ser refactorizado o eliminado.
-    {
-        return $this->ejecutarConsulta(
-            "INSERT INTO `usuarios` (`nombre`, `apellidos`, `email`, `contrasena`, `imagen`, `id_roles`) VALUE ('$nombre', '$apellidos', '$email', '$contrasena', '$imagen', $idRol)"
-        );
-    }
-
+        /**
+     * Método que lista el usuario con el ID facilitado
+     */
     public function leerPorId($id) // TODO: Este método necesita ser refactorizado o eliminado.
     {
         return $this->ejecutarConsulta("SELECT * FROM `usuarios` WHERE `id` = $id");
     }
 
+    /**
+     * Métodos para obtener los datos
+     */
     public function obtenerApellidos()
     {
         if (is_null($this->apellidos)) {
@@ -202,7 +174,7 @@ class Usuario extends Modelo
 
     public function obtenerImagen()
     {
-        if (is_null($this->imgen)) {
+        if (is_null($this->imagen)) {
             throw new Exception("Ruta de la imagen no definida");
         } else {
             return $this->imagen;

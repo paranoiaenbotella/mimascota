@@ -18,7 +18,7 @@ class Rol extends Modelo
     }
 
     /**
-     * Métodos para definir y obtener datos
+     * Método para definir el nombre de rol
      */
     public function definirNombre($nombre)
     {
@@ -29,7 +29,9 @@ class Rol extends Modelo
         }
         return $this;
     }
-
+    /**
+     * Método que inserta un rol en la BD
+     */
     public function insertar()
     {
         $consulta = $this->conexion->prepare("INSERT INTO `roles` (`nombre`) VALUE (?)");
@@ -38,7 +40,9 @@ class Rol extends Modelo
         $consulta->close();
         return $result;
     }
-
+    /**
+     * Método que lista un rol por el ID facilitado
+     */
     public function leerPorId($id)
     {
         $consulta = $this->conexion->prepare("SELECT * FROM `roles` WHERE `id` = ?");
@@ -56,7 +60,10 @@ class Rol extends Modelo
             return $rol;
         }
     }
-
+    /**
+     * Método que lista todos los roles
+     * menos el de Administrador
+     */
     public function listarRoles()
     {
         $roles = [];
@@ -69,7 +76,9 @@ class Rol extends Modelo
         }
         return $roles;
     }
-
+    /**
+     * Métodos para obtener datos
+     */
     public function obtenerId()
     {
         if (is_null($this->id)) {
