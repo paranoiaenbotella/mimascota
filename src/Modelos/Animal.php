@@ -6,11 +6,100 @@ require_once(dirname(__DIR__) . "/Modelo.php");
 *base de datos relacionadas con los animales
 */
 class Animal extends Modelo
-{
+{   
+    private $id;
+    private $tipoAnimal;
+    private $usuario;
     private $nombre;
 
 /**
- * Métodos para definir y obtener datos
+ * Se define y se fuerza que el tipo 
+ * de la $id sea Int
+ */
+    private function definirId($id) {
+        $this->id = (int)$id; 
+    }
+
+/**
+ * Método para obtener el id
+ * del animal
+ */
+    public function obtenerId()
+    {
+        if (is_null($this->id)) {
+            throw new Exception("El identificador del animal no está definido.");
+        } else {
+            return $this->id;
+        }
+    }
+
+/**
+ * Se crea al tipo de animal 
+ */
+
+public function crearTipoAnimal($tipoAnimal){
+
+    if ($tipoAnimal instanceof AnimalTipo){
+        $this->tipoAnimal = $tipoAnimal->obtenerId();
+    } else {
+        throw new Exception("El parámetro facilitado no es una instancia de la clase AnimalTipo.");
+        
+    }
+}
+
+/**
+ * Método para definir el tipo de animal
+ */
+public function definirTipoAnimal($tipoAnimal){
+    $this->tipoAnimal = (int)$tipoAnimal;
+}
+
+/**
+ * Método para obtener el tipo de animal
+ */
+public function obtenerTipoAnimal(){
+    if (is_null($this->tipoAnimal)){
+        throw new Exception("El tipo de animal no está definido");    
+    } else {
+        return $this->tipoAnimal;
+    }
+}
+
+/**
+ * Se crea al usuario propietario del animal 
+ */
+public function crearUsuario($usuario){
+
+    if ($usuario instanceof Usuario){
+        $this->usuario = $usuario->obtenerId();
+    } else {
+        throw new Exception("El parámetro facilitado no es una instancia de la clase Usuario.");
+        
+    }
+}
+
+/**
+ * Se define y se fuerza que el tipo 
+ * de la $usuario sea Int
+ */
+    public function definirUsuario($usuario){
+        $this->usuario = (int)$usuario;
+    }
+
+/**
+ * Método para obtener el usuario
+ */
+    public function obtenerUsuario()
+    {
+        if (is_null($this->usuario)) {
+            throw new Exception("El usuario no está definido");
+        } else {
+            return $this->usuario;
+        }
+    }
+
+/**
+ * Método para definir el nombre del animal
  */
     public function definirNombre($nombre)
     {
@@ -23,6 +112,9 @@ class Animal extends Modelo
         }
     }
 
+/**
+ * Método para obtener el nombre del animal
+ */
     public function obtenerNombre(){
         if (is_null($this->nombre)){
         throw new Exception("El nombre del animal no esta definido");
@@ -33,18 +125,58 @@ class Animal extends Modelo
     }
 
 /**
- * Métodos que realizan las operaciones requeridas 
- * por la aplicación en la BD.
+ * Método para insertar animal
  */
-    public function insertarAnimal($idAnimalesTipo, $idUsuario, $nombre)
+    public function insertar()
     {
-        return $this->ejecutarConsulta(
-            "INSERT INTO `animales` (`id_animales_tipos`, `id_usuarios`, `nombre`) VALUE ($idAnimalesTipo, $idUsuario, '$nombre')"
-        );
+       $consulta = $this->conexion->prepare( "INSERT INTO `animales` (`id_animales_tipos`, `id_usuarios`,  `nombre`) VALUES (?, ?, ?)");
+       $consulta->bind_param("iis", $this->AnimalTipo, $this->usuario, $this->nombre);
+       $resultado = $consulta->execute();
+       $consulta->close();
+       return $resultado;
     }
+/**
+ * Método para listar por id un animal
+ */
 
     public function leerPorId($id)
     {
-        return $this->ejecutarConsulta("SELECT * FROM `animales` WHERE `id` = $id");
+       $consulta = $this->conexion->prepare("SELECT * FROM animales WHERE id = ?");
+       $consulta->bind_param("i", $id);
+       $consulta->execute();
+       $resultado = $consulta->get_result();
+       $consulta->close();
+       if (empty($resultado->num_rows)) {
+            throw new Exception("Animal no encontrado");      
+       } else {
+            $fila = $resultado->fetch_assoc();
+            $animal = new Animal();
+            $animal->definirId($fila["id"]);
+            $animal->definirTipoAnimal($fila["id_animales_tipos"]);
+            $animal->definirUsuario($fila["id_usuarios"]);
+            $animal->definirNombre($fila["nombre"]);
+            return $animal;
+
+       }
     }
+
+/**
+ * Método para listar todos los animales 
+ */
+   public function listarAnimales()
+   {
+        $animales = [];
+        $resultado = $this->conexion->query("SELECT * FROM `animales` ORDER BY `id`");
+        while ($fila = $resultado->fetch_assoc()) {
+            $animal = new Animal();
+            $animal->definirId($fila["id"]);
+            $animal->definirTipoAnimal($fila["id_animales_tipos"]);
+            $animal->definirUsuario($fila["id_usuarios"]);
+            $animal->definirNombre($fila["nombre"]);
+            array_push($animales, $animal);
+        }
+        return $animales;     
+   }
+
+
 }

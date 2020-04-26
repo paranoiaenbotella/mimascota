@@ -227,6 +227,20 @@ public function definirContrasena($contrasena){
     }
 
 /**
+ * Método para obtener el rol
+ * Si el rol es nulo se lanza una nueva excepción
+ * si no, se retorna el rol.
+ */
+    public function obtenerRol()
+    {
+        if (is_null($this->rol)) {
+            throw new Exception("El rol no está definido");
+        } else {
+            return $this->rol;
+        }
+    }
+
+/**
  * Método que inserta usuarios en la BD
  * A la variable $consulta se le asigna la consulta
  * a la BD en este caso la inserción de datos.
@@ -252,15 +266,45 @@ public function definirContrasena($contrasena){
  */
     public function listarUsuarios()
     {
-        
+        $usuarios = [];
+        $resultado = $this->conexion->query("SELECT * FROM `usuarios` ORDER BY `apellidos`");
+        while ($fila = $resultado->fetch_assoc()) {
+            $usuario = new Usuario();
+            $usuario->definirId($fila["id"]);
+            $usuario->definirRol($fila["id_roles"]);
+            $usuario->definirEmail($fila["email"]);
+            $usuario->definirNombre($fila["nombre"]);
+            $usuario->definirApellidos($fila["apellidos"]);
+            $usuario->definirImagen($fila["imagen"]);
+            array_push($usuarios, $usuario);
+        }
+        return $usuarios;        
     }
 
  /**
   * Método que lista el usuario con el ID facilitado
   */
-    public function leerPorId($id) // TODO: Este método necesita ser refactorizado o eliminado.
+    public function leerPorId($id)
     {
-        return $this->ejecutarConsulta("SELECT * FROM `usuarios` WHERE `id` = $id");
+        $consulta = $this->conexion->prepare("SELECT * FROM usuarios WHERE id =?");
+        $consulta->bind_param("i", $id);
+        $consulta->execute();
+        $resultado = $consulta->get_result();
+
+        if (empty($resultado->num_rows)){
+            throw new Exception("Usuario no encontrado");    
+        } else {
+            $fila = $resultado->fetch_assoc();
+            $usuario = new Usuario();
+            $usuario->definirId($fila["id"]);
+            $usuario->definirRol($fila["rol"]);
+            $usuario->definirEmail($fila["email"]);
+            $usuario->definirNombre($fila["nombre"]);
+            $usuario->definirApellidos($fila["apellidos"]);
+            $usuario->definirImagen($fila["imagen"]);
+            return $usuario;
+        }
+
     }
 
 /**
@@ -276,6 +320,7 @@ public function definirContrasena($contrasena){
             return $this->apellidos;
         }
     }
+
 /**
  * Método para obtener la contraseña
  * Si la contraseña  es nulo se lanza una nueva excepción
