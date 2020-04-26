@@ -1,9 +1,7 @@
 <?php
 
-session_start();
-if (!key_exists("invitado", $_SESSION)) {
-    $_SESSION["invitado"] = true;
-}
+require_once(dirname(__DIR__) . "/src/Sesion.php");
+Sesion::instanciar();
 /**
  * redireccionar las peticiones hacia los controladores
  * según las URI's introducidas en la barra de navegación
@@ -70,7 +68,7 @@ switch ($_SERVER["REQUEST_URI"]) {
             $accion = "getCrear";
         }
         break;
-        case "/animales/tipos":
+    case "/animales/tipos":
         $fichero = dirname(__DIR__) . "/src/Controladores/Animales/Tipos.php";
         $clase = "AnimalesTipos";
         $accion = "getListar";

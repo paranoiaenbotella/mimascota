@@ -6,10 +6,6 @@ class Inicio
 {
     public function getInicio()
     {
-        if ($_SESSION["invitado"]) {
-            var_dump("Eres un invitado.");
-        } else {
-            var_dump("Bienvenido.");
-        }
+        require_once(dirname(__DIR__) . "/Vistas/Inicio/Inicio.php");
     }
 }

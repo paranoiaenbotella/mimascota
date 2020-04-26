@@ -19,14 +19,15 @@ class Acceso
 
     public function postIdentificar()
     {
-        $usuario = new Usuario();
-        $cuenta = $usuario->listarPorEmail($_POST["email"]);
         try {
+            $usuario = new Usuario();
+            $cuenta = $usuario->listarPorEmail($_POST["email"]);
             if ($cuenta->obtenerContrasena() === sha1($_POST["contrasena"])) {
-                $_SESSION["invitado"] = false;
+                Sesion::definirUsuario($cuenta->obtenerId());
                 header("Location: /");
             }
         } catch (Exception $exception) {
+            Sesion::definirError("correoElectronico", $exception->getMessage());
             header("Location: /identificacion");
         }
     }

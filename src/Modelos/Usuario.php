@@ -297,7 +297,7 @@ public function definirContrasena($contrasena){
             $fila = $resultado->fetch_assoc();
             $usuario = new Usuario();
             $usuario->definirId($fila["id"]);
-            $usuario->definirRol($fila["rol"]);
+            $usuario->definirRol($fila["id_roles"]);
             $usuario->definirEmail($fila["email"]);
             $usuario->definirNombre($fila["nombre"]);
             $usuario->definirApellidos($fila["apellidos"]);

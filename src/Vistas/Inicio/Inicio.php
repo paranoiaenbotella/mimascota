@@ -5,6 +5,10 @@
         <title>MiMascota</title>
     </head>
     <body>
-        <?php var_dump($rol1) ?>
+        <?php if (Sesion::esInvitado()): ?>
+            <p>Hola, señor Invitado.</p>
+        <?php else: ?>
+            <p>Hola, señor <?php echo(Sesion::obtenerUsuario()->obtenerApellidos()); ?>.</p>
+        <?php endif; ?>
     </body>
 </html>
