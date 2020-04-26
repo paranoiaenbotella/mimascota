@@ -66,7 +66,7 @@ class AnimalTipo extends Modelo
  */
     public function insertar()
     {
-        $consulta = $this->conexion->prepare("INSERT INTO `animales_tipo` (`nombre`) VALUE (?)");
+        $consulta = $this->conexion->prepare("INSERT INTO `animales_tipos` (`nombre`) VALUE (?)");
         $consulta->bind_param("s", $this->nombre);
         $result = $consulta->execute();
         $consulta->close();
@@ -78,7 +78,7 @@ class AnimalTipo extends Modelo
      */
     public function listarPorId($id)
     {
-        $consulta = $this->conexion->prepare("SELECT * FROM animales_tipo WHERE id = ? ");
+        $consulta = $this->conexion->prepare("SELECT * FROM animales_tipos WHERE id = ? ");
         $consulta->bind_param("i", $id);
         $consulta->execute();
         $resultado = $consulta->get_result();
@@ -98,13 +98,13 @@ class AnimalTipo extends Modelo
      */
    public function listarTiposAnimales()
    {
-        $animalesTipo = [];
-        $resultado = $this->conexion->query("SELECT * FROM `animales_tipo` ORDER BY `id`");
+       $animalesTipo = [];
+       $resultado = $this->conexion->query("SELECT * FROM `animales_tipos` ORDER BY `id`");
         while ($fila = $resultado->fetch_assoc()) {
             $animalTipo = new AnimalTipo();
             $animalTipo->definirId($fila["id"]);
             $animalTipo->definirNombre($fila["nombre"]);
-            array_push($animalesTipo, $animal);
+            array_push($animalesTipo, $animalTipo);
         }
        return $animalesTipo;
    }
