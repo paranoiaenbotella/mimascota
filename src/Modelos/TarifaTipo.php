@@ -12,7 +12,7 @@ class TarifaTipo extends Modelo
 	private $nombre;
 
 /**
- * Se define y se fuerza que el tipo 
+ * Se define y se fuerza que el tipo
  * de la $id sea Int
  */
     private function definirId($id)
@@ -40,7 +40,7 @@ class TarifaTipo extends Modelo
 	$nombreValido = filter_var($nombre, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 	if ($nombreValido === false) {
 		throw new Exception("El nombre introducido no es valido");
-		
+
 		} else {
 			$this->nombre = $nombreValido;
 		}
@@ -52,8 +52,7 @@ class TarifaTipo extends Modelo
 	public function obtenerNombre(){
 	if (is_null($this->nombre)){
 		throw new Exception("El nombre del tipo de tarifa no esta definido");
-		
-	} else {
+    } else {
 		return $this->nombre;
 	}
 }
@@ -70,11 +69,12 @@ class TarifaTipo extends Modelo
         return $result;
     }
 
-/**
- * Método para leer por id un tipo de tarifa
- */
-	public function leerPorId($id){
-		$consulta = $this->conexion->prepare("SELECT * FROM `tarifas_tipos` WHERE `id` = ?");
+    /**
+     * Método para leer por id un tipo de tarifa
+     */
+    public function listarPorId($id)
+    {
+        $consulta = $this->conexion->prepare("SELECT * FROM `tarifas_tipos` WHERE `id` = ?");
         $consulta->bind_param("i", $id);
         $consulta->execute();
         $resultado = $consulta->get_result();

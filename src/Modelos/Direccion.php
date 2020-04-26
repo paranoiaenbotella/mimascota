@@ -7,7 +7,7 @@ require_once(dirname(__DIR__) . "/Modelo.php");
  * que definen, obtienen y validan los datos.
  */
 class Direccion extends Modelo
-{   
+{
     private $id;
 
     private $usuario;
@@ -28,10 +28,10 @@ class Direccion extends Modelo
 
     private $imagen4;
 
-/**
- * Se define y se fuerza que el tipo 
- * de la $id sea Int
- */
+    /**
+     * Se define y se fuerza que el tipo
+     * de la $id sea Int
+     */
     private function definirId($id)
     {
         $this->id = (int)$id;
@@ -49,23 +49,23 @@ class Direccion extends Modelo
         }
     }
 
-/**
- * Se crea al usuario propietario del animal 
- */
+    /**
+     * Se crea al usuario propietario del animal
+     */
 public function crearUsuario($usuario){
 
     if ($usuario instanceof Usuario){
         $this->usuario = $usuario->obtenerId();
     } else {
         throw new Exception("El parámetro facilitado no es una instancia de la clase Usuario.");
-        
+
     }
 }
 
-/**
- * Se define y se fuerza que el tipo 
- * de la $usuario sea Int
- */
+    /**
+     * Se define y se fuerza que el tipo
+     * de la $usuario sea Int
+     */
     public function definirUsuario($usuario){
         $this->usuario = (int)$usuario;
     }
@@ -289,25 +289,25 @@ public function crearUsuario($usuario){
     public function insertar() {
         $consulta = $this->conexion->prepare(
             "INSERT INTO 'direcciones' (`id_usuarios`, `pais`, `ciudad`, `codigo_postal`, `calle`, `imagen1`, `imagen2`, `imagen3`, `imagen4`) VALUE ( ?,?,?,?,?,?,?,?,?)");
-        $consulta->bind_param("issssssss", $this->usuario,$this->pais,$this->ciudad,$this->codigoPostal,$this->calle,$this->imagen1,$this->imagen2,$this->imagen3,$this->iamgen4);
+        $consulta->bind_param("issssssss", $this->usuario, $this->pais, $this->ciudad, $this->codigoPostal,
+            $this->calle, $this->imagen1, $this->imagen2, $this->imagen3, $this->iamgen4);
         $resultado = $consulta->execute();
         $consulta->close();
         return $resultado;
-
     }
 
-/**
- * Método para leer direcciones por el id de usuario
- */
-    public function leerPorIdUsuario($usuario)
-    {   
+    /**
+     * Método para leer direcciones por el id de usuario
+     */
+    public function listarPorIdUsuario($usuario)
+    {
         $direcciones = [];
         $consulta = $this->conexion->prepare("SELECT * FROM `direcciones` WHERE `id_usuarios` = ?");
         $consulta->bind_param("i", $usuario);
         $consulta->execute();
         $resultado = $consulta->get_result();
         $consulta->close();
-        while ($fila = $resultado->fetch_assoc()){
+        while ($fila = $resultado->fetch_assoc()) {
             $direccion = new Direccion();
             $direccion->definirId($fila["id"]);
             $direccion->definirPais($fila["pais"]);

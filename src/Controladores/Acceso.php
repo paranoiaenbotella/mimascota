@@ -34,7 +34,7 @@ class Acceso
     public function postRegistro()
     {
         $rol = new Rol();
-        $rol = $rol->leerPorId($_POST["rol"]);
+        $rol = $rol->listarPorId($_POST["rol"]);
         $usuario = new Usuario();
         $usuario->definirEmail($_POST["email"])
             ->crearContrasena($_POST["contrasena"], $_POST["contrasena-verificada"])

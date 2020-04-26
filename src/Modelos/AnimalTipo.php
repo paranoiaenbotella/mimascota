@@ -8,17 +8,18 @@ require_once(dirname(__DIR__) . "/Modelo.php");
  */
 class AnimalTipo extends Modelo
 {
-	private $id; 
+    private $id;
 
-	private $nombre;
+    private $nombre;
 
-/**
- * Se define y se fuerza que el tipo 
- * de la $id sea Int
- */
-private function definirId($id){
-	$this->id = (int)$id;
-}
+    /**
+     * Se define y se fuerza que el tipo
+     * de la $id sea Int
+     */
+    private function definirId($id)
+    {
+        $this->id = (int)$id;
+    }
 
 /**
  * Método para obtener el id
@@ -42,7 +43,7 @@ private function definirId($id){
  		$nombreValido = filter_var($nombre, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 		if ($nombreValido === false) {
 			throw new Exception("El nombre introducido no es valido");
-		
+
 		} 	else {
 			$this->nombre = $nombreValido;
 		}
@@ -54,7 +55,7 @@ private function definirId($id){
  	public function obtenerNombre(){
 		if (is_null($this->nombre)){
 		throw new Exception("El nombre del tipo de animal no esta definido");
-		
+
 		} 	else {
 			return $this->nombre;
 		}
@@ -72,29 +73,29 @@ private function definirId($id){
         return $result;
     }
 
-/**
- * Método para listar tipos de animales por id 
- */
-	public function leerPorId($id){
-		$consulta = $this->conexion->prepare("SELECT * FROM animales_tipo WHERE id = ? ");
-		$consulta->bind_param("i", $id);
-		$consulta->execute();
-		$resultado = $consulta->get_result();
-		$consulta->close();
-
-		if (empty($resultado->num_rows)){
-			throw new Exception("Tipo de animal no encontrado");
-		} else {
-			$fila = $resultado->fetch_assoc();
+    /**
+     * Método para listar tipos de animales por id
+     */
+    public function listarPorId($id)
+    {
+        $consulta = $this->conexion->prepare("SELECT * FROM animales_tipo WHERE id = ? ");
+        $consulta->bind_param("i", $id);
+        $consulta->execute();
+        $resultado = $consulta->get_result();
+        $consulta->close();
+        if (empty($resultado->num_rows)) {
+            throw new Exception("Tipo de animal no encontrado");
+        } else {
+            $fila = $resultado->fetch_assoc();
 			$tipoAnimal = new AnimalTipo();
 			$tipoAnimal->definirNombre($fila["id"]);
 			$tipoAnimal->definirNombre($fila["nombre"]);
 		}
 	}
 
-/**
- * Método para listar todos los tipos de animales 
- */
+    /**
+     * Método para listar todos los tipos de animales
+     */
    public function listarTiposAnimales()
    {
         $animalesTipo = [];
@@ -105,7 +106,7 @@ private function definirId($id){
             $animalTipo->definirNombre($fila["nombre"]);
             array_push($animalesTipo, $animal);
         }
-        return $animalesTipo;     
+       return $animalesTipo;
    }
 
 
