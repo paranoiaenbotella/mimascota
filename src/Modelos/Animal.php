@@ -176,16 +176,29 @@ public function crearUsuario($usuario){
        return $animales;
    }
 
-/**
- * Método para actualizar los animales por id
- */
-public function actualizar($id, $tipoAnimal, $nombre){
-        $consulta = $this->conexion->prepare("UPDATE animales SET id_animales_tipos = ?, nombre = ? WHERE id = ?");
-        $consulta->bind_param("isi", $tipoAnimal, $nombre, $id);
+    /**
+     * Método para actualizar los animales por id
+     */
+    public function actualizar()
+    {
+        $consulta = $this->conexion->prepare(
+            "UPDATE `animales` SET `id_animales_tipos` = ?, `id_usuarios` = ?, `nombre` = ? WHERE `id` = ?"
+        );
+        $consulta->bind_param("iisi", $this->tipoAnimal, $this->usuario, $this->nombre, $this->id);
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado;
     }
 
-/**
- * Método para eliminar los animales por id
- */   
-
+    /**
+     * Método para eliminar los animales por id
+     */
+    public function eliminar()
+    {
+        $consulta = $this->conexion->prepare("DELETE FROM `animales` WHERE `id` = ?");
+        $consulta->bind_param("i", $this->id);
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado;
+    }
 }
