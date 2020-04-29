@@ -36,17 +36,19 @@ class Acceso
 
     public function postRegistro()
     {
-        $rol = new Rol();
-        $rol = $rol->listarPorId($_POST["rol"]);
-        $usuario = new Usuario();
-        $usuario->definirEmail($_POST["email"])
-            ->crearContrasena($_POST["contrasena"], $_POST["contrasena-verificada"])
-            ->definirApellidos($_POST["apellidos"])
-            ->definirNombre($_POST["nombre"])
-            ->crearRol($rol);
-        if ($usuario->insertar()) {
+        try {
+            $rol = new Rol();
+            $rol = $rol->listarPorId($_POST["rol"]);
+            $usuario = new Usuario();
+            $usuario->definirNombre($_POST["nombre"])
+                ->definirApellidos($_POST["apellidos"])
+                ->definirEmail($_POST["email"])
+                ->crearContrasena($_POST["contrasena"], $_POST["contrasena-verificada"])
+                ->crearRol($rol);
+            $usuario->insertar();
             header("Location: /identificacion");
-        } else {
+        } catch (Exception $exception) {
+            Sesion::definirError($exception, "nombre");
             header("Location: /registro");
         }
     }

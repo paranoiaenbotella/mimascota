@@ -114,7 +114,7 @@ private function firmarContrasena($contrasena)
             $this->comprobarContrasenaVerificacion($contrasena, $contrasenaVerificada);
             $this->contrasena = $this->firmarContrasena($contrasena);
         } catch (Exception $exception) {
-            var_dump($exception);
+            // TODO: Do something.
         }
         return $this;
     }
@@ -191,11 +191,10 @@ public function definirImagen($imagen)
  */
 public function definirNombre($nombre)
 {
-    $nombreValido = filter_var($nombre, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    if ($nombreValido === false) {
-        throw new Exception("El nombre introducido no es valido");
+    if (empty($nombre)) {
+        throw new Exception("El nombre introducido no es valido.");
     } else {
-        $this->nombre = $nombreValido;
+        $this->nombre = filter_var($nombre, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
     return $this;
 }
@@ -345,7 +344,7 @@ public function obtenerApellidos()
                 throw new Exception();
             }
         } catch (Exception $exception) {
-            throw new Exception("Los credenciales son incorrectos.");
+            throw new Exception("Las credenciales son incorrectas.");
         }
     }
 

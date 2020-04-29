@@ -10,6 +10,11 @@
                 <label for="nombre">Nombre:</label>
                 <input id="nombre" name="nombre" type="text">
             </div>
+            <?php if (Sesion::existeError("nombre")): ?>
+                <div>
+                    <p><?php echo(Sesion::obtenerError("nombre")); ?></p>
+                </div>
+            <?php endif; ?>
             <div>
                 <label for="appellidos">Apellidos:</label>
                 <input id="appellidos" name="apellidos" type="text">
