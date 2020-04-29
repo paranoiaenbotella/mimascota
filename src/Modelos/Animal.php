@@ -158,9 +158,9 @@ public function crearUsuario($usuario){
        }
     }
 
-    /**
-     * Método para listar todos los animales
-     */
+/**
+ * Método para listar todos los animales
+ */
    public function listarAnimales()
    {
         $animales = [];
@@ -176,5 +176,16 @@ public function crearUsuario($usuario){
        return $animales;
    }
 
+/**
+ * Método para actualizar los animales por id
+ */
+public function actualizar($id, $tipoAnimal, $nombre){
+        $consulta = $this->conexion->prepare("UPDATE animales SET id_animales_tipos = ?, nombre = ? WHERE id = ?");
+        $consulta->bind_param("isi", $tipoAnimal, $nombre, $id);
+    }
+
+/**
+ * Método para eliminar los animales por id
+ */   
 
 }
