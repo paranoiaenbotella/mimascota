@@ -2,6 +2,10 @@
 
 class Sesion
 {
+    public static function definirError()
+    {
+    }
+
     public static function definirInvitado($invitado)
     {
         $_SESSION["invitado"] = $invitado;
@@ -39,6 +43,10 @@ class Sesion
         }
     }
 
+    public static function obtenerError()
+    {
+    }
+
     public static function obtenerInvitado()
     {
         return $_SESSION["invitado"];
@@ -53,17 +61,7 @@ class Sesion
             return $usuario->listarPorId($_SESSION["idUsuario"]);
         }
     }
-
-    public static function definirError(){
-       
-    }
-
-    public static function obtenerError(){
-
-     
-       }
-    }
-   
-
-   
 }
+
+
+
