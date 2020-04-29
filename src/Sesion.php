@@ -2,8 +2,9 @@
 
 class Sesion
 {
-    public static function definirError()
+    public static function definirError(Exception $exception, $titulo)
     {
+        $_SESSION["errores"][$titulo] = $exception->getMessage();
     }
 
     public static function definirInvitado($invitado)
@@ -20,6 +21,11 @@ class Sesion
     public static function esInvitado()
     {
         return self::obtenerInvitado();
+    }
+
+    public static function existeError($titulo)
+    {
+        return isset($_SESSION["errores"][$titulo]);
     }
 
     public static function instanciar()
@@ -43,8 +49,11 @@ class Sesion
         }
     }
 
-    public static function obtenerError()
+    public static function obtenerError($titulo)
     {
+        $error = $_SESSION["errores"][$titulo];
+        unset($_SESSION["errores"][$titulo]);
+        return $error;
     }
 
     public static function obtenerInvitado()

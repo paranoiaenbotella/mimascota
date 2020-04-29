@@ -130,28 +130,25 @@ private function firmarContrasena($contrasena)
 
     public function listarPorEmail($email)
     {
-        try {
-            $consulta = $this->conexion->prepare("SELECT * FROM `usuarios` WHERE `email` = ?");
-            $consulta->bind_param("s", $email);
-            $consulta->execute();
-            $resultado = $consulta->get_result();
-            $consulta->close();
-            if (empty($resultado->num_rows)) {
-                throw new Exception("Email no encontrado");
-            } else {
-                $fila = $resultado->fetch_assoc();
-                $usuario = new Usuario();
-                $usuario->definirEmail($fila["email"]);
-                $usuario->definirId($fila["id"]);
-                $usuario->definirNombre($fila["nombre"]);
-                $usuario->definirApellidos($fila["apellidos"]);
-                $usuario->definirContrasena($fila["contrasena"]);
-                $usuario->definirImagen($fila["imagen"]);
-                $usuario->definirRol($fila["id_roles"]);
-                return $usuario;
-            }
-        } catch (Exception $exception){
-            }
+        $consulta = $this->conexion->prepare("SELECT * FROM `usuarios` WHERE `email` = ?");
+        $consulta->bind_param("s", $email);
+        $consulta->execute();
+        $resultado = $consulta->get_result();
+        $consulta->close();
+        if (empty($resultado->num_rows)) {
+            throw new Exception("Email no encontrado");
+        } else {
+            $fila = $resultado->fetch_assoc();
+            $usuario = new Usuario();
+            $usuario->definirEmail($fila["email"]);
+            $usuario->definirId($fila["id"]);
+            $usuario->definirNombre($fila["nombre"]);
+            $usuario->definirApellidos($fila["apellidos"]);
+            $usuario->definirContrasena($fila["contrasena"]);
+            $usuario->definirImagen($fila["imagen"]);
+            $usuario->definirRol($fila["id_roles"]);
+            return $usuario;
+        }
     }
 
     /**
@@ -329,24 +326,38 @@ public function obtenerApellidos()
  * Si la contraseña  es nulo se lanza una nueva excepción
  * si no, se retorna la contraseña.
  */
-public function obtenerContrasena()
-{
-    if (is_null($this->contrasena)) {
-        throw new Exception("La contraseña no está definida.");
-    } else {
-        return $this->contrasena;
+    public function obtenerContrasena()
+    {
+        if (is_null($this->contrasena)) {
+            throw new Exception("La contraseña no está definida.");
+        } else {
+            return $this->contrasena;
+        }
     }
-}
 
-/**
- * Método para obtener el email
- * Si el email es nulo se lanza una nueva excepción
- * si no, se retorna el email.
- */
-public function obtenerEmail()
-{
-    if (is_null($this->email)) {
-        throw new Exception("El correo electrónico no está definido.");
+    public function identificar($email, $contrasena)
+    {
+        try {
+            $cuenta = $this->listarPorEmail($email);
+            if ($cuenta->obtenerContrasena() === sha1($contrasena)) {
+                return $cuenta;
+            } else {
+                throw new Exception();
+            }
+        } catch (Exception $exception) {
+            throw new Exception("Los credenciales son incorrectos.");
+        }
+    }
+
+    /**
+     * Método para obtener el email
+     * Si el email es nulo se lanza una nueva excepción
+     * si no, se retorna el email.
+     */
+    public function obtenerEmail()
+    {
+        if (is_null($this->email)) {
+            throw new Exception("El correo electrónico no está definido.");
     } else {
         return $this->email;
     }

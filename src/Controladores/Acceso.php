@@ -6,9 +6,6 @@ require_once(dirname(__DIR__) . "/Modelos/Usuario.php");
 /**
  * Clases para excepciones
  */
-class correoElectronico extends Exception{};
-class contrasena extends Exception{};
-
 class Acceso
 {
     public function getIdentificar()
@@ -23,29 +20,20 @@ class Acceso
         require_once(dirname(__DIR__) . "/Vistas/Acceso/Registro.php");
     }
 
-public function postIdentificar()
+    public function postIdentificar()
     {
         try {
             $usuario = new Usuario();
-             if (!($cuenta = $usuario->listarPorEmail($_POST["email"]))){
-                throw new correoElectronico("Correo electrónico incorrecto");
-                
-             } elseif(!($cuenta->obtenerContrasena() === sha1($_POST["contrasena"]))){
-                throw new contrasena("Contraseña incorrecta.");               
-             }
-            else {
+            if ($cuenta = $usuario->identificar($_POST["email"], $_POST["contrasena"])) {
                 Sesion::definirUsuario($cuenta->obtenerId());
                 header("Location: /");
             }
-
-        } catch (correoElectronico $exception) {
-            Sesion::definirError( "correoElectronico", $exception->getMessage());
-            header("Location: /identificacion");
-        } catch (contrasena $exception) {
-            Sesion::definirError( "contrasena", $exception->getMessage());
+        } catch (Exception $exception) {
+            Sesion::definirError($exception, "credenciales");
             header("Location: /identificacion");
         }
     }
+
     public function postRegistro()
     {
         $rol = new Rol();
