@@ -53,4 +53,17 @@ class Sesion
             return $usuario->listarPorId($_SESSION["idUsuario"]);
         }
     }
+
+    public static function definirError(){
+       
+    }
+
+    public static function obtenerError(){
+
+     
+       }
+    }
+   
+
+   
 }

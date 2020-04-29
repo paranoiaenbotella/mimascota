@@ -22,19 +22,19 @@ class Usuario extends Modelo
  * acceder a ellas se crearan los métodos definir y obtener
  */
 
-    private $apellidos;
+private $apellidos;
 
-    private $contrasena;
+private $contrasena;
 
-    private $email;
+private $email;
 
-    private $imagen;
+private $imagen;
 
-    private $nombre;
+private $nombre;
 
-    private $rol;
+private $rol;
 
-    private $id;
+private $id;
 
     /**
      * Se define y se fuerza que el tipo
@@ -80,10 +80,10 @@ class Usuario extends Modelo
  * Firma la contraseña utilizando el algoritmo
  * sha1.
  */
-    private function firmarContrasena($contrasena)
-    {
-        return sha1($contrasena);
-    }
+private function firmarContrasena($contrasena)
+{
+    return sha1($contrasena);
+}
 
     /**
      * Definir apellidos
@@ -119,36 +119,39 @@ class Usuario extends Modelo
         return $this;
     }
 
-public function definirContrasena($contrasena){
-    $contrasenaValida = filter_var($contrasena, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    if ($contrasenaValida === false){
-        throw new Exception("Contraseña no valida");
-    } else {
-        $this->contrasena = $contrasenaValida;
+    public function definirContrasena($contrasena){
+        $contrasenaValida = filter_var($contrasena, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if ($contrasenaValida === false){
+            throw new Exception("Contraseña no valida");
+        } else {
+            $this->contrasena = $contrasenaValida;
+        }
     }
-}
 
     public function listarPorEmail($email)
     {
-        $consulta = $this->conexion->prepare("SELECT * FROM `usuarios` WHERE `email` = ?");
-        $consulta->bind_param("s", $email);
-        $consulta->execute();
-        $resultado = $consulta->get_result();
-        $consulta->close();
-        if (empty($resultado->num_rows)) {
-            throw new Exception("Email no encontrado");
-        } else {
-            $fila = $resultado->fetch_assoc();
-            $usuario = new Usuario();
-            $usuario->definirEmail($fila["email"]);
-            $usuario->definirId($fila["id"]);
-            $usuario->definirNombre($fila["nombre"]);
-            $usuario->definirApellidos($fila["apellidos"]);
-            $usuario->definirContrasena($fila["contrasena"]);
-            $usuario->definirImagen($fila["imagen"]);
-            $usuario->definirRol($fila["id_roles"]);
-            return $usuario;
-        }
+        try {
+            $consulta = $this->conexion->prepare("SELECT * FROM `usuarios` WHERE `email` = ?");
+            $consulta->bind_param("s", $email);
+            $consulta->execute();
+            $resultado = $consulta->get_result();
+            $consulta->close();
+            if (empty($resultado->num_rows)) {
+                throw new Exception("Email no encontrado");
+            } else {
+                $fila = $resultado->fetch_assoc();
+                $usuario = new Usuario();
+                $usuario->definirEmail($fila["email"]);
+                $usuario->definirId($fila["id"]);
+                $usuario->definirNombre($fila["nombre"]);
+                $usuario->definirApellidos($fila["apellidos"]);
+                $usuario->definirContrasena($fila["contrasena"]);
+                $usuario->definirImagen($fila["imagen"]);
+                $usuario->definirRol($fila["id_roles"]);
+                return $usuario;
+            }
+        } catch (Exception $exception){
+            }
     }
 
     /**
@@ -174,31 +177,31 @@ public function definirContrasena($contrasena){
  * Definir imagen.
  * El filtro aplicado es de saneamiento de una url
  */
-    public function definirImagen($imagen)
-    {
-        $imagenValida = filter_var($imagen, FILTER_SANITIZE_URL);
-        if ($imagenValida === false) {
-            throw new Exception("La ruta de la imagen es incorrecta");
-        } else {
-            $this->imagen = $imagenValida;
-        }
+public function definirImagen($imagen)
+{
+    $imagenValida = filter_var($imagen, FILTER_SANITIZE_URL);
+    if ($imagenValida === false) {
+        throw new Exception("La ruta de la imagen es incorrecta");
+    } else {
+        $this->imagen = $imagenValida;
     }
+}
 
 /**
  * Definir nombre.
  * El filtro aplicado es de saneamiento codifica
  * el código y el navegador no lo interpreta.
  */
-    public function definirNombre($nombre)
-    {
-        $nombreValido = filter_var($nombre, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ($nombreValido === false) {
-            throw new Exception("El nombre introducido no es valido");
-        } else {
-            $this->nombre = $nombreValido;
-        }
-        return $this;
+public function definirNombre($nombre)
+{
+    $nombreValido = filter_var($nombre, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    if ($nombreValido === false) {
+        throw new Exception("El nombre introducido no es valido");
+    } else {
+        $this->nombre = $nombreValido;
     }
+    return $this;
+}
 
     /**
      * Crear rol para el registro
@@ -231,15 +234,15 @@ public function definirContrasena($contrasena){
  * Si el rol es nulo se lanza una nueva excepción
  * si no, se retorna el rol.
  */
-    public function obtenerRol()
-    {
-        if (is_null($this->rol)) {
-            throw new Exception("El rol no está definido");
-        } else {
-            $rol = new Rol();
-            return $rol->listarPorId($this->rol);
-        }
+public function obtenerRol()
+{
+    if (is_null($this->rol)) {
+        throw new Exception("El rol no está definido");
+    } else {
+        $rol = new Rol();
+        return $rol->listarPorId($this->rol);
     }
+}
 
     /**
      * Método que inserta usuarios en la BD
@@ -265,130 +268,130 @@ public function definirContrasena($contrasena){
 /**
  * Método que lista los usuarios de la BD
  */
-    public function listarUsuarios()
-    {
-        $usuarios = [];
-        $resultado = $this->conexion->query("SELECT * FROM `usuarios` ORDER BY `apellidos`");
-        while ($fila = $resultado->fetch_assoc()) {
-            $usuario = new Usuario();
-            $usuario->definirId($fila["id"]);
-            $usuario->definirRol($fila["id_roles"]);
-            $usuario->definirEmail($fila["email"]);
-            $usuario->definirNombre($fila["nombre"]);
-            $usuario->definirApellidos($fila["apellidos"]);
-            $usuario->definirImagen($fila["imagen"]);
-            array_push($usuarios, $usuario);
-        }
-        return $usuarios;
+public function listarUsuarios()
+{
+    $usuarios = [];
+    $resultado = $this->conexion->query("SELECT * FROM `usuarios` ORDER BY `apellidos`");
+    while ($fila = $resultado->fetch_assoc()) {
+        $usuario = new Usuario();
+        $usuario->definirId($fila["id"]);
+        $usuario->definirRol($fila["id_roles"]);
+        $usuario->definirEmail($fila["email"]);
+        $usuario->definirNombre($fila["nombre"]);
+        $usuario->definirApellidos($fila["apellidos"]);
+        $usuario->definirImagen($fila["imagen"]);
+        array_push($usuarios, $usuario);
     }
+    return $usuarios;
+}
 
  /**
   * Método que lista el usuario con el ID facilitado
   */
-    public function listarPorId($id)
-    {
-        $consulta = $this->conexion->prepare("SELECT * FROM usuarios WHERE id =?");
-        $consulta->bind_param("i", $id);
-        $consulta->execute();
-        $resultado = $consulta->get_result();
-        if (empty($resultado->num_rows)) {
-            throw new Exception("Usuario no encontrado");
-        } else {
-            $fila = $resultado->fetch_assoc();
-            $usuario = new Usuario();
-            $usuario->definirId($fila["id"]);
-            $usuario->definirRol($fila["id_roles"]);
-            $usuario->definirEmail($fila["email"]);
-            $usuario->definirNombre($fila["nombre"]);
-            $usuario->definirApellidos($fila["apellidos"]);
-            $usuario->definirImagen($fila["imagen"]);
-            return $usuario;
-        }
-
+ public function listarPorId($id)
+ {
+    $consulta = $this->conexion->prepare("SELECT * FROM usuarios WHERE id =?");
+    $consulta->bind_param("i", $id);
+    $consulta->execute();
+    $resultado = $consulta->get_result();
+    if (empty($resultado->num_rows)) {
+        throw new Exception("Usuario no encontrado");
+    } else {
+        $fila = $resultado->fetch_assoc();
+        $usuario = new Usuario();
+        $usuario->definirId($fila["id"]);
+        $usuario->definirRol($fila["id_roles"]);
+        $usuario->definirEmail($fila["email"]);
+        $usuario->definirNombre($fila["nombre"]);
+        $usuario->definirApellidos($fila["apellidos"]);
+        $usuario->definirImagen($fila["imagen"]);
+        return $usuario;
     }
+
+}
 
 /**
  * Método para obtener apellidos
  * Si apellidos es nulo se lanza una nueva excepción
  * si no, se retorna apellidos.
  */
-    public function obtenerApellidos()
-    {
-        if (is_null($this->apellidos)) {
-            throw new Exception("Los apellidos no están definidos");
-        } else {
-            return $this->apellidos;
-        }
+public function obtenerApellidos()
+{
+    if (is_null($this->apellidos)) {
+        throw new Exception("Los apellidos no están definidos");
+    } else {
+        return $this->apellidos;
     }
+}
 
 /**
  * Método para obtener la contraseña
  * Si la contraseña  es nulo se lanza una nueva excepción
  * si no, se retorna la contraseña.
  */
-    public function obtenerContrasena()
-    {
-        if (is_null($this->contrasena)) {
-            throw new Exception("La contraseña no está definida.");
-        } else {
-            return $this->contrasena;
-        }
+public function obtenerContrasena()
+{
+    if (is_null($this->contrasena)) {
+        throw new Exception("La contraseña no está definida.");
+    } else {
+        return $this->contrasena;
     }
+}
 
 /**
  * Método para obtener el email
  * Si el email es nulo se lanza una nueva excepción
  * si no, se retorna el email.
  */
-    public function obtenerEmail()
-    {
-        if (is_null($this->email)) {
-            throw new Exception("El correo electrónico no está definido.");
-        } else {
-            return $this->email;
-        }
+public function obtenerEmail()
+{
+    if (is_null($this->email)) {
+        throw new Exception("El correo electrónico no está definido.");
+    } else {
+        return $this->email;
     }
+}
 
 /**
  * Método para obtener el imagen
  * Si el imagen es nulo se lanza una nueva excepción
  * si no, se retorna el imagen.
  */
-    public function obtenerImagen()
-    {
-        if (is_null($this->imagen)) {
-            throw new Exception("Ruta de la imagen no definida");
-        } else {
-            return $this->imagen;
-        }
+public function obtenerImagen()
+{
+    if (is_null($this->imagen)) {
+        throw new Exception("Ruta de la imagen no definida");
+    } else {
+        return $this->imagen;
     }
+}
 
 /**
  * Método para obtener el nombre
  * Si el nombre es nulo se lanza una nueva excepción
  * si no, se retorna el nombre.
  */
-    public function obtenerNombre()
-    {
-        if (is_null($this->nombre)) {
-            throw new Exception("El nombre no esta definido");
-        } else {
-            return $this->nombre;
-        }
+public function obtenerNombre()
+{
+    if (is_null($this->nombre)) {
+        throw new Exception("El nombre no esta definido");
+    } else {
+        return $this->nombre;
     }
+}
 
 /**
  * Método para obtener el id
  * Si el id es nulo se lanza una nueva excepción
  * si no, se retorna el id.
  */
-    public function obtenerId()
-    {
-        if (is_null($this->id)) {
-            throw new Exception("El identificador del usuario no está definido.");
-        } else {
-            return $this->id;
-        }
+public function obtenerId()
+{
+    if (is_null($this->id)) {
+        throw new Exception("El identificador del usuario no está definido.");
+    } else {
+        return $this->id;
     }
+}
 
 }
