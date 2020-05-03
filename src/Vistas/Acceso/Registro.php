@@ -7,59 +7,61 @@
         <title>MiMascota</title>
     </head>
     <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <form method="POST" novalidate>
-                        <div class="row">
-                            <div class="col-md-2 col-xl-4">
-                                <label for="nombre">Nombre:</label>
-                            </div>
-                            <div class="col-md-2 col-xl-8">
-                                <input id="nombre" name="nombre" type="text">
-                            </div>
-                        </div>
-                        <?php if (Sesion::existeError("nombre")): ?>
-                            <div>
-                                <p><?php echo(Sesion::obtenerError("nombre")); ?></p>
-                            </div>
-                        <?php endif; ?>
-                        <div>
-                            <label for="appellidos">Apellidos:</label>
-                            <input id="appellidos" name="apellidos" type="text">
-                        </div>
-                        <div>
-                            <label for="email">Correo Electrónico:</label>
-                            <input id="email" name="email" type="email">
-                        </div>
-                        <div>
-                            <label for="movil"> Móvil:</label>
-                            <input id="movil" name="movil" type="text">
-                        </div>
-                        <div>
-                            <label for="contrasena">Contraseña:</label>
-                            <input id="contrasena" name="contrasena" type="password">
-                        </div>
-                        <div>
-                            <label for="contrasena-verificada">Verificar Contraseña:</label>
-                            <input id="contrasena-verificada" name="contrasena-verificada" type="password">
-                        </div>
-                        <div>
-                            <label for="rol">Rol:</label>
-                            <select name="rol" id="rol">
-                                <?php foreach ($roles as $rol): ?>
-                                    <option value="<?php echo($rol->obtenerId()); ?>"><?php echo($rol->obtenerNombre(
-                                        )); ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div>
-                            <input type="submit" value="Registrarse">
-                        </div>
-                    </form>
-                </div>
+        <section class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-10 col-md-8 col-lg-5">
+            <form method="POST" novalidate>
+                <fieldset>
+                    <legend >Formulario de Registro</legend>
+                    <p class="small">Todos los campos son requeridos</p>
+                    <div class="form-group my-1">
+                        <label for="nombre" class="form-text mb-0">Nombre:</label>
+                        <input class = "form-control form-control-sm" id="nombre" name="nombre" type="text">
+                    </div>
+                    <?php if (Sesion::existeError("nombre")): ?>
+                    <div>
+                        <p><?php echo(Sesion::obtenerError("nombre")); ?></p>
+                    </div>
+                    <?php endif; ?>
+                    <div class="form-group my-1">
+                        <label for="appellidos" class="form-text mb-0">Apellidos:</label>
+                        <input class = "form-control form-control-sm" id="appellidos" name="apellidos" type="text">
+                    </div>
+                    <div class="form-group my-1">
+                        <label for="email" class="form-text mb-0">Correo Electrónico:</label>
+                        <input class = "form-control form-control-sm" id="email" name="email" type="email" aria-describedby="emailInfo">
+                        <small id="emailInfo" class="form-text text-muted">Nunca se compartirá tu email con alguien.</small>
+                    </div>
+                    <div class="form-group my-1">
+                        <label for="movil" class="form-text mb-0"> Móvil:</label>
+                        <input class = "form-control form-control-sm" id="movil" name="movil" type="text">
+                    </div>
+                    <div class="form-group my-1">
+                        <label for="contrasena" class="form-text mb-0">Contraseña:</label>
+                        <input class = "form-control form-control-sm" id="contrasena" name="contrasena" type="password" aria-describedby="contraseñaInfo">
+                        <small id="contraseñaInfo" class="form-text text-muted">Longitud: entre 8 y 64 caracteres ambos inclusive.</small>
+                    </div>
+                    <div class="form-group my-1">
+                        <label for="contrasena-verificada" class="form-text mb-0">Verificar Contraseña:</label>
+                        <input class = "form-control form-control-sm" id="contrasena-verificada" name="contrasena-verificada" type="password">
+                    </div>
+                    <div class="form-group my-1">
+                        <label for="rol" class="form-text mb-0">Rol:</label>
+                        <select class = "form-control form-control-sm" name="rol" id="rol">
+                            <?php foreach ($roles as $rol): ?>
+                            <option value="<?php echo($rol->obtenerId()); ?>"><?php echo($rol->obtenerNombre(
+                            )); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div>
+                        <input type="submit" class = "btn btn-success col-12"value="Registrarse">
+                    </div>
+                </fieldset>
+            </form>
             </div>
-        </div>
+            </div>
+        </section>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
