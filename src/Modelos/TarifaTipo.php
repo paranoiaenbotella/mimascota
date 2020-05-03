@@ -105,4 +105,25 @@ class TarifaTipo extends Modelo
         return $tiposTarifas;
     }
 
+/**
+ * Método para actualizar tipos de tarifa
+ */
+    public function actualizar(){
+
+        $consulta = $this->conexion->prepare("UPDATE tarifas_tipos SET nombre = ? WHERE id = ?");
+        $consulta->bind_param("si", $this->nombre, $this->id);
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado;
+    }
+/**
+ * Método para eliminar tipo de tarifa por id
+ */
+    public function eliminar(){
+        $consulta = $this->conexion->prepare("DELETE FROM `tarifas_tipos` WHERE `id` = ?");
+        $consulta->bind_param("i", $this->id);
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado;
+    }
 }

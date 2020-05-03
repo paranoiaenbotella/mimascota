@@ -187,4 +187,24 @@ public function leerPorPropietario($propietario){
         return $opiniones;
 }
 
+/**
+ * Método para actualizar los opiniones por id
+ */
+    public function actualizar(){
+
+        $consulta = $this->conexion->prepare("UPDATE opiniones SET propietario = ?, cuidador = ?, mensaje = ? WHERE id = ?");
+        $consulta->bind_param("iisi", $this->propietario, $this->cuidador, $this->mensaje, $this->id);
+        return $resultado;
+    }
+
+/**
+ * Método para eliminar opinion por id
+ */
+    public function eliminar(){
+        $consulta = $this->conexion->prepare("DELETE FROM opiniones WHERE id = ?");
+        $consulta->bind_param("i", $this->id);
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado;
+    }
 }

@@ -36,6 +36,8 @@ private $rol;
 
 private $id;
 
+private $movil;
+
     /**
      * Se define y se fuerza que el tipo
      * de la $id sea Int
@@ -155,7 +157,7 @@ private function firmarContrasena($contrasena)
      * Definir email
      * Se le aplica al email un filtro de saneamiento y
      * el resultado se guarda en la variable $emailValido
-     * Si el resultado es identico a false se lanza una
+     * Si el resultado es idéntico a false se lanza una
      * excepción. Si no, el valor del email es el resultado
      * del saneamiento.
      */
@@ -166,6 +168,20 @@ private function firmarContrasena($contrasena)
             throw new Exception("El correo electrónico proporcionado no es válido.");
         } else {
             $this->email = $emailValido;
+        }
+        return $this;
+    }
+
+/**
+ * Método para definir el móvil
+ */
+    public function definirMovil($movil){
+        $movilValido = filter_var($movil, FILTER_SANITIZE_NUMBER_INT);
+        if ($movilValido === false && $movilValido < 9){
+            throw new Exception("El número de móvil proporcionado no es válido");
+            
+        } else {
+            $this->movil = $movilValido;
         }
         return $this;
     }
@@ -253,9 +269,9 @@ public function obtenerRol()
     public function insertar()
     {
         $consulta = $this->conexion->prepare(
-            "INSERT INTO `usuarios` (`id_roles`, `email`, `contrasena`, `nombre`, `apellidos`) VALUES (?, ?, ?, ?, ?)"
+            "INSERT INTO `usuarios` (`id_roles`, `email`, `movil`, `contrasena`, `nombre`, `apellidos`) VALUES (?, ?, ?, ?, ?, ?)"
         );
-        $consulta->bind_param("issss", $this->rol, $this->email, $this->contrasena, $this->nombre, $this->apellidos);
+        $consulta->bind_param("isssss", $this->rol, $this->email, $this->movil, $this->contrasena, $this->nombre, $this->apellidos);
         $resultado = $consulta->execute();
         $consulta->close();
         return $resultado;
@@ -273,6 +289,7 @@ public function listarUsuarios()
         $usuario->definirId($fila["id"]);
         $usuario->definirRol($fila["id_roles"]);
         $usuario->definirEmail($fila["email"]);
+        $ususario->definirMovil($fila["movil"]);
         $usuario->definirNombre($fila["nombre"]);
         $usuario->definirApellidos($fila["apellidos"]);
         $usuario->definirImagen($fila["imagen"]);
@@ -298,6 +315,7 @@ public function listarUsuarios()
         $usuario->definirId($fila["id"]);
         $usuario->definirRol($fila["id_roles"]);
         $usuario->definirEmail($fila["email"]);
+        $usuario->definirMovil($fila["movil"]);
         $usuario->definirNombre($fila["nombre"]);
         $usuario->definirApellidos($fila["apellidos"]);
         $usuario->definirImagen($fila["imagen"]);
@@ -404,4 +422,38 @@ public function obtenerId()
     }
 }
 
+/**
+ * Método para obtener el móvil
+ */
+    public function obtenerMovil() {
+
+        if (is_null($this->id)){
+            throw new Exception("El número de móvil no esta definido.");  
+        } else {
+            return $this->movil;
+        }
+    }
+
+/**
+ * Método para actualizar usuario por id
+ */
+    public function actualizar(){
+
+        $consulta = $this->conexion->prepare("UPDATE usuarios SET id_roles = ?, email = ?, movil = ?, contrasena = ?, nombre = ?, apellidos = ?, imagen = ? WHERE id =?");
+        $consulta->bind_param("issssssi", $this->rol, $this->email, $this->movil, $this->contrasena, $this->nombre, $this->apellidos, $this->imagen, $this->id);
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado;
+    }
+
+/**
+ * Método para eliminar usuario por id
+ */
+    public function eliminar(){
+        $consulta = $this->conexion->prepare("DELETE FROM `usuarios` WHERE `id` = ?");
+        $consulta->bind_param("i", $this->id);
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado;
+    }
 }

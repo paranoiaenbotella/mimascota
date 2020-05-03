@@ -165,7 +165,7 @@ require_once(dirname(__DIR__) . "/Modelo.php");
     }
 
 /**
- * Método para leer las tarifas por tipo
+ * Método para leer las tarifas por usuario
  */
 
 	public function leerPorUsuario($usuario){
@@ -188,5 +188,28 @@ require_once(dirname(__DIR__) . "/Modelo.php");
         }
         return $tarifas;
 	}
-	
+
+/**
+ * Método para actualizar tarifas por id
+ */
+	public function actualizar(){
+
+        $consulta = $this->conexion->prepare("UPDATE tarifas SET id_usuarios = ?, id_tarifas_tipos =?, nombre = ?, precio =? WHERE id = ?");
+        $consulta->bind_param("iisfi", $this->usuario, $this->tarifaTipo, $this->nombre, $this->precio, $this->id);
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado;
+    }
+
+/**
+ * Método para eliminar tarifa por id
+ */
+    public function eliminar(){
+
+         $consulta = $this->conexion->prepare("DELETE FROM `tarifas` WHERE `id` = ?");
+        $consulta->bind_param("i", $this->id);
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado;
+    }
  }

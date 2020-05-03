@@ -29,8 +29,12 @@
                             <input id="appellidos" name="apellidos" type="text">
                         </div>
                         <div>
-                            <label for="email">Correo Electronico:</label>
+                            <label for="email">Correo Electrónico:</label>
                             <input id="email" name="email" type="email">
+                        </div>
+                        <div>
+                            <label for="movil"> Móvil:</label>
+                            <input id="movil" name="movil" type="text">
                         </div>
                         <div>
                             <label for="contrasena">Contraseña:</label>

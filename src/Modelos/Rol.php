@@ -143,4 +143,26 @@ class Rol extends Modelo
             return $this->nombre;
         }
     }
+
+/**
+ * Método para actualizar el rol por id
+ */
+    public function actualizar(){
+        $consulta = $this->conexion->prepare("UPDATE roles SET nombre = ? WHERE id = ?");
+        $consulta->bind_param("si", $this->nombre, $this->id);
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado;
+    }
+
+/**
+ * Método para eliminar un rol por id
+ */
+    public function eliminar(){
+        $consulta = $this->conexion->prepare("DELETE FROM `roles` WHERE `id` = ?");
+        $consulta->bind_param("i", $this->id);
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado; 
+    }
 }

@@ -109,6 +109,30 @@ class AnimalTipo extends Modelo
        return $animalesTipo;
    }
 
+    /**
+     * Método para actualizar los tipos de animales por id
+     */
+    public function actualizar()
+    {
+        $consulta = $this->conexion->prepare(
+            "UPDATE `animales_tipos` SET `nombre` = ? WHERE `id` = ?"
+        );
+        $consulta->bind_param("si", $this->nombre, $this->id);
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado;
+    }
 
+    /**
+     * Método para eliminar los tipos de animales por id
+     */
+    public function eliminar()
+    {
+        $consulta = $this->conexion->prepare("DELETE FROM `animales_tipos` WHERE `id` = ?");
+        $consulta->bind_param("i", $this->id);
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado;
+    }
 
 }

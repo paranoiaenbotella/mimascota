@@ -43,6 +43,7 @@ class Acceso
             $usuario->definirNombre($_POST["nombre"])
                 ->definirApellidos($_POST["apellidos"])
                 ->definirEmail($_POST["email"])
+                ->definirMovil($_POST["movil"])
                 ->crearContrasena($_POST["contrasena"], $_POST["contrasena-verificada"])
                 ->crearRol($rol);
             $usuario->insertar();

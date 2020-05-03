@@ -323,4 +323,28 @@ public function crearUsuario($usuario){
 
         return $direccioens;
     }
+
+    /**
+     * Método para actualizar direcciones por el id 
+     */
+    public function actualizar(){
+
+        $consulta = $this->conexion->prepare("UPDATE direcciones SET id_usuarios = ?, pais =?, ciudad = ?, codigo_postal = ?, calle = ?, imagen1 = ?, imagen2 = ?, imagen3 =?, imagen4 = ? WHERE id = ?");
+        $consulta->bind_param("issssssssi", $this->usuario, $this->pais, $this->ciudad, $this->codigoPostal, $this->calle, $this->imagen1, $this->imagen2, $this->imagen3, $this->imagen4, $this->id);
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado;
+    }
+    /**
+     * Método para eliminar direcciones por el id 
+     */
+    public function eliminar(){
+
+       $consulta = $this->conexion->prepare("DELETE FROM `direcciones` WHERE `id` = ?");
+        $consulta->bind_param("i", $this->id);
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado; 
+    }
+
 }
