@@ -47,7 +47,7 @@ class Usuario extends Modelo
     private function comprobarContrasenaLongitud($contrasena)
     {
         if (strlen($contrasena) < 8) {
-            throw new Exception("La contraseña es demasiado corta.");
+            Sesion::definirError(new Exception("La contraseña es demasiado corta."), "constrasena");
         } else {
             return true;
         }
@@ -64,7 +64,7 @@ class Usuario extends Modelo
         if ($contrasena === $contrasenaVerificada) {
             return true;
         } else {
-            throw new Exception("La verificación de la contraseña ha fallado.");
+            Sesion::definirError(new Exception("La contraseñas no coinciden."), "contrasenaVerificada");
         }
     }
 
@@ -118,13 +118,9 @@ class Usuario extends Modelo
      */
     public function crearContrasena($contrasena, $contrasenaVerificada)
     {
-        try {
-            $this->comprobarContrasenaLongitud($contrasena);
-            $this->comprobarContrasenaVerificacion($contrasena, $contrasenaVerificada);
-            $this->contrasena = $this->firmarContrasena($contrasena);
-        } catch (Exception $exception) {
-            // TODO: Do something.
-        }
+        $this->comprobarContrasenaLongitud($contrasena);
+        $this->comprobarContrasenaVerificacion($contrasena, $contrasenaVerificada);
+        $this->contrasena = $this->firmarContrasena($contrasena);
         return $this;
     }
 
