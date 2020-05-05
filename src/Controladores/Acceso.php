@@ -17,7 +17,7 @@ class Acceso
     {
         $roles = new Rol();
         $roles = $roles->listarRoles();
-        require_once(dirname(__DIR__) . "/Vistas/Acceso/Registro.php");
+        require_once(dirname(__DIR__) . "/Vistas/Acceso/RegistroIlya.php");
     }
 
     public function postIdentificar()

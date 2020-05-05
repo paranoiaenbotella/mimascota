@@ -155,7 +155,7 @@ class Usuario extends Modelo
     public function definirApellidos($apellidos)
     {
         if (empty($apellidos)) {
-            Sesion::definirError(new Exception("Los apellidos introducidos no son validos"), "apellidos");
+            Sesion::definirError(new Exception("Los apellidos introducidos no son validos."), "apellidos");
         } else {
             $this->apellidos = filter_var($apellidos, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         }

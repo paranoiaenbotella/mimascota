@@ -9,74 +9,78 @@
     </head>
     <body>
         <section class="container">
-            <div class="row justify-content-center" id="registro">
-                <div class="col-sm-10 col-md-8 col-lg-5">
-                    <form method="POST" novalidate>
-                        <fieldset>
-                            <legend>Formulario de Registro</legend>
-                            <p class="small">Todos los campos son requeridos</p>
-                            <div class="form-group my-1">
-                                <label for="nombre" class="form-text mb-0">Nombre:</label>
-                                <input class="form-control form-control-sm" id="nombre" name="nombre" type="text">
-                            </div>
+            <div class="row">
+                <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                    <h3>Formulario de Registro</h3>
+                    <form method="post" novalidate>
+                        <div class="form-group my-1">
+                            <label for="nombre" class="mb-0">Nombre:</label>
                             <?php if (Sesion::existeError("nombre")): ?>
-                                <div>
-                                    <p><?php echo(Sesion::obtenerError("nombre")); ?></p>
+                                <input class="form-control form-control-sm is-invalid" id="nombre" name="nombre" type="text">
+                                <div class="invalid-feedback">
+                                    <?php echo(Sesion::obtenerError("nombre")); ?>
                                 </div>
+                            <?php else: ?>
+                                <input class="form-control form-control-sm" id="nombre" name="nombre" type="text">
                             <?php endif; ?>
-                            <div class="form-group my-1">
-                                <label for="appellidos" class="form-text mb-0">Apellidos:</label>
-                                <input class="form-control form-control-sm" id="appellidos" name="apellidos" type="text">
-                            </div>
+                        </div>
+                        <div class="form-group my-1">
+                            <label for="appellidos" class="mb-0">Apellidos:</label>
                             <?php if (Sesion::existeError("apellidos")): ?>
-                                <div>
-                                    <p><?php echo(Sesion::obtenerError("apellidos")); ?></p>
+                                <input class="form-control form-control-sm is-invalid" id="appellidos" name="apellidos" type="text">
+                                <div class="invalid-feedback">
+                                    <?php echo(Sesion::obtenerError("apellidos")); ?>
                                 </div>
+                            <?php else: ?>
+                                <input class="form-control form-control-sm" id="appellidos" name="apellidos" type="text">
                             <?php endif; ?>
-                            <div class="form-group my-1">
-                                <label for="email" class="form-text mb-0">Correo Electrónico:</label>
-                                <input class="form-control form-control-sm" id="email" name="email" type="email" aria-describedby="emailInfo">
-                                <small id="emailInfo" class="form-text text-muted">Nunca se compartirá tu email con alguien.</small>
+                        </div>
+                        <?php if (Sesion::existeError("apellidos")): ?>
+                            <div>
+                                <p><?php echo(Sesion::obtenerError("apellidos")); ?></p>
                             </div>
-                            <?php if (Sesion::existeError("email")): ?>
-                                <div>
-                                    <p><?php echo(Sesion::obtenerError("email")); ?></p>
-                                </div>
-                            <?php endif; ?>
-                            <div class="form-group my-1">
-                                <label for="movil" class="form-text mb-0"> Móvil:</label>
-                                <input class="form-control form-control-sm" id="movil" name="movil" type="text">
+                        <?php endif; ?>
+                        <div class="form-group my-1">
+                            <label for="email" class="mb-0">Correo Electrónico:</label>
+                            <input class="form-control form-control-sm" id="email" name="email" type="email" aria-describedby="emailInfo">
+                            <small id="emailInfo" class="form-text text-muted">Nunca se compartirá tu email con alguien.</small>
+                        </div>
+                        <?php if (Sesion::existeError("email")): ?>
+                            <div>
+                                <p><?php echo(Sesion::obtenerError("email")); ?></p>
                             </div>
-                            <?php if (Sesion::existeError("movil")): ?>
-                                <div>
-                                    <p><?php echo(Sesion::obtenerError("movil")); ?></p>
-                                </div>
-                            <?php endif; ?>
-                            <div class="form-group my-1">
-                                <label for="contrasena" class="form-text mb-0">Contraseña:</label>
-                                <input class="form-control form-control-sm" id="contrasena" name="contrasena" type="password" aria-describedby="contraseñaInfo">
-                                <small id="contraseñaInfo" class="form-text text-muted">Longitud: entre 8 y 64 caracteres ambos inclusive.</small>
+                        <?php endif; ?>
+                        <div class="form-group my-1">
+                            <label for="movil" class="mb-0">Móvil:</label>
+                            <input class="form-control form-control-sm" id="movil" name="movil" type="text">
+                        </div>
+                        <?php if (Sesion::existeError("movil")): ?>
+                            <div>
+                                <p><?php echo(Sesion::obtenerError("movil")); ?></p>
                             </div>
-                            <div class="form-group my-1">
-                                <label for="contrasena-verificada" class="form-text mb-0">Verificar Contraseña:</label>
-                                <input class="form-control form-control-sm" id="contrasena-verificada" name="contrasena-verificada" type="password">
-                            </div>
-                            <div class="form-group my-1">
-                                <label for="rol" class="form-text mb-0">Rol:</label>
-                                <select class="form-control form-control-sm" name="rol" id="rol">
-                                    <?php
-                                    foreach ($roles as $rol): ?>
-                                        <option value="<?php
-                                        echo($rol->obtenerId()); ?>"><?php
-                                            echo($rol->obtenerNombre()); ?></option>
-                                    <?php
-                                    endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="form-group my-2">
-                                <input type="submit" class="btn btn-block btn-success" value="Registrarse">
-                            </div>
-                        </fieldset>
+                        <?php endif; ?>
+                        <div class="form-group my-1">
+                            <label for="contrasena" class="mb-0">Contraseña:</label>
+                            <input class="form-control form-control-sm" id="contrasena" name="contrasena" type="password" aria-describedby="contraseñaInfo">
+                            <small id="contraseñaInfo" class="text-muted">Longitud: entre 8 y 64 caracteres ambos inclusive.</small>
+                        </div>
+                        <div class="form-group my-1">
+                            <label for="contrasena-verificada" class=" mb-0">Verificar Contraseña:</label>
+                            <input class="form-control form-control-sm" id="contrasena-verificada" name="contrasena-verificada" type="password">
+                        </div>
+                        <div class="form-group my-1">
+                            <label for="rol" class="mb-0">Rol:</label>
+                            <select class="form-control form-control-sm" name="rol" id="rol">
+                                <?php foreach ($roles as $rol): ?>
+                                    <option value="<?php echo($rol->obtenerId()); ?>">
+                                        <?php echo($rol->obtenerNombre()); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group my-2">
+                            <input type="submit" class="btn btn-block btn-success" value="Registrarse">
+                        </div>
                     </form>
                 </div>
             </div>
