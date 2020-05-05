@@ -4,17 +4,17 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link rel="stylesheet" href="public/css/style.css"  type="text/css" >
+        <link rel="stylesheet" href="/css/style.css">
         <title>MiMascota</title>
     </head>
     <body>
-        <section class="container" >
+        <section class="container">
             <div class="row justify-content-center" id="registro">
                 <div class="col-sm-10 col-md-8 col-lg-5">
-            <form method="POST" novalidate>
-                <fieldset>
-                    <legend >Formulario de Registro</legend>
-                    <p class="small">Todos los campos son requeridos</p>
+                    <form method="POST" novalidate>
+                        <fieldset>
+                            <legend>Formulario de Registro</legend>
+                            <p class="small">Todos los campos son requeridos</p>
                     <div class="form-group my-1">
                         <label for="nombre" class="form-text mb-0">Nombre:</label>
                         <input class = "form-control form-control-sm" id="nombre" name="nombre" type="text">
