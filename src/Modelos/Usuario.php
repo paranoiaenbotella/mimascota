@@ -163,8 +163,8 @@ private function firmarContrasena($contrasena)
      */
     public function definirEmail($email)
     {
-        $emailValido = filter_var($email, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ($emailValido === false) {
+        $emailValido = filter_var($email, FILTER_SANITIZE_EMAIL);
+        if (!filter_var($emailValido, FILTER_VALIDATE_EMAIL)) {
             throw new Exception("El correo electrónico proporcionado no es válido.");
         } else {
             $this->email = $emailValido;
