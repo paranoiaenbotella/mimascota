@@ -55,12 +55,12 @@
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div>
-                        <input type="submit" class = "btn btn-success col-12"value="Registrarse">
+                    <div class="form-group my-2">
+                        <input type="submit" class="btn btn-block btn-success" value="Registrarse">
                     </div>
                 </fieldset>
             </form>
-            </div>
+                </div>
             </div>
         </section>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
