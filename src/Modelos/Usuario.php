@@ -155,7 +155,7 @@ class Usuario extends Modelo
     public function definirApellidos($apellidos)
     {
         if (empty($apellidos)) {
-            throw new Exception("Los apellidos introducidos no son validos");
+            Sesion::definirError(new Exception("Los apellidos introducidos no son validos"), "apellidos");
         } else {
             $this->apellidos = filter_var($apellidos, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         }
@@ -184,7 +184,7 @@ class Usuario extends Modelo
     {
         $emailValido = filter_var($email, FILTER_SANITIZE_EMAIL);
         if (!filter_var($emailValido, FILTER_VALIDATE_EMAIL)) {
-            throw new Exception("El correo electrónico proporcionado no es válido.");
+            Sesion::definirError(new Exception("El correo electrónico proporcionado no es válido."), "email");
         } else {
             $this->email = $emailValido;
         }
@@ -211,8 +211,8 @@ class Usuario extends Modelo
     public function definirMovil($movil)
     {
         $movilValido = filter_var($movil, FILTER_SANITIZE_NUMBER_INT);
-        if ($movilValido === false && $movilValido < 9) {
-            throw new Exception("El número de móvil proporcionado no es válido");
+        if ($movilValido < 9) {
+            Sesion::definirError(new Exception("El número de móvil proporcionado no es válido"), "movil");
         } else {
             $this->movil = $movilValido;
         }
@@ -227,7 +227,7 @@ class Usuario extends Modelo
     public function definirNombre($nombre)
     {
         if (empty($nombre)) {
-            throw new Exception("El nombre introducido no es valido.");
+            Sesion::definirError(new Exception("El nombre introducido no es valido."), "nombre");
         } else {
             $this->nombre = filter_var($nombre, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         }
