@@ -25,9 +25,7 @@
                             <a class="nav-link" href="#">Link</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown
-                            </a>
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="#">Action</a>
                                 <a class="dropdown-item" href="#">Another action</a>
@@ -102,14 +100,27 @@
                         <?php endif; ?>
                         <div class="form-group my-1">
                             <label for="email" class="mb-0">Correo Electrónico:</label>
-                            <input class="form-control form-control-sm" id="email" name="email" type="email" aria-describedby="emailInfo">
+                            <?php if (Sesion::existeFormulario("email")): ?>
+                                <?php if (Sesion::existeError("email")): ?>
+                                    <input aria-describedby="emailInfo" class="form-control form-control-sm is-invalid" id="email" name="email" type="email" value="<?php echo(Sesion::obtenerFormulario("email")); ?>">
+                                    <div class="invalid-feedback">
+                                        <?php echo(Sesion::obtenerError("email")); ?>
+                                    </div>
+                                <?php else: ?>
+                                    <input aria-describedby="emailInfo" class="form-control form-control-sm is-valid" id="email" name="email" type="email" value="<?php echo(Sesion::obtenerFormulario("email")); ?>">
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <?php if (Sesion::existeError("email")): ?>
+                                    <input aria-describedby="emailInfo" class="form-control form-control-sm is-invalid" id="email" name="email" type="email">
+                                    <div class="invalid-feedback">
+                                        <?php echo(Sesion::obtenerError("email")); ?>
+                                    </div>
+                                <?php else: ?>
+                                    <input aria-describedby="emailInfo" class="form-control form-control-sm" id="email" name="email" type="email">
+                                <?php endif; ?>
+                            <?php endif; ?>
                             <small id="emailInfo" class="form-text text-muted">Nunca se compartirá tu email con alguien.</small>
                         </div>
-                        <?php if (Sesion::existeError("email")): ?>
-                            <div>
-                                <p><?php echo(Sesion::obtenerError("email")); ?></p>
-                            </div>
-                        <?php endif; ?>
                         <div class="form-group my-1">
                             <label for="movil" class="mb-0">Móvil:</label>
                             <input class="form-control form-control-sm" id="movil" name="movil" type="text">
