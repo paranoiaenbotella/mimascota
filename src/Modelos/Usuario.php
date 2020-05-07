@@ -47,7 +47,7 @@ class Usuario extends Modelo
     private function comprobarContrasenaLongitud($contrasena)
     {
         if (strlen($contrasena) < 8) {
-            throw new Exception("La contraseña es demasiado corta.");
+           Sesion:: definirError(new Exception("La contraseña es demasiado corta."), "contrasenaCorta");
         } else {
             return true;
         }
@@ -64,7 +64,7 @@ class Usuario extends Modelo
         if ($contrasena === $contrasenaVerificada) {
             return true;
         } else {
-            throw new Exception("La verificación de la contraseña ha fallado.");
+           Sesion:: definirError(new Exception("La verificación de la contraseña ha fallado."), "contrasenaVerificada");
         }
     }
 
@@ -166,7 +166,7 @@ class Usuario extends Modelo
     {
         $contrasenaValida = filter_var($contrasena, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if ($contrasenaValida === false) {
-            throw new Exception("Contraseña no valida");
+            Sesion::definirError(new Exception("Contraseña no valida"), "contrasena");
         } else {
             $this->contrasena = $contrasenaValida;
         }
