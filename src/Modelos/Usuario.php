@@ -154,6 +154,7 @@ class Usuario extends Modelo
             Sesion::definirError(new Exception("Los apellidos introducidos no son validos."), "apellidos");
         } else {
             $this->apellidos = filter_var($apellidos, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            Sesion::definirFormulario("apellidos", $this->apellidos);
         }
         return $this;
     }
@@ -183,6 +184,7 @@ class Usuario extends Modelo
             Sesion::definirError(new Exception("El correo electrónico proporcionado no es válido."), "email");
         } else {
             $this->email = $emailValido;
+            Sesion::definirFormulario("email", $this->email);
         }
         return $this;
     }
@@ -226,6 +228,7 @@ class Usuario extends Modelo
             Sesion::definirError(new Exception("El nombre introducido no es valido."), "nombre");
         } else {
             $this->nombre = filter_var($nombre, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            Sesion::definirFormulario("nombre", $this->nombre);
         }
         return $this;
     }
