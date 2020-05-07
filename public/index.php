@@ -13,9 +13,13 @@ switch ($_SERVER["REQUEST_URI"]) {
         $accion = "getInicio";
         break;
     case "/perfil":
-        $fichero = dirname(__DIR__) . "/src/Controladores/Perfil.php";
-        $clase = "Perfil";
-        $accion = "getInicio";
+        if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
+        } else {
+            $fichero = dirname(__DIR__) . "/src/Controladores/Perfil.php";
+            $clase = "Perfil";
+            $accion = "getInicio";
+        }
         break;
     case "/editar":
         $fichero = dirname(__DIR__) . "/src/Controladores/Perfil.php";

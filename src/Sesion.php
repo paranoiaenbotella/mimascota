@@ -38,14 +38,6 @@ class Sesion
     {
         if (!key_exists("invitado", $_SESSION)) {
             self::definirInvitado(true);
-            self::instanciarUsuario();
-        }
-    }
-
-    public static function instanciarUsuario()
-    {
-        if (!key_exists("idUsuario", $_SESSION)) {
-            self::definirUsuario(0);
         }
     }
 
