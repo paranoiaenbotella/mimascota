@@ -46,6 +46,7 @@ class Acceso
             ->crearContrasena($_POST["contrasena"], $_POST["contrasena-verificada"])
             ->crearRol($rol);
         if ($usuario->insertar()) {
+            Sesion::limpiarFormulario();
             header("Location: /identificacion");
         } else {
             header("Location: /registro");

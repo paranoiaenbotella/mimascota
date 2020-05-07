@@ -53,24 +53,46 @@
                     <form method="post" novalidate>
                         <div class="form-group my-1">
                             <label for="nombre" class="mb-0">Nombre:</label>
-                            <?php if (Sesion::existeError("nombre")): ?>
-                                <input class="form-control form-control-sm is-invalid" id="nombre" name="nombre" type="text">
-                                <div class="invalid-feedback">
-                                    <?php echo(Sesion::obtenerError("nombre")); ?>
-                                </div>
+                            <?php if (Sesion::existeFormulario("nombre")): ?>
+                                <?php if (Sesion::existeError("nombre")): ?>
+                                    <input class="form-control form-control-sm is-invalid" id="nombre" name="nombre" type="text" value="<?php echo(Sesion::obtenerFormulario("nombre")); ?>">
+                                    <div class="invalid-feedback">
+                                        <?php echo(Sesion::obtenerError("nombre")); ?>
+                                    </div>
+                                <?php else: ?>
+                                    <input class="form-control form-control-sm is-valid" id="nombre" name="nombre" type="text" value="<?php echo(Sesion::obtenerFormulario("nombre")); ?>">
+                                <?php endif; ?>
                             <?php else: ?>
-                                <input class="form-control form-control-sm" id="nombre" name="nombre" type="text">
+                                <?php if (Sesion::existeError("nombre")): ?>
+                                    <input class="form-control form-control-sm is-invalid" id="nombre" name="nombre" type="text">
+                                    <div class="invalid-feedback">
+                                        <?php echo(Sesion::obtenerError("nombre")); ?>
+                                    </div>
+                                <?php else: ?>
+                                    <input class="form-control form-control-sm" id="nombre" name="nombre" type="text">
+                                <?php endif; ?>
                             <?php endif; ?>
                         </div>
                         <div class="form-group my-1">
                             <label for="appellidos" class="mb-0">Apellidos:</label>
-                            <?php if (Sesion::existeError("apellidos")): ?>
-                                <input class="form-control form-control-sm is-invalid" id="appellidos" name="apellidos" type="text">
-                                <div class="invalid-feedback">
-                                    <?php echo(Sesion::obtenerError("apellidos")); ?>
-                                </div>
+                            <?php if (Sesion::existeFormulario("apellidos")): ?>
+                                <?php if (Sesion::existeError("apellidos")): ?>
+                                    <input class="form-control form-control-sm is-invalid" id="appellidos" name="apellidos" type="text" value="<?php echo(Sesion::obtenerFormulario("apellidos")); ?>">
+                                    <div class="invalid-feedback">
+                                        <?php echo(Sesion::obtenerError("apellidos")); ?>
+                                    </div>
+                                <?php else: ?>
+                                    <input class="form-control form-control-sm is-valid" id="appellidos" name="apellidos" type="text" value="<?php echo(Sesion::obtenerFormulario("apellidos")); ?>">
+                                <?php endif; ?>
                             <?php else: ?>
-                                <input class="form-control form-control-sm" id="appellidos" name="apellidos" type="text">
+                                <?php if (Sesion::existeError("apellidos")): ?>
+                                    <input class="form-control form-control-sm is-invalid" id="appellidos" name="apellidos" type="text">
+                                    <div class="invalid-feedback">
+                                        <?php echo(Sesion::obtenerError("apellidos")); ?>
+                                    </div>
+                                <?php else: ?>
+                                    <input class="form-control form-control-sm" id="appellidos" name="apellidos" type="text">
+                                <?php endif; ?>
                             <?php endif; ?>
                         </div>
                         <?php if (Sesion::existeError("apellidos")): ?>

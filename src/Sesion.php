@@ -7,6 +7,11 @@ class Sesion
         $_SESSION["errores"][$titulo] = $exception->getMessage();
     }
 
+    public static function definirFormulario($campo, $valor)
+    {
+        $_SESSION["formulario"][$campo] = $valor;
+    }
+
     public static function definirInvitado($invitado)
     {
         $_SESSION["invitado"] = $invitado;
@@ -28,6 +33,11 @@ class Sesion
         return isset($_SESSION["errores"][$titulo]);
     }
 
+    public static function existeFormulario($campo)
+    {
+        return isset($_SESSION["formulario"][$campo]);
+    }
+
     public static function instanciar()
     {
         session_start();
@@ -38,15 +48,23 @@ class Sesion
     {
         if (!key_exists("invitado", $_SESSION)) {
             self::definirInvitado(true);
-            self::instanciarUsuario();
         }
     }
 
-    public static function instanciarUsuario()
+    public static function limpiar()
     {
-        if (!key_exists("idUsuario", $_SESSION)) {
-            self::definirUsuario(0);
-        }
+        self::limpiarErrores();
+        self::limpiarFormulario();
+    }
+
+    public static function limpiarErrores()
+    {
+        unset($_SESSION["errores"]);
+    }
+
+    public static function limpiarFormulario()
+    {
+        unset($_SESSION["formulario"]);
     }
 
     public static function obtenerError($titulo)
@@ -54,6 +72,13 @@ class Sesion
         $error = $_SESSION["errores"][$titulo];
         unset($_SESSION["errores"][$titulo]);
         return $error;
+    }
+
+    public static function obtenerFormulario($campo)
+    {
+        $valor = $_SESSION["formulario"][$campo];
+        unset($_SESSION["formulario"][$campo]);
+        return $valor;
     }
 
     public static function obtenerInvitado()
