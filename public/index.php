@@ -21,6 +21,19 @@ switch ($_SERVER["REQUEST_URI"]) {
             $accion = "getInicio";
         }
         break;
+    case "/perfil/editar":
+        if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
+        } else {
+            if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                $accion = "postEditar";
+            } else {
+                $accion = "getEditar";
+            }
+            $fichero = dirname(__DIR__) . "/src/Controladores/Perfil.php";
+            $clase = "Perfil";
+        }
+        break;
     case "/editar":
         $fichero = dirname(__DIR__) . "/src/Controladores/Perfil.php";
         $clase = "Perfil";

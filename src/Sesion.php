@@ -88,12 +88,8 @@ class Sesion
 
     public static function obtenerUsuario()
     {
-        if ($_SESSION["idUsuario"] === 0) {
-            throw new Exception("El usuario no está identificado.");
-        } else {
-            $usuario = new Usuario();
-            return $usuario->listarPorId($_SESSION["idUsuario"]);
-        }
+        $usuario = new Usuario();
+        return $usuario->listarPorId($_SESSION["idUsuario"]);
     }
 }
 
