@@ -47,7 +47,7 @@ class Usuario extends Modelo
     private function comprobarContrasenaLongitud($contrasena)
     {
         if (strlen($contrasena) < 8) {
-            Sesion::definirError(new Exception("La contraseña es demasiado corta."), "constrasena");
+            Sesion::definirError("La contraseña es demasiado corta.", "constrasena");
         } else {
             return true;
         }
@@ -64,7 +64,7 @@ class Usuario extends Modelo
         if ($contrasena === $contrasenaVerificada) {
             return true;
         } else {
-            Sesion::definirError(new Exception("La contraseñas no coinciden."), "contrasenaVerificada");
+            Sesion::definirError("La contraseñas no coinciden.", "contrasenaVerificada");
         }
     }
 
@@ -151,7 +151,7 @@ class Usuario extends Modelo
     public function definirApellidos($apellidos)
     {
         if (empty($apellidos)) {
-            Sesion::definirError(new Exception("Los apellidos introducidos no son validos."), "apellidos");
+            Sesion::definirError("Los apellidos introducidos no son validos.", "apellidos");
         } else {
             $this->apellidos = filter_var($apellidos, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             Sesion::definirFormulario("apellidos", $this->apellidos);
@@ -181,11 +181,11 @@ class Usuario extends Modelo
     {
         $emailValido = filter_var($email, FILTER_SANITIZE_EMAIL);
         if (!filter_var($emailValido, FILTER_VALIDATE_EMAIL)) {
-            Sesion::definirError(new Exception("El correo electrónico proporcionado no es válido."), "email");
+            Sesion::definirError("El correo electrónico proporcionado no es válido.", "email");
         } else {
             $this->email = $emailValido;
-            Sesion::definirFormulario("email", $this->email);
         }
+        empty($emailValido) ?: Sesion::definirFormulario("email", $emailValido);
         return $this;
     }
 
@@ -210,7 +210,7 @@ class Usuario extends Modelo
     {
         $movilValido = filter_var($movil, FILTER_SANITIZE_NUMBER_INT);
         if ($movilValido < 9) {
-            Sesion::definirError(new Exception("El número de móvil proporcionado no es válido"), "movil");
+            Sesion::definirError("El número de móvil proporcionado no es válido", "movil");
         } else {
             $this->movil = $movilValido;
         }
@@ -225,7 +225,7 @@ class Usuario extends Modelo
     public function definirNombre($nombre)
     {
         if (empty($nombre)) {
-            Sesion::definirError(new Exception("El nombre introducido no es valido."), "nombre");
+            Sesion::definirError("El nombre introducido no es valido.", "nombre");
         } else {
             $this->nombre = filter_var($nombre, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             Sesion::definirFormulario("nombre", $this->nombre);

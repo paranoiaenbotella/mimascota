@@ -7,7 +7,18 @@
     <body>
         <form method="post" enctype="multipart/form-data">
             <label for="fichero">Fichero</label>
-            <input id="fichero" name="fichero" type="file">
+            <div>
+                <input id="fichero" name="fichero1" type="file">
+            </div>
+            <div>
+                <input id="fichero" name="fichero2" type="file">
+            </div>
+            <div>
+                <input id="fichero" name="fichero3" type="file">
+            </div>
+            <div>
+                <input id="fichero" name="fichero4" type="file">
+            </div>
             <input type="submit" value="Enviar">
         </form>
     </body>

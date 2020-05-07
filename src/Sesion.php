@@ -2,9 +2,9 @@
 
 class Sesion
 {
-    public static function definirError(Exception $exception, $titulo)
+    public static function definirError($mensaje, $titulo)
     {
-        $_SESSION["errores"][$titulo] = $exception->getMessage();
+        $_SESSION["errores"][$titulo] = $mensaje;
     }
 
     public static function definirFormulario($campo, $valor)
