@@ -91,6 +91,15 @@ switch ($_SERVER["REQUEST_URI"]) {
         $clase = "TarifasTipo";
         $accion = "getListar";
         break;
+    case "/fichero":
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $accion = "postInicio";
+        } else {
+            $accion = "getInicio";
+        }
+        $fichero = dirname(__DIR__) . "/src/Controladores/Fichero.php";
+        $clase = "Fichero";
+        break;
     default:
         echo("Error 404 - Página no encontrada");
         break;
