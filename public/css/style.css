@@ -1,4 +1,4 @@
-h2 {
+h4 {
     font-weight: bold;
 }
 
@@ -8,7 +8,17 @@ h2 {
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
+   
 }
+
+.col-sm-10, .col-md-8, .col-lg-4 {
+     background-color: #effcef; 
+}
+
+.col-md-8, .col-lg-4{
+    padding: 2rem 4rem;
+    margin-top: 2rem;
+} 
 
 @media (min-width: 576px) {
     .container {
@@ -35,9 +45,29 @@ h2 {
 }
 
 .form-group label {
-    font-size: 1.6rem;
+    font-size: 0.9rem;
+    font-weight: bold;
 }
 
+.form-group input[type=text],
+            input[type=email],
+            input[type=password] {
+    height: 1.5rem;
+    margin-bottom: 0.1rem;
+}
+
+.form-group select{
+    height: 1.5rem;
+    padding: 0.1rem;
+}
+.form-group small{
+    font-size: 0.7rem;
+}
+
+.error {
+    font-size: 0.9rem;
+    color: #920D0D;
+}
 .navbar .container {
     padding: 0;
 }

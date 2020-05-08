@@ -46,8 +46,9 @@ class Usuario extends Modelo
      */
     private function comprobarContrasenaLongitud($contrasena)
     {
-        if (strlen($contrasena) < 8) {
-            Sesion::definirError("La contraseña es demasiado corta.", "constrasena");
+        if (strlen($contrasena) < 8 || empty($contrasena)) {
+            Sesion::definirError("La contraseña es demasiado corta, o no se ha introducido.", "contrasenaCorta");
+            Sesion::definirFormulario("contrasenaCorta", $contrasena);
         } else {
             return true;
         }
@@ -64,8 +65,8 @@ class Usuario extends Modelo
         if ($contrasena === $contrasenaVerificada) {
             return true;
         } else {
-
-            Sesion::definirError("La contraseñas no coinciden.", "contrasenaVerificada");
+            Sesion::definirError("Las contraseñas no coinciden.", "contrasenaVerificada");
+            Sesion::definirFormulario("contrasenaVerificada", $contrasena);
         }
     }
 
@@ -164,10 +165,11 @@ class Usuario extends Modelo
     {
         $contrasenaValida = filter_var($contrasena, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if ($contrasenaValida === false) {
-            Sesion::definirError(new Exception("Contraseña no valida"), "contrasena");
+            Sesion::definirError(("Contraseña no valida"), "contrasena");
         } else {
             $this->contrasena = $contrasenaValida;
         }
+            
     }
 
     /**
@@ -215,6 +217,7 @@ class Usuario extends Modelo
         } else {
             $this->movil = $movilValido;
         }
+        empty($movilValido) ?: Sesion::definirFormulario("movil", $movilValido);
         return $this;
     }
 
@@ -257,16 +260,14 @@ class Usuario extends Modelo
 
     public function identificar($email, $contrasena)
     {
-        try {
+        
             $cuenta = $this->listarPorEmail($email);
-            if ($cuenta->obtenerContrasena() === sha1($contrasena)) {
+            if ( isset($cuenta) && $cuenta->obtenerContrasena() === sha1($contrasena)) {
                 return $cuenta;
             } else {
-                throw new Exception();
+                Sesion::definirError("Las credenciales son incorrectas.", "cuenta");
             }
-        } catch (Exception $exception) {
-            throw new Exception("Las credenciales son incorrectas.");
-        }
+       
     }
 
     /**
@@ -306,7 +307,7 @@ class Usuario extends Modelo
         $resultado = $consulta->get_result();
         $consulta->close();
         if (empty($resultado->num_rows)) {
-            throw new Exception("Email no encontrado");
+            Sesion::definirError("Email no encontrado", "emailNoEncontrado");
         } else {
             $fila = $resultado->fetch_assoc();
             $usuario = new Usuario();

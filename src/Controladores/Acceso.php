@@ -17,19 +17,17 @@ class Acceso
     {
         $roles = new Rol();
         $roles = $roles->listarRoles();
-        require_once(dirname(__DIR__) . "/Vistas/Acceso/RegistroIlya.php");
+        require_once(dirname(__DIR__) . "/Vistas/Acceso/Registro.php");
     }
 
     public function postIdentificar()
     {
-        try {
+        
             $usuario = new Usuario();
             if ($cuenta = $usuario->identificar($_POST["email"], $_POST["contrasena"])) {
                 Sesion::definirUsuario($cuenta->obtenerId());
                 header("Location: /");
-            }
-        } catch (Exception $exception) {
-            Sesion::definirError($exception, "credenciales");
+            } else { 
             header("Location: /identificacion");
         }
     }
