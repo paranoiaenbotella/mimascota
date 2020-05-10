@@ -14,19 +14,18 @@
                     <h6 class="mb-3"> Tipos de animales registrados en la base de datos</h6>
                     <table class="table table-sm table-hover border border-success">
                         <thead>
-                            <tr class ="bg-success text-white">
+                            <tr class="bg-success text-white">
                                 <th>Id</th>
                                 <th>Nombre</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                            foreach ($animalesTipo as $animalTipo) { ?>
-                            <tr>
-                                <td><?php echo $animalTipo->obtenerId();?></td>
-                                <td><?php echo $animalTipo->obtenerNombre();?></td>
-                            </tr>
-                            <?php } ?>
+                            <?php foreach ($animalesTipo as $animalTipo): ?>
+                                <tr>
+                                    <td><?php echo $animalTipo->obtenerId(); ?></td>
+                                    <td><?php echo $animalTipo->obtenerNombre(); ?></td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
