@@ -1,33 +1,39 @@
 <?php
 
+require_once(dirname(__DIR__) . "/Controlador.php");
 require_once(dirname(__DIR__) . "/Modelos/Rol.php");
 require_once(dirname(__DIR__) . "/Modelos/Usuario.php");
 
 /**
  * Clases para excepciones
  */
-class Acceso
+class Acceso extends Controlador
 {
+    protected function obtenerDirectorioVistas()
+    {
+        return dirname(__DIR__) . "/Vistas/Acceso";
+    }
+
     public function getIdentificar()
     {
-        require_once(dirname(__DIR__) . "/Vistas/Acceso/Identificacion.php");
+        $this->renderizar("Identificacion.php");
     }
 
     public function getRegistro()
     {
         $roles = new Rol();
         $roles = $roles->listarRoles();
-        require_once(dirname(__DIR__) . "/Vistas/Acceso/Registro.php");
+        $this->renderizar("Registro.php", ["roles" => $roles]);
     }
 
     public function postIdentificar()
     {
-        
+
             $usuario = new Usuario();
-            if ($cuenta = $usuario->identificar($_POST["email"], $_POST["contrasena"])) {
-                Sesion::definirUsuario($cuenta->obtenerId());
-                header("Location: /");
-            } else { 
+        if ($cuenta = $usuario->identificar($_POST["email"], $_POST["contrasena"])) {
+            Sesion::definirUsuario($cuenta->obtenerId());
+            header("Location: /");
+        } else {
             header("Location: /identificacion");
         }
     }
