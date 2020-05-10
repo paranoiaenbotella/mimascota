@@ -12,6 +12,12 @@ class Sesion
         $_SESSION["formulario"][$campo] = $valor;
     }
 
+    public static function definirAcierto($texto, $nombre)
+    {
+        $_SESSION["aciertos"][$nombre] = $texto;
+    }
+
+
     public static function definirInvitado($invitado)
     {
         $_SESSION["invitado"] = $invitado;
@@ -38,6 +44,11 @@ class Sesion
         return isset($_SESSION["formulario"][$campo]);
     }
 
+    public static function exiteAcierto($nombre)
+    {
+        return isset($_SESSION["aciertos"][$nombre]);
+    }
+
     public static function instanciar()
     {
         session_start();
@@ -55,6 +66,7 @@ class Sesion
     {
         self::limpiarErrores();
         self::limpiarFormulario();
+        self::limpiarAciertos();
     }
 
     public static function limpiarErrores()
@@ -67,6 +79,9 @@ class Sesion
         unset($_SESSION["formulario"]);
     }
 
+    public static function limpiarAciertos(){
+        unset($_SESSION["aciertos"]);
+    }
     public static function obtenerError($titulo)
     {
         $error = $_SESSION["errores"][$titulo];
@@ -79,6 +94,13 @@ class Sesion
         $valor = $_SESSION["formulario"][$campo];
         unset($_SESSION["formulario"][$campo]);
         return $valor;
+    }
+
+    public static function obtenerAcierto($nombre)
+    {
+        $acierto = $_SESSION["aciertos"][$nombre];
+        unset($_SESSION["aciertos"][$nombre]);
+        return $acierto;
     }
 
     public static function obtenerInvitado()

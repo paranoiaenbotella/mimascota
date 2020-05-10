@@ -41,12 +41,12 @@ class AnimalTipo extends Modelo
  	public function definirNombre($nombre)
  	{
  		$nombreValido = filter_var($nombre, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-		if ($nombreValido === false) {
-			throw new Exception("El nombre introducido no es valido");
-
+		if (empty($nombreValido)) {
+		      Sesion::definirError("El campo está vacío o el nombre existe.", "nombreTipoAnimal");
 		} 	else {
 			$this->nombre = $nombreValido;
 		}
+        
  	}
 
 /**
@@ -90,6 +90,7 @@ class AnimalTipo extends Modelo
 			$tipoAnimal = new AnimalTipo();
 			$tipoAnimal->definirNombre($fila["id"]);
 			$tipoAnimal->definirNombre($fila["nombre"]);
+            return $tipoAnimal;
 		}
 	}
 

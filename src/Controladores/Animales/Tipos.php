@@ -23,16 +23,17 @@ class AnimalesTipos
  */
     public function postCrear()
     {
-        if (empty($_POST["nombre"])) {
-            echo("No se ha definido el nombre del tipo de animal.");
-        } else {
+
             $animalTipo = new AnimalTipo();
-            if ($animalTipo->insertarTipoAnimal($_POST["nombre"])) {
+            $animalTipo->definirNombre($_POST["nombre"]);
+            if ($animalTipo->insertar()) {
+                Sesion::definirAcierto("Operación realizada.", "succes");
                 header("Location: /animales/tipos/crear");
             } else {
-                echo("No se ha podido crear el tipo de animal.");
+                Sesion::definirError("El campo está vacío o el nombre existe.", "nombreTipoAnimal");
+                header("Location: /animales/tipos/crear");
             }
-        }
+        
     }
 /**
  * Mediante este método se muestra por pantalla los registros de tipos de animales
@@ -41,7 +42,7 @@ class AnimalesTipos
     {   
         
         $animalTipo = new AnimalTipo();
-        $tipoAnimal =  $animalTipo->listarTiposAnimales(); 
+        $animalesTipo =  $animalTipo->listarTiposAnimales(); 
         require_once(dirname(__DIR__) . "/../Vistas/Animales/Tipo/Listar.php");
     }
 }
