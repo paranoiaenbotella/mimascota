@@ -1,11 +1,17 @@
 <?php
 
+require_once(dirname(__DIR__) . "/Controlador.php");
 require_once(dirname(__DIR__) . "/Modelos/Usuario.php");
 
-class Inicio
+class Inicio extends Controlador
 {
+    protected function obtenerDirectorioVistas()
+    {
+        return dirname(__DIR__) . "/Vistas/Inicio";
+    }
+
     public function getInicio()
     {
-        require_once(dirname(__DIR__) . "/Vistas/Inicio/Inicio.php");
+        $this->mostrar("Inicio.php");
     }
 }
