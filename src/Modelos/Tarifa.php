@@ -38,7 +38,7 @@ require_once(dirname(__DIR__) . "/Modelo.php");
 /**
  * Crear usuario para el registro
  */
-	public function crearUsuario($usuairo)
+	public function crearUsuario($usuario)
     {
         if ($usuario instanceof Rol) {
             $this->usuario = $usuario->obtenerId();
@@ -168,7 +168,7 @@ require_once(dirname(__DIR__) . "/Modelo.php");
  * Método para leer las tarifas por usuario
  */
 
-	public function leerPorUsuario($usuario){
+	public function listarPorUsuario($usuario){
 
 		$tarifas = [];
         $consulta = $this->conexion->prepare("SELECT * FROM tarifas WHERE id_usuarios =?");

@@ -10,6 +10,10 @@ require_once(dirname(__DIR__) . "/Modelos/Usuario.php");
  */
 class Acceso extends Controlador
 {
+
+/**
+ * Método que devuelve la vista
+ */
     protected function obtenerDirectorioVistas()
     {
         return dirname(__DIR__) . "/Vistas/Acceso";

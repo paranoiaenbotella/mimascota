@@ -21,7 +21,7 @@ class TarifasTipo extends Controlador
     }
 
 /**
- * Método que muestra el formulario de 
+ * Método que muestra el formulario para 
  * crear tipos de tarifas
  */
     public function getCrear()
