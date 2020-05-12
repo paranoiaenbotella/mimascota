@@ -71,6 +71,15 @@ switch ($_SERVER["REQUEST_URI"]) {
         $clase = "Roles";
         $accion = "getListar";
         break;
+    case "/roles/editar":
+        $fichero = dirname(__DIR__) . "/src/Controladores/Roles.php";
+        $clase = "Roles";
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $accion = "postEditar";
+        } else {
+            $accion = "getEditar";
+        }
+        break;
     case "/opiniones":
         $fichero = dirname(__DIR__) . "/src/Controladores/Opiniones.php";
         $clase = "Opiniones";
@@ -85,10 +94,42 @@ switch ($_SERVER["REQUEST_URI"]) {
             $accion = "getCrear";
         }
         break;
+    case "/animales/tipos/editar":
+        $fichero = dirname(__DIR__) . "/src/Controladores/Animales/Tipos.php";
+        $clase = "AnimalesTipos";
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $accion = "postEditar";
+        } else {
+            $accion = "getEditar";
+        }
+        break;
     case "/animales/tipos":
         $fichero = dirname(__DIR__) . "/src/Controladores/Animales/Tipos.php";
         $clase = "AnimalesTipos";
         $accion = "getListar";
+        break;
+     case "/animales":
+        $fichero = dirname(__DIR__) . "/src/Controladores/Animales.php";
+        $clase = "Animales";
+        $accion = "getListar";
+        break; 
+    case "/animales/crear":
+        $fichero = dirname(__DIR__) . "/src/Controladores/Animales.php";
+        $clase = "Animales";
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $accion = "postCrear";
+        } else {
+            $accion = "getCrear";
+        }
+        break;
+    case "/animales/editar":
+        $fichero = dirname(__DIR__) . "/src/Controladores/Animales.php";
+        $clase = "Animales";
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $accion = "postEditar";
+        } else {
+            $accion = "getEditar";
+        }
         break;
     case "/tarifas/tipos/crear":
         $fichero = dirname(__DIR__) . "/src/Controladores/Tarifas/Tipos.php";
@@ -104,6 +145,16 @@ switch ($_SERVER["REQUEST_URI"]) {
         $clase = "TarifasTipo";
         $accion = "getListar";
         break;
+    case "/tarifas/tipos/editar":
+        $fichero = dirname(__DIR__) . "/src/Controladores/Tarifas/Tipos.php";
+        $clase = "TarifasTipo";
+        if ($_SERVER["REQUEST_METHOD"] === "POST"){
+            $accion = "postEditar";
+        } else {
+        $accion = "getEditar";
+        }
+        break;
+
     case "/fichero":
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $accion = "postInicio";

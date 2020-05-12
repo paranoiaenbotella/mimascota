@@ -10,7 +10,7 @@
                         <div>
                             <p class="error"><?php echo(Sesion::obtenerError("nombreTipoAnimal")); ?></p>
                         </div>
-                    <?php elseif (Sesion::exiteAcierto("succes")): ?>
+                    <?php elseif (Sesion::existeAcierto("succes")): ?>
                         <div>
                             <p class="succes"><?php echo(Sesion::obtenerAcierto("succes")); ?></p>
                         </div>

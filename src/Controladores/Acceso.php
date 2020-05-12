@@ -5,7 +5,8 @@ require_once(dirname(__DIR__) . "/Modelos/Rol.php");
 require_once(dirname(__DIR__) . "/Modelos/Usuario.php");
 
 /**
- * Clases para excepciones
+ * Clase para controlar y realizar tanto el acceso como
+ * la identificación del usuario a la parte privada
  */
 class Acceso extends Controlador
 {

@@ -13,13 +13,16 @@ h4, h5, h6
    
 }
 
-.col-sm-10, .col-md-8, 
-.col-lg-4
+.col-sm-10, .col-md-8, .col-md-10, 
+.col-lg-6, .col-lg-4
 {
      background-color: #effcef; 
+     margin:auto;
 }
 
-.col-md-8, .col-lg-4{
+.col-md-8, .col-lg-4,
+.col-md-10,.col-lg-6
+{
     padding: 2rem 4rem;
     margin-top: 2rem;
 } 
@@ -75,6 +78,11 @@ h4, h5, h6
 .succes{
     font-size: 0.9rem;
     color: #0DC151;
+}
+
+.btn-sm
+{
+  line-height: 1rem;
 }
 .navbar .container {
     padding: 0;

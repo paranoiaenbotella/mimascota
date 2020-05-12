@@ -30,7 +30,7 @@ class Rol extends Modelo
     public function definirNombre($nombre)
     {
         if (empty($nombre)) {
-            throw new Exception("El nombre introducido no puede ser vacío.");
+           Sesion::definirError("El campo está vacío o el nombre existe.", "nombreRol");
         } else {
             $this->nombre = filter_var($nombre, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         }

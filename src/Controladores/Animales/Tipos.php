@@ -10,6 +10,10 @@ require_once(dirname(__DIR__) . "/../Controlador.php");
  */
 class AnimalesTipos extends Controlador
 {
+
+/**
+ * Método que devuelve la vista
+ */
     protected function obtenerDirectorioVistas()
     {
         return dirname(__DIR__) . "/../Vistas/Animales/Tipo";
@@ -34,6 +38,17 @@ class AnimalesTipos extends Controlador
     }
 
     /**
+     * Método que muestra el formulario de edición
+     * de tipo de animales
+     */
+    public function getEditar()
+    {
+        $animalTipo = new AnimalTipo();
+        $animalesTipo = $animalTipo->listarPorId(1);
+        $this->renderizar("Editar.php", ["animalesTipo" => $animalesTipo]);
+    }
+
+    /**
      * Mediante este método se controla la inserción del tipo de animal en la BD
      */
     public function postCrear()
@@ -46,6 +61,23 @@ class AnimalesTipos extends Controlador
         } else {
             Sesion::definirError("El campo está vacío o el nombre existe.", "nombreTipoAnimal");
             header("Location: /animales/tipos/crear");
+        }
+    }
+
+     /**
+     * Mediante este método se controla la actualización
+     * del tipo de animal en la BD
+     */
+    public function postEditar()
+    {
+        $animalTipo = new AnimalTipo();
+        $animalTipo->definirNombre($_POST["nombre"]);
+        if ($animalTipo->actualizar()) {
+            Sesion::definirAcierto("Operación realizada.", "succes");
+            header("Location: /animales/tipos/editar");
+        } else {
+            Sesion::definirError("El campo está vacío o el nombre existe.", "nombreTipoAnimal");
+            header("Location: /animales/tipos/editar");
         }
     }
 }

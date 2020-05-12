@@ -8,7 +8,7 @@ require_once(dirname(__DIR__) . "/Modelo.php");
 class Animal extends Modelo
 {
     private $id;
-    private $tipoAnimal;
+    private $animalTipo;
     private $usuario;
     private $nombre;
 
@@ -37,10 +37,10 @@ class Animal extends Modelo
      * Se crea al tipo de animal
      */
 
-public function crearTipoAnimal($tipoAnimal){
+public function crearAnimalTipo($animalTipo){
 
-    if ($tipoAnimal instanceof AnimalTipo){
-        $this->tipoAnimal = $tipoAnimal->obtenerId();
+    if ($animalTipo instanceof AnimalTipo){
+        $this->animalTipo = $animalTipo->obtenerId();
     } else {
         throw new Exception("El parámetro facilitado no es una instancia de la clase AnimalTipo.");
 
@@ -50,18 +50,18 @@ public function crearTipoAnimal($tipoAnimal){
 /**
  * Método para definir el tipo de animal
  */
-public function definirTipoAnimal($tipoAnimal){
-    $this->tipoAnimal = (int)$tipoAnimal;
+public function definirAnimalTipo($animalTipo){
+    $this->animalTipo = (int)$animalTipo;
 }
 
 /**
  * Método para obtener el tipo de animal
  */
-public function obtenerTipoAnimal(){
-    if (is_null($this->tipoAnimal)){
+public function obtenerAnimalTipo(){
+    if (is_null($this->animalTipo)){
         throw new Exception("El tipo de animal no está definido");
     } else {
-        return $this->tipoAnimal;
+        return $this->animalTipo;
     }
 }
 
@@ -104,9 +104,8 @@ public function crearUsuario($usuario){
     public function definirNombre($nombre)
     {
         $nombreValido = filter_var($nombre, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ($nombreValido === false) {
-            throw new Exception("El nombre introducido no es valido");
-
+        if (empty($nombreValido)) {
+            Sesion::definirError("El campo está vacío o el nombre existe.", "nombreAnimal");
         }   else {
             $this->nombre = $nombreValido;
         }
@@ -150,7 +149,7 @@ public function crearUsuario($usuario){
             $fila = $resultado->fetch_assoc();
             $animal = new Animal();
             $animal->definirId($fila["id"]);
-            $animal->definirTipoAnimal($fila["id_animales_tipos"]);
+            $animal->definirAnimalTipo($fila["id_animales_tipos"]);
             $animal->definirUsuario($fila["id_usuarios"]);
             $animal->definirNombre($fila["nombre"]);
             return $animal;
@@ -168,7 +167,7 @@ public function crearUsuario($usuario){
         while ($fila = $resultado->fetch_assoc()) {
             $animal = new Animal();
             $animal->definirId($fila["id"]);
-            $animal->definirTipoAnimal($fila["id_animales_tipos"]);
+            $animal->definirAnimalTipo($fila["id_animales_tipos"]);
             $animal->definirUsuario($fila["id_usuarios"]);
             $animal->definirNombre($fila["nombre"]);
             array_push($animales, $animal);
@@ -184,7 +183,7 @@ public function crearUsuario($usuario){
         $consulta = $this->conexion->prepare(
             "UPDATE `animales` SET `id_animales_tipos` = ?, `id_usuarios` = ?, `nombre` = ? WHERE `id` = ?"
         );
-        $consulta->bind_param("iisi", $this->tipoAnimal, $this->usuario, $this->nombre, $this->id);
+        $consulta->bind_param("iisi", $this->AnimalTipo, $this->usuario, $this->nombre, $this->id);
         $resultado = $consulta->execute();
         $consulta->close();
         return $resultado;

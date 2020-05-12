@@ -44,7 +44,7 @@ class Sesion
         return isset($_SESSION["formulario"][$campo]);
     }
 
-    public static function exiteAcierto($nombre)
+    public static function existeAcierto($nombre)
     {
         return isset($_SESSION["aciertos"][$nombre]);
     }
