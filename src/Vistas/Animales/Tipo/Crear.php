@@ -1,3 +1,4 @@
+<!--Form para crear tipos de animales-->
 <section class="container">
     <div class="row">
         <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
