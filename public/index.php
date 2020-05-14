@@ -108,27 +108,39 @@ switch ($_SERVER["REQUEST_URI"]) {
         $clase = "AnimalesTipos";
         $accion = "getListar";
         break;
-     case "/animales":
-        $fichero = dirname(__DIR__) . "/src/Controladores/Animales.php";
-        $clase = "Animales";
-        $accion = "getListar";
-        break; 
-    case "/animales/crear":
-        $fichero = dirname(__DIR__) . "/src/Controladores/Animales.php";
-        $clase = "Animales";
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            $accion = "postCrear";
+    case "/animales":
+        if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
         } else {
-            $accion = "getCrear";
+            $fichero = dirname(__DIR__) . "/src/Controladores/Animales.php";
+            $clase = "Animales";
+            $accion = "getListar";
+        }
+        break;
+    case "/animales/crear":
+        if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
+        } else {
+            $fichero = dirname(__DIR__) . "/src/Controladores/Animales.php";
+            $clase = "Animales";
+            if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                $accion = "postCrear";
+            } else {
+                $accion = "getCrear";
+            }
         }
         break;
     case "/animales/editar":
-        $fichero = dirname(__DIR__) . "/src/Controladores/Animales.php";
-        $clase = "Animales";
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            $accion = "postEditar";
+        if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
         } else {
-            $accion = "getEditar";
+            $fichero = dirname(__DIR__) . "/src/Controladores/Animales.php";
+            $clase = "Animales";
+            if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                $accion = "postEditar";
+            } else {
+                $accion = "getEditar";
+            }
         }
         break;
     case "/tarifas/crear":
