@@ -6,40 +6,26 @@ Sesion::instanciar();
  * redireccionar las peticiones hacia los controladores
  * según las URI's introducidas en la barra de navegación
  */
-switch ($_SERVER["REQUEST_URI"]) {
-    case '/':
+switch (1) {
+    case preg_match("`^/$`", $_SERVER["REQUEST_URI"]):
         $fichero = dirname(__DIR__) . "/src/Controladores/Inicio.php";
         $clase = "Inicio";
         $accion = "getInicio";
         break;
-    case "/perfil":
-        if (Sesion::esInvitado()) {
-            header("Location: /identificacion", 301);
-        } else {
-            $fichero = dirname(__DIR__) . "/src/Controladores/Perfil.php";
-            $clase = "Perfil";
-            $accion = "getInicio";
-        }
-        break;
-    case "/perfil/editar":
+    case preg_match("`^/perfil$`", $_SERVER["REQUEST_URI"]):
         if (Sesion::esInvitado()) {
             header("Location: /identificacion", 301);
         } else {
             if ($_SERVER["REQUEST_METHOD"] === "POST") {
-                $accion = "postEditar";
+                $accion = "postInicio";
             } else {
-                $accion = "getEditar";
+                $accion = "getInicio";
             }
             $fichero = dirname(__DIR__) . "/src/Controladores/Perfil.php";
             $clase = "Perfil";
         }
         break;
-    case "/editar":
-        $fichero = dirname(__DIR__) . "/src/Controladores/Perfil.php";
-        $clase = "Perfil";
-        $accion = "getEditar";
-        break;
-    case "/identificacion":
+    case preg_match("`^/identificacion$`", $_SERVER["REQUEST_URI"]):
         $fichero = dirname(__DIR__) . "/src/Controladores/Acceso.php";
         $clase = "Acceso";
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -48,7 +34,7 @@ switch ($_SERVER["REQUEST_URI"]) {
             $accion = "getIdentificar";
         }
         break;
-    case "/registro":
+    case preg_match("`^/registro$`", $_SERVER["REQUEST_URI"]):
         $fichero = dirname(__DIR__) . "/src/Controladores/Acceso.php";
         $clase = "Acceso";
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -57,7 +43,7 @@ switch ($_SERVER["REQUEST_URI"]) {
             $accion = "getRegistro";
         }
         break;
-    case "/roles/crear";
+    case preg_match("`^/roles/crear$`", $_SERVER["REQUEST_URI"]);
         $fichero = dirname(__DIR__) . "/src/Controladores/Roles.php";
         $clase = "Roles";
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -66,26 +52,27 @@ switch ($_SERVER["REQUEST_URI"]) {
             $accion = "getCrear";
         }
         break;
-    case "/roles":
+    case preg_match("`^/roles$`", $_SERVER["REQUEST_URI"]):
         $fichero = dirname(__DIR__) . "/src/Controladores/Roles.php";
         $clase = "Roles";
         $accion = "getListar";
         break;
-    case "/roles/editar":
+    case preg_match("`^/roles/editar/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
         $fichero = dirname(__DIR__) . "/src/Controladores/Roles.php";
         $clase = "Roles";
+        $argumento = $matches["id"];
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $accion = "postEditar";
         } else {
             $accion = "getEditar";
         }
         break;
-    case "/opiniones":
+    case preg_match("`^/opiniones$`", $_SERVER["REQUEST_URI"]):
         $fichero = dirname(__DIR__) . "/src/Controladores/Opiniones.php";
         $clase = "Opiniones";
         $accion = "getInicio";
         break;
-    case "/animales/tipos/crear":
+    case preg_match("`^/animales/tipos/crear$`", $_SERVER["REQUEST_URI"]):
         $fichero = dirname(__DIR__) . "/src/Controladores/Animales/Tipos.php";
         $clase = "AnimalesTipos";
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -94,7 +81,7 @@ switch ($_SERVER["REQUEST_URI"]) {
             $accion = "getCrear";
         }
         break;
-    case "/animales/tipos/editar":
+    case preg_match("`^/animales/tipos/editar$`", $_SERVER["REQUEST_URI"]):
         $fichero = dirname(__DIR__) . "/src/Controladores/Animales/Tipos.php";
         $clase = "AnimalesTipos";
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -103,12 +90,12 @@ switch ($_SERVER["REQUEST_URI"]) {
             $accion = "getEditar";
         }
         break;
-    case "/animales/tipos":
+    case preg_match("`^/animales/tipos$`", $_SERVER["REQUEST_URI"]):
         $fichero = dirname(__DIR__) . "/src/Controladores/Animales/Tipos.php";
         $clase = "AnimalesTipos";
         $accion = "getListar";
         break;
-    case "/animales":
+    case preg_match("`^/animales$`", $_SERVER["REQUEST_URI"]):
         if (Sesion::esInvitado()) {
             header("Location: /identificacion", 301);
         } else {
@@ -117,7 +104,7 @@ switch ($_SERVER["REQUEST_URI"]) {
             $accion = "getListar";
         }
         break;
-    case "/animales/crear":
+    case preg_match("`^/animales/crear$`", $_SERVER["REQUEST_URI"]):
         if (Sesion::esInvitado()) {
             header("Location: /identificacion", 301);
         } else {
@@ -130,7 +117,7 @@ switch ($_SERVER["REQUEST_URI"]) {
             }
         }
         break;
-    case "/animales/editar":
+    case preg_match("`^/animales/editar$`", $_SERVER["REQUEST_URI"]):
         if (Sesion::esInvitado()) {
             header("Location: /identificacion", 301);
         } else {
@@ -143,7 +130,7 @@ switch ($_SERVER["REQUEST_URI"]) {
             }
         }
         break;
-    case "/tarifas/crear":
+    case preg_match("`^/tarifas/crear$`", $_SERVER["REQUEST_URI"]):
         $fichero = dirname(__DIR__) . "/src/Controladores/Tarifas.php";
         $clase = "Tarifas";
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -152,22 +139,21 @@ switch ($_SERVER["REQUEST_URI"]) {
             $accion = "getCrear";
         }
         break;
-    case "/tarifas":
+    case preg_match("`^/tarifas$`", $_SERVER["REQUEST_URI"]):
         $fichero = dirname(__DIR__) . "/src/Controladores/Tarifas.php";
         $clase = "Tarifas";
         $accion = "getListar";
         break;
-    case "/tarifas/editar":
+    case preg_match("`^/tarifas/editar$`", $_SERVER["REQUEST_URI"]):
         $fichero = dirname(__DIR__) . "/src/Controladores/Tarifas.php";
         $clase = "Tarifas";
-        if ($_SERVER["REQUEST_METHOD"] === "POST"){
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $accion = "postEditar";
         } else {
-        $accion = "getEditar";
+            $accion = "getEditar";
         }
         break;
-
-    case "/fichero":
+    case preg_match("`^/fichero$`", $_SERVER["REQUEST_URI"]):
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $accion = "postInicio";
         } else {
@@ -183,4 +169,8 @@ switch ($_SERVER["REQUEST_URI"]) {
 //Instanciar clases
 require_once($fichero);
 $instancia = new $clase();
-$instancia->$accion();
+if (isset($argumento)) {
+    $instancia->$accion($argumento);
+} else {
+    $instancia->$accion();
+}

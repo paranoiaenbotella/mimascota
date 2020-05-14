@@ -45,24 +45,36 @@ class Roles extends Controlador
     {
             $rol = new Rol();
             $roles = $rol->definirNombre($_POST["nombre"]);
-            if ($rol->insertar($_POST["nombre"])) {
+            if ($rol->insertar()) {
                 Sesion::definirAcierto("Operación realizada.", "succes");
                 header("Location: /roles/crear");
             } else {
                 Sesion::definirError("El campo esta vacío o el nombre exite", "nombreRol");
-                header("Location: /roles/crear");              
+                header("Location: /roles/crear");
             }
     }
 
-/**
- * Mediante este método se muestra por pantalla el
- * formulario para editar el rol
- */
-     public function getEditar()
+    /**
+     * Mediante este método se muestra por pantalla el
+     * formulario para editar el rol
+     */
+    public function getEditar($id)
     {
         $rol = new Rol();
-        $roles = $rol->listarPorId(2);
-        $this->renderizar("Editar.php", ["roles" => $roles]);
+        $rol = $rol->listarPorId($id);
+        $this->renderizar("Editar.php", ["rol" => $rol]);
+    }
 
-    } 
+    public function postEditar($id)
+    {
+        $rol = new Rol();
+        $rol = $rol->listarPorId($id);
+        $rol->definirNombre($_POST["nombre"]);
+        if ($rol->actualizar()) {
+            Sesion::definirAcierto("El rol se ha actualizado.", "nombreRol");
+            header("Location: /roles/editar/$id");
+        } else {
+            header("Location: /roles/editar/$id");
+        }
+    }
 }

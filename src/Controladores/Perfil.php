@@ -20,17 +20,12 @@ class Perfil extends Controlador
 
     public function getInicio()
     {
-        $this->renderizar("Inicio.php");
-    }
-
-    public function getEditar()
-    {
         $usuario = Sesion::obtenerUsuario();
-        require_once(dirname(__DIR__) . "/Vistas/Perfil/Editar.php");
+        $this->renderizar("Inicio.php", ["usuario" => $usuario]);
     }
 
-    public function postEditar()
+    public function postInicio()
     {
-        var_dump($_POST, $_FILES);
+        var_dump($_POST); // TODO: Implementar este metodo.
     }
 }

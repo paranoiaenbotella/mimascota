@@ -17,7 +17,7 @@
                             <td><?php echo $rol->obtenerId(); ?></td>
                             <td><?php echo $rol->obtenerNombre(); ?></td>
                             <td>
-                                <a href="/roles/editar" class="btn btn-sm btn-info">Editar</a>
+                                <a href="/roles/editar/<?php echo($rol->obtenerId()); ?>" class="btn btn-sm btn-info">Editar</a>
                             </td>
                             <td>
                                 <a href="" class="btn btn-sm btn-danger">Eliminar</a>
