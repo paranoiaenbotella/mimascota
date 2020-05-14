@@ -77,7 +77,7 @@ public function crearUsuario($usuario){
         } else {
             return $this->usuario;
         }
-    } 
+    }
 
 
 
@@ -87,15 +87,14 @@ public function crearUsuario($usuario){
  * Método para definir la fecha de creación
  */
 
-public function definirFecha($fecha){
-	
-	if (is_null($fecha)){
-		Sesion::definirError("No hay una fecha creada.", "fecha");
-	} else{
-		$this->fecha = date_format($fecha, "d/m/y");
-	}
-
-	return this;
+public function definirFecha($fecha)
+{
+    if (is_null($fecha)) {
+        Sesion::definirError("No hay una fecha creada.", "fecha");
+    } else {
+        $this->fecha = date_format(strtotime($fecha), "d/m/y");
+    }
+    return $this;
 }
 
 /**
@@ -103,9 +102,9 @@ public function definirFecha($fecha){
  */
 public function obtenerFecha()
 {
-	if(is_null($this->fecha)){
-		throw new Exception("La fecha no está definida");	
-	} else {
+	if(is_null($this->fecha)) {
+        throw new Exception("La fecha no está definida");
+    } else {
 
 
 
@@ -163,7 +162,7 @@ public function obtenerFecha()
         }   else {
             $this->iamgen4 = $imagen4Valida;
         }
-    } 
+    }
 
  /**
  * Método para obtener la imagen 1
