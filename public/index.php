@@ -131,23 +131,23 @@ switch ($_SERVER["REQUEST_URI"]) {
             $accion = "getEditar";
         }
         break;
-    case "/tarifas/tipos/crear":
-        $fichero = dirname(__DIR__) . "/src/Controladores/Tarifas/Tipos.php";
-        $clase = "TarifasTipo";
+    case "/tarifas/crear":
+        $fichero = dirname(__DIR__) . "/src/Controladores/Tarifas.php";
+        $clase = "Tarifas";
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $accion = "postCrear";
         } else {
             $accion = "getCrear";
         }
         break;
-    case "/tarifas/tipos":
-        $fichero = dirname(__DIR__) . "/src/Controladores/Tarifas/Tipos.php";
-        $clase = "TarifasTipo";
+    case "/tarifas":
+        $fichero = dirname(__DIR__) . "/src/Controladores/Tarifas.php";
+        $clase = "Tarifas";
         $accion = "getListar";
         break;
-    case "/tarifas/tipos/editar":
-        $fichero = dirname(__DIR__) . "/src/Controladores/Tarifas/Tipos.php";
-        $clase = "TarifasTipo";
+    case "/tarifas/editar":
+        $fichero = dirname(__DIR__) . "/src/Controladores/Tarifas.php";
+        $clase = "Tarifas";
         if ($_SERVER["REQUEST_METHOD"] === "POST"){
             $accion = "postEditar";
         } else {

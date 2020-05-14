@@ -20,14 +20,6 @@ class Direccion extends Modelo
 
     private $calle;
 
-    private $imagen1;
-
-    private $imagen2;
-
-    private $imagen3;
-
-    private $imagen4;
-
     /**
      * Se define y se fuerza que el tipo
      * de la $id sea Int
@@ -135,57 +127,7 @@ public function crearUsuario($usuario){
         }
     }
 
-/**
- * Método para definir la imagen 1
- */
-    public function definirImagen1($imagen1)
-    {
-        $imagen1Valida = filter_var($imagen1, FILTER_SANITIZE_URL);
-        if ($imagen1Valida === false) {
-            throw new Exception("La ruta de la imagen es incorrecta");
-        }   else {
-            $this->imagen1 = $imagen1Valida;
-        }
-    }
 
-/**
- * Método para definir la imagen 2
- */
-    public function definirImagen2($imagen2)
-    {
-        $imagen2Valida = filter_var($imagen2, FILTER_SANITIZE_URL);
-        if ($imagen2Valida === false) {
-            throw new Exception("La ruta de la imagen es incorrecta");
-        }   else {
-            $this->iamgen2 = $imagen2Valida;
-        }
-    }
-
-/**
- * Método para definir la imagen 3
- */
-    public function definirImagen3($imagen3)
-    {
-        $imagen3Valida = filter_var($imagen3, FILTER_SANITIZE_URL);
-        if ($imagen3Valida === false) {
-            throw new Exception("La ruta de la imagen es incorrecta");
-        }   else {
-            $this->imagen3 = $imagen3Valida;
-        }
-    }
-
-/**
- * Método para definir la imagen 4
- */
-    public function definirImagen4($imagen4)
-    {
-        $imagen4Valida = filter_var($imagen4, FILTER_SANITIZE_URL);
-        if ($imagen4Valida === false) {
-            throw new Exception("La ruta de la imagen es incorrecta");
-        }   else {
-            $this->iamgen4 = $imagen4Valida;
-        }
-    }
 
 /**
  * Método para obtener el país
@@ -235,53 +177,7 @@ public function crearUsuario($usuario){
         }
     }
 
-/**
- * Método para obtener la imagen 1
- */
-    public function obtenerImagen1()
-    {
-        if (is_null($this->imagen1)){
-        throw new Exception("Ruta de la imagen no definida");
-        }   else {
-            return $this->imagen1;
-        }
-    }
 
-/**
- * Método para obtener la imagen 2
- */
-    public function obtenerImagen2()
-    {
-        if (is_null($this->imagen2)){
-        throw new Exception("Ruta de la imagen no definida");
-        }   else {
-            return $this->imagen2;
-        }
-    }
-
-/**
- * Método para obtener la imagen 3
- */
-    public function obtenerImagen3()
-    {
-        if (is_null($this->imagen3)){
-        throw new Exception("Ruta de la imagen no definida");
-        }   else {
-            return $this->imagen3;
-        }
-    }
-
-/**
- * Método para obtener la imagen 4
- */
-    public function obtenerImagen4()
-    {
-        if (is_null($this->imagen4)) {
-            throw new Exception("Ruta de la imagen no definida");
-        } else {
-            return $this->imagen4;
-        }
-    }
 
 /**
  * Método para insertar dirección
