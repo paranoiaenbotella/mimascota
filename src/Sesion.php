@@ -2,6 +2,11 @@
 
 class Sesion
 {
+    public static function definirAcierto($texto, $nombre)
+    {
+        $_SESSION["aciertos"][$nombre] = $texto;
+    }
+
     public static function definirError($mensaje, $titulo)
     {
         $_SESSION["errores"][$titulo] = $mensaje;
@@ -11,12 +16,6 @@ class Sesion
     {
         $_SESSION["formulario"][$campo] = $valor;
     }
-
-    public static function definirAcierto($texto, $nombre)
-    {
-        $_SESSION["aciertos"][$nombre] = $texto;
-    }
-
 
     public static function definirInvitado($invitado)
     {
@@ -29,9 +28,23 @@ class Sesion
         $_SESSION["idUsuario"] = $id;
     }
 
+    public static function esAdministrador()
+    {
+        if (self::obtenerUsuario()->obtenerRol()->obtenerNombre() === "Administrador") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static function esInvitado()
     {
         return self::obtenerInvitado();
+    }
+
+    public static function existeAcierto($nombre)
+    {
+        return isset($_SESSION["aciertos"][$nombre]);
     }
 
     public static function existeError($titulo)
@@ -42,11 +55,6 @@ class Sesion
     public static function existeFormulario($campo)
     {
         return isset($_SESSION["formulario"][$campo]);
-    }
-
-    public static function existeAcierto($nombre)
-    {
-        return isset($_SESSION["aciertos"][$nombre]);
     }
 
     public static function instanciar()
@@ -69,6 +77,11 @@ class Sesion
         self::limpiarAciertos();
     }
 
+    public static function limpiarAciertos()
+    {
+        unset($_SESSION["aciertos"]);
+    }
+
     public static function limpiarErrores()
     {
         unset($_SESSION["errores"]);
@@ -79,9 +92,13 @@ class Sesion
         unset($_SESSION["formulario"]);
     }
 
-    public static function limpiarAciertos(){
-        unset($_SESSION["aciertos"]);
+    public static function obtenerAcierto($nombre)
+    {
+        $acierto = $_SESSION["aciertos"][$nombre];
+        unset($_SESSION["aciertos"][$nombre]);
+        return $acierto;
     }
+
     public static function obtenerError($titulo)
     {
         $error = $_SESSION["errores"][$titulo];
@@ -94,13 +111,6 @@ class Sesion
         $valor = $_SESSION["formulario"][$campo];
         unset($_SESSION["formulario"][$campo]);
         return $valor;
-    }
-
-    public static function obtenerAcierto($nombre)
-    {
-        $acierto = $_SESSION["aciertos"][$nombre];
-        unset($_SESSION["aciertos"][$nombre]);
-        return $acierto;
     }
 
     public static function obtenerInvitado()
