@@ -127,11 +127,11 @@ public function crearUsuario($usuario){
  */
     public function insertar()
     {
-       $consulta = $this->conexion->prepare( "INSERT INTO `animales` (`id_animales_tipos`, `id_usuarios`,  `nombre`) VALUES (?, ?, ?)");
-       $consulta->bind_param("iis", $this->AnimalTipo, $this->usuario, $this->nombre);
-       $resultado = $consulta->execute();
-       $consulta->close();
-       return $resultado;
+        $consulta = $this->conexion->prepare("INSERT INTO `animales` (`id_animales_tipos`, `id_usuarios`,  `nombre`) VALUES (?, ?, ?)");
+        $consulta->bind_param("iis", $this->animalTipo, $this->usuario, $this->nombre);
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado;
     }
 /**
  * Método para listar por id un animal
