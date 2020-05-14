@@ -46,7 +46,7 @@ class AnimalTipo extends Modelo
 		} 	else {
 			$this->nombre = $nombreValido;
 		}
-        
+
  	}
 
 /**
@@ -87,11 +87,11 @@ class AnimalTipo extends Modelo
             throw new Exception("Tipo de animal no encontrado");
         } else {
             $fila = $resultado->fetch_assoc();
-			$tipoAnimal = new AnimalTipo();
-			$tipoAnimal->definirNombre($fila["id"]);
-			$tipoAnimal->definirNombre($fila["nombre"]);
+            $tipoAnimal = new AnimalTipo();
+            $tipoAnimal->definirId($fila["id"]);
+            $tipoAnimal->definirNombre($fila["nombre"]);
             return $tipoAnimal;
-		}
+        }
 	}
 
     /**
