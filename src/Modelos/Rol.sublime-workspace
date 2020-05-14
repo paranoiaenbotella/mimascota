@@ -1,0 +1,274 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"codigo",
+				"codigoPostal"
+			],
+			[
+				"nombre",
+				"nombreValido"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"tipo",
+				"tipoAnimal"
+			],
+			[
+				"An",
+				"AnimalTipo"
+			],
+			[
+				"animal",
+				"animalTipo"
+			],
+			[
+				"tarifas",
+				"tarifas_tipos"
+			],
+			[
+				"cl",
+				"clase"
+			],
+			[
+				"t",
+				"tbody\tTag"
+			],
+			[
+				"c",
+				"caption\tTag"
+			],
+			[
+				"dire",
+				"direccion"
+			],
+			[
+				"co",
+				"codigo_postal"
+			],
+			[
+				"em",
+				"email"
+			],
+			[
+				"ti",
+				"title\tTag"
+			],
+			[
+				"me",
+				"meta\tTag"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/xampp/htdocs/mimascota/src/Modelos/Usuario.php",
+		"/C/xampp/htdocs/pruebas/FilterVar.php",
+		"/C/xampp/htdocs/pruebas/FilterVar.html",
+		"/C/xampp/htdocs/mimascota/src/Modelos/Rol.php",
+		"/C/xampp/htdocs/mimascota/src/Modelos/Opinion.php",
+		"/C/xampp/htdocs/mimascota/src/Modelos/AnimalTipo.php",
+		"/C/xampp/htdocs/mimascota/src/Modelos/Direccion.php",
+		"/C/xampp/htdocs/mimascota/src/Modelos/Animal.php",
+		"/C/xampp/htdocs/mimascota/src/Modelos/Tarifa.php",
+		"/C/xampp/htdocs/mimascota/src/Modelos/TarifaTipo.php",
+		"/C/xampp/htdocs/mimascota/src/Controladores/Roles.php",
+		"/C/xampp/htdocs/mimascota/src/Controladores/Animales.php",
+		"/C/xampp/htdocs/mimascota/src/Controladores/Perfil.php",
+		"/C/xampp/htdocs/mimascota/src/Controladores/Opiniones.php",
+		"/C/xampp/htdocs/mimascota/src/Controladores/Tarifas/Tipos.php",
+		"/C/xampp/htdocs/mimascota/public/index.php",
+		"/C/xampp/htdocs/mimascota/src/Vistas/Roles/Listar.php",
+		"/C/xampp/htdocs/mimascota/src/Controladores/Animales/Tipos.php",
+		"/C/xampp/htdocs/mimascota/src/Vistas/Tarifas/Tipos/Listar.php",
+		"/C/xampp/htdocs/mimascota/src/Vistas/Animales/Tipo/Listar.php",
+		"/C/xampp/htdocs/mimascota/src/Modelo.php",
+		"/C/Users/Administrador/Desktop/Curso DAW II/DesEntServ/tareas/Bota_Sultana_Mihaela_DEWS_UD8_CP1/MVCUD8/thronesDB.php",
+		"/C/Users/Administrador/Desktop/Curso DAW II/DesEntServ/tareas/Bota_Sultana_Mihaela_DEWS_UD8_CP1/MVCUD8/actoresCast.php",
+		"/C/Users/Administrador/Desktop/Curso DAW II/DesEntServ/tareas/Bota_Sultana_Mihaela_DEWS_UD8_CP1/MVCUD8/modelosJuego.php",
+		"/C/Users/Administrador/Desktop/Curso DAW II/DesEntServ/tareas/Bota_Sultana_Mihaela_DEWS_UD8_CP1/MVCUD8/actoresSeason.php",
+		"/C/xampp/htdocs/mimascota/src/Controladores/Acceso.php",
+		"/C/xampp/htdocs/mimascota/src/Vistas/Roles/Crear.php",
+		"/C/xampp/htdocs/mimascota/src/Vistas/Tarifas/Tipos/Crear.php",
+		"/C/xampp/htdocs/mimascota/src/Vistas/Animales/Tipo/Crear.php",
+		"/C/xampp/htdocs/mimascota/src/Vistas/Animales/Tipos/Crear.php",
+		"/C/xampp/htdocs/mimascota/src/Vistas/Animales/InsertarTipo.php",
+		"/C/xampp/htdocs/mimascota/src/Vistas/Perfil/Editar.php",
+		"/C/xampp/htdocs/mimascota/src/Vistas/Inicio/Inicio.php",
+		"/C/xampp/htdocs/mimascota/src/Controladores/Inicio.php",
+		"/C/xampp/htdocs/mimascota/src/Vistas/Acceso/Registro.php",
+		"/C/xampp/htdocs/mimascota/config/basededatos.php",
+		"/C/xampp/htdocs/mimascota/src/Vistas/Perfil/Inicio.php",
+		"/C/xampp/htdocs/mimascota/src/Vistas/Acceso/Identificacion.php",
+		"/C/xampp/apache/conf/extra/httpd-vhosts.conf",
+		"/C/xampp/htdocs/mimascota/src/Vistas/Opiniones/Inicio.php",
+		"/A/Descargas/Inmobiliaria-master/Inmobiliaria-master/inmobiliaria/aplicacion/Admin/Controlador/index.php",
+		"/C/xampp/apache/conf/httpd.conf",
+		"/C/xampp/apache/conf/extra/httpd-mpm.conf",
+		"/C/xampp/htdocs/mimascota/src/Controllers/Acceso.php",
+		"/C/xampp/htdocs/mimascota/src/Controllers/Opiniones.php",
+		"/C/xampp/htdocs/mimascota/src/Controllers/Perfil.php"
+	],
+	"find":
+	{
+		"height": 0.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 40.8
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "Rol.sublime-project",
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 243.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
