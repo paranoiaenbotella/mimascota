@@ -17,7 +17,7 @@
                             <td><?php echo $animalTipo->obtenerId(); ?></td>
                             <td><?php echo $animalTipo->obtenerNombre(); ?></td>
                             <td>
-                                <a href="/animales/tipos/editar" class="btn btn-sm btn-info">Editar</a>
+                                <a href="/animales/tipos/editar/<?php echo ($animalTipo->obtenerId());?>" class="btn btn-sm btn-info">Editar</a>
                             </td>
                             <td>
                                 <a href="" class="btn btn-sm btn-danger">Eliminar</a>

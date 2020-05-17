@@ -87,10 +87,10 @@ class AnimalTipo extends Modelo
             throw new Exception("Tipo de animal no encontrado");
         } else {
             $fila = $resultado->fetch_assoc();
-            $tipoAnimal = new AnimalTipo();
-            $tipoAnimal->definirId($fila["id"]);
-            $tipoAnimal->definirNombre($fila["nombre"]);
-            return $tipoAnimal;
+            $animalTipo = new AnimalTipo();
+            $animalTipo->definirId($fila["id"]);
+            $animalTipo->definirNombre($fila["nombre"]);
+            return $animalTipo;
         }
 	}
 
