@@ -36,8 +36,9 @@ class Animales extends Controlador
     {
         $animal = new Animal();
         $animales = $animal->listarAnimales();
-
-        $this->renderizar("Listar.php", ["animales"=>$animales]);
+        $animalTipo = new AnimalTipo();
+        $animalTipos = $animalTipo->listarTiposAnimales();
+        $this->renderizar("Listar.php", ["animales" => $animales, "animalTipos" => $animalTipos]);
     }
 
  /**
@@ -77,18 +78,17 @@ class Animales extends Controlador
 /**
  * Método para actualizar el animal
  */
-    
+
     public function postEditar($id)
     {
         $animalTipo = new AnimalTipo();
         $animalTipo = $animalTipo->listarPorId($_POST["tipoAnimal"]);
         $usuario = Sesion::obtenerUsuario();
-
         $animal = new Animal();
         $animal = $animal->listarPorId($id);
         $animal->definirNombre($_POST["nombre"]);
-        $animal->definirAnimalTipo($animalTipo);
-        $animal->definirUsuario($usuario);
+        $animal->definirAnimalTipo($animalTipo->obtenerId());
+        $animal->definirUsuario($usuario->obtenerId());
         if ($animal->actualizar()) {
             Sesion::definirAcierto("El animal se ha actualizado.", "nombreAnimal");
             header("Location: /animales/editar/$id");

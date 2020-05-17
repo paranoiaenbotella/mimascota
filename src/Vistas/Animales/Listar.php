@@ -18,10 +18,16 @@
                         <tr>
                             <td><?php echo $animal->obtenerId(); ?></td>
                             <td><?php echo $animal->obtenerNombre(); ?></td>
-                            <td><?php echo $animal->obtenerAnimalTipo();?></td>
-                            <td><?php echo $animal->obtenerUsuario();?></td>
+                            <?php foreach ($datos["animalTipos"] as $animalTipo): ?>
+                                <?php if ($animal->obtenerAnimalTipo() === $animalTipo->obtenerId()): ?>
+                                    <td><?php echo $animalTipo->obtenerNombre(); ?></td>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                            <td><?php echo $animal->obtenerUsuario(); ?></td>
                             <td>
-                                <a href="/animales/editar/<?php echo($animal->obtenerId()); ?>" class="btn btn-sm btn-info">Editar</a>
+                                <a href="/animales/editar/<?php echo($animal->obtenerId(
+                                )); ?>" class="btn btn-sm btn-info">Editar
+                                </a>
                             </td>
                             <td>
                                 <a href="" class="btn btn-sm btn-danger">Eliminar</a>

@@ -183,7 +183,7 @@ public function crearUsuario($usuario){
         $consulta = $this->conexion->prepare(
             "UPDATE `animales` SET `id_animales_tipos` = ?, `id_usuarios` = ?, `nombre` = ? WHERE `id` = ?"
         );
-        $consulta->bind_param("iisi", $this->AnimalTipo, $this->usuario, $this->nombre, $this->id);
+        $consulta->bind_param("iisi", $this->animalTipo, $this->usuario, $this->nombre, $this->id);
         $resultado = $consulta->execute();
         $consulta->close();
         return $resultado;

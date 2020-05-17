@@ -6,23 +6,28 @@
             <form method="POST" novalidate>
                 <div class="form-group mb-1">
                     <label for="nombre" class="mb-0">Nombre:</label>
-                    <input class="form-control my-0" id="nombre" name="nombre" type="text" value="<?php echo($datos["animal"]->obtenerNombre()); ?>">
+                    <input class="form-control my-0" id="nombre" name="nombre" type="text" value="<?php echo($datos["animal"]->obtenerNombre(
+                    )); ?>">
                     <div class="form-group my-0">
-                    <label for="tipoAnimal" class="mb-0">Tipo Animal:</label>
-                    <select class="form-control form-control-sm" name="tipoAnimal" id="tipoAnimal">
-                        <?php foreach ($datos["animalesTipo"] as $animalTipo): ?>
-                            <option value="<?php echo($animalTipo->obtenerId()); ?>">
+                        <label for="tipoAnimal" class="mb-0">Tipo Animal:</label>
+                        <select class="form-control form-control-sm" name="tipoAnimal" id="tipoAnimal">
+                            <?php foreach ($datos["animalesTipo"] as $animalTipo): ?>
+                                <?php if ($animalTipo->obtenerId() === $datos["animal"]->obtenerAnimalTipo()): ?>
+                                    <option selected value="<?php echo($animalTipo->obtenerId()); ?>">
+                                <?php else: ?>
+                                    <option value="<?php echo($animalTipo->obtenerId()); ?>">
+                                <?php endif; ?>
                                 <?php echo($animalTipo->obtenerNombre()); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                     <div class="input-group input-group-sm my-2">
                         <button class="btn btn-info btn-block btn-sm" type="submit">Guardar</button>
                     </div>
                     <div class="input-group input-group-sm mt-4">
-                     <a href="/animales" class="btn btn-block btn-sm btn-secondary">Regresar a la lista de animales</a>
-                 </div>
+                        <a href="/animales" class="btn btn-block btn-sm btn-secondary">Regresar a la lista de animales</a>
+                    </div>
                 </div>
             </form>
         </div>
