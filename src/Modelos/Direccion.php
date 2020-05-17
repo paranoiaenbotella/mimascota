@@ -199,7 +199,7 @@ public function crearUsuario($usuario){
         return $resultado;
     }
     /**
-     * Método para leer todas las direcciones 
+     * Método para leer todas las direcciones
      */
     public function listarDirecciones()
    {
@@ -221,7 +221,6 @@ public function crearUsuario($usuario){
      */
     public function listarPorId($id)
     {
-        $direcciones = [];
         $consulta = $this->conexion->prepare("SELECT * FROM `direcciones` WHERE `id` = ?");
         $consulta->bind_param("i", $id);
         $consulta->execute();
@@ -234,31 +233,35 @@ public function crearUsuario($usuario){
             $direccion->definirCiudad($fila["ciudad"]);
             $direccion->definirCodigoPostal($fila["codigo_postal"]);
             $direccion->definirCalle($fila["calle"]);
-            array_push($direcciones, $direccion);
+            return $direccion;
         }
 
-        return $direcciones;
     }
 
     /**
-     * Método para actualizar direcciones por el id 
+     * Método para actualizar direcciones por el id
      */
-    public function actualizar(){
-
-        $consulta = $this->conexion->prepare("UPDATE direcciones SET id_usuarios = ?, pais =?, ciudad = ?, codigo_postal = ?, calle = ?, WHERE id = ?");
-        $consulta->bind_param("issssi", 
-            $this->usuario, 
-            $this->pais, 
-            $this->ciudad, 
-            $this->codigoPostal, 
-            $this->calle, 
-            $this->id);
+    public function actualizar()
+    {
+        $consulta = $this->conexion->prepare(
+            "UPDATE `direcciones` SET `id_usuarios` = ?, `pais` =?, `ciudad` = ?, `codigo_postal` = ?, `calle` = ?, `where` `id` = ?"
+        );
+        $consulta->bind_param(
+            "issssi",
+            $this->usuario,
+            $this->pais,
+            $this->ciudad,
+            $this->codigoPostal,
+            $this->calle,
+            $this->id
+        );
         $resultado = $consulta->execute();
         $consulta->close();
         return $resultado;
     }
+
     /**
-     * Método para eliminar direcciones por el id 
+     * Método para eliminar direcciones por el id
      */
     public function eliminar(){
 
@@ -266,7 +269,7 @@ public function crearUsuario($usuario){
         $consulta->bind_param("i", $this->id);
         $resultado = $consulta->execute();
         $consulta->close();
-        return $resultado; 
+        return $resultado;
     }
 
 }
