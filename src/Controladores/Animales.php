@@ -26,8 +26,6 @@ class Animales extends Controlador
     {
     	$animalesTipo = new AnimalTipo();
     	$animalesTipo = $animalesTipo->listarTiposAnimales();
-    	$usuarios = new Usuario();
-        $usuarios = $usuarios->listarUsuarios();
         $this->renderizar("Crear.php", ["animalesTipo" => $animalesTipo]);
     }
 
@@ -38,6 +36,7 @@ class Animales extends Controlador
     {
         $animal = new Animal();
         $animales = $animal->listarAnimales();
+
         $this->renderizar("Listar.php", ["animales"=>$animales]);
     }
 
@@ -66,13 +65,50 @@ class Animales extends Controlador
  * Mediante este método se muestra por pantalla el
  * formulario para editar el animal
  */
-     public function getEditar()
+     public function getEditar($id)
     {
         $animal = new Animal();
-        $animales = $animal->listarPorId(1);
-        $this->renderizar("Editar.php", ["animales" => $animales]);
+        $animal = $animal->listarPorId($id);
+        $animalTipo = new AnimalTipo();
+        $animalesTipo = $animalTipo->listarTiposAnimales();
+        $this->renderizar("Editar.php", ["animal" => $animal, "animalesTipo" => $animalesTipo]);
 
     }
+/**
+ * Método para actualizar el animal
+ */
+    
+    public function postEditar($id)
+    {
+        $animalTipo = new AnimalTipo();
+        $animalTipo = $animalTipo->listarPorId($_POST["tipoAnimal"]);
+        $usuario = Sesion::obtenerUsuario();
 
+        $animal = new Animal();
+        $animal = $animal->listarPorId($id);
+        $animal->definirNombre($_POST["nombre"]);
+        $animal->definirAnimalTipo($animalTipo);
+        $animal->definirUsuario($usuario);
+        if ($animal->actualizar()) {
+            Sesion::definirAcierto("El animal se ha actualizado.", "nombreAnimal");
+            header("Location: /animales/editar/$id");
+        } else {
+            header("Location: /animales/editar/$id");
+        }
+    }
 
+/**
+ * Método para eliminar el animal
+ */
+public function postEliminar(){
+
+    $animal = new Animal($id);
+    $animal = $animal->listarPorId($id);
+    if ($animal->eliminar()) {
+            Sesion::definirAcierto("El animal se ha actualizado.", "nombreAnimal");
+            header("Location: /animales");
+        } else {
+            header("Location: /animales");
+        }
+    }
 }

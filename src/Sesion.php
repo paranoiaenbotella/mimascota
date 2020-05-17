@@ -37,6 +37,22 @@ class Sesion
         }
     }
 
+    public static function esPropietario(){
+        if (self::obtenerUsuario()->obtenerRol()->obtenerNombre() === "Propietario"){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function esCuidador(){
+        if (self::obtenerUsuario()->obtenerRol()->obtenerNombre() === "Cuidador"){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static function esInvitado()
     {
         return self::obtenerInvitado();
