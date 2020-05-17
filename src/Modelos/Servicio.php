@@ -9,7 +9,6 @@ require_once(dirname(__DIR__) . "/Modelo.php");
  class Tarifa extends Modelo
  {
  	private $id;
- 	private $usuario;
  	private $anuncio;
  	private $nombre;
     private $descripcion;
@@ -36,41 +35,9 @@ require_once(dirname(__DIR__) . "/Modelo.php");
         }
     } 
 
-/**
- * Crear usuario para el registro
- */
-	public function crearUsuario($usuario)
-    {
-        if ($usuario instanceof Rol) {
-            $this->usuario = $usuario->obtenerId();
-        } else {
-            throw new Exception("El parámetro facilitado no es una instancia de la clase Usuario");
-        }
-        return $this;
-    }
 
 /**
- * Definir usuario
- */
-	public function definirUsuario($usuario){
-		$this->usuario = (int)$usuario;
-	}
-
-/**
- * Obtener usuario
- */
-    public function obtenerUsuario()
-    {
-        if (is_null($this->usuario)) {
-            throw new Exception("El identificador del usuario no está definido.");
-        } else {
-            return $this->usuario;
-        }
-    }
-
-
-/**
- * Crear tipo de tarifa para el registro
+ * Crear el anuncio donde se publica el servicio
  */
     public function crearAnuncio($anuncio)
     {
@@ -130,7 +97,7 @@ require_once(dirname(__DIR__) . "/Modelo.php");
 	}
 
 /**
- * Método para obtener el nombre
+ * Método para definir la descripcion
  */
 public function definirDescripcion($descripcion){
     if (empty($descripcion) || strlen($descripcion) > 512){
@@ -183,10 +150,9 @@ public function obtenerDescripcion(){
  */
 	    public function insertar()
     {
-        $consulta = $this->conexion->prepare("INSERT INTO `servicios` (`id_anuncio`,`id_usuarios`, `nombre`,`descripcion`, `precio` ) VALUES (?, ?, ?, ?, ?)");
-        $consulta->bind_param("iissf", 
-            $this->anuncio, 
-            $this->usuario, 
+        $consulta = $this->conexion->prepare("INSERT INTO `servicios` (`id_anuncio`, `nombre`,`descripcion`, `precio` ) VALUES (?, ?, ?, ?, ?)");
+        $consulta->bind_param("issf", 
+            $this->anuncio,  
             $this->nombre, 
             $this->descripcion, 
             $this->precio);
@@ -211,7 +177,6 @@ public function obtenerDescripcion(){
 
         	$servicio = new Servicio();
         	$servicio->definirId($fila["id"]);
-        	$servicio->definirUsuario($fila["id_usuarios"]);
         	$servicio->definirserAnuncio($fila["id_anuncios"]);
         	$servicio->definirNombre($fila["nombre"]);
             $servicio->definirDescripcion($fila["descripcion"]);
@@ -226,9 +191,8 @@ public function obtenerDescripcion(){
  */
 	public function actualizar(){
 
-        $consulta = $this->conexion->prepare("UPDATE tarifas SET id_usuarios = ?, id_anuncios =?, nombre = ?, descripcion = ?, precio =? WHERE id = ?");
-        $consulta->bind_param("iissfi", 
-            $this->usuario, 
+        $consulta = $this->conexion->prepare("UPDATE tarifas SET id_anuncios =?, nombre = ?, descripcion = ?, precio =? WHERE id = ?");
+        $consulta->bind_param("issfi",  
             $this->anuncio, 
             $this->nombre, 
             $this->descripcion;
