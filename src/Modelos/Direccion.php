@@ -80,9 +80,8 @@ public function crearUsuario($usuario){
     public function definirPais($pais)
     {
         $paisValido = filter_var($pais, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ($paisValido === false) {
-            throw new Exception("El país introducido no es valido");
-
+        if (empty($paisValido)) {
+            Sesion::definirError("El campo está vacío o el nombre existe.", "pais");
         }   else {
             $this->pais = $paisValido;
         }
@@ -94,8 +93,8 @@ public function crearUsuario($usuario){
     public function definirCiudad($ciudad)
     {
         $ciudadValida = filter_var($ciudad, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ($ciudadValida === false) {
-            throw new Exception("La ciudad introducida no es valida");
+        if (empty($ciudadValida)) {
+            Sesion::definirError("El campo está vacío o el nombre existe.", "ciudad");
         } else {
             $this->ciudad = $ciudadValida;
         }
@@ -107,8 +106,8 @@ public function crearUsuario($usuario){
     public function definirCodigoPostal($codigoPostal)
     {
         $codigoPostalValido = filter_var($codigoPostal, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ($codigoPostalValido === false) {
-            throw new Exception("El codigo postal introducido no es valido");
+        if (empty($codigoPostalValido)) {
+            Sesion::definirError("El campo está vacío o el nombre existe.", "codigoPostal");
         }   else {
             $this->codigoPostal = $codigoPostalValido;
         }
@@ -120,8 +119,8 @@ public function crearUsuario($usuario){
     public function definirCalle($calle)
     {
         $calleValida = filter_var($calle, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ($calleValida === false) {
-            throw new Exception("La calle introducida no es valida");
+        if (empty($calleValida)) {
+            Sesion::definirError("El campo está vacío o la calle existe.", "calle");
         } else {
             $this->calle = $calleValida;
         }
@@ -182,27 +181,30 @@ public function crearUsuario($usuario){
 /**
  * Método para insertar dirección
  */
-    public function insertar() {
+   public function insertar()
+    {
         $consulta = $this->conexion->prepare(
-            "INSERT INTO 'direcciones' (`id_usuarios`, `pais`, `ciudad`, `codigo_postal`, `calle`, `imagen1`, `imagen2`, `imagen3`, `imagen4`) VALUE ( ?,?,?,?,?,?,?,?,?)");
-        $consulta->bind_param("issssssss", $this->usuario, $this->pais, $this->ciudad, $this->codigoPostal,
-            $this->calle, $this->imagen1, $this->imagen2, $this->imagen3, $this->iamgen4);
+            "INSERT INTO `direcciones` (`id_usuarios`, `pais`, `ciudad`, `codigo_postal`, `calle`) VALUES (?, ?, ?, ?, ?)"
+        );
+        $consulta->bind_param(
+            "issss",
+            $this->usuario,
+            $this->pais,
+            $this->ciudad,
+            $this->codigoPostal,
+            $this->calle
+        );
         $resultado = $consulta->execute();
         $consulta->close();
         return $resultado;
     }
-
     /**
-     * Método para leer direcciones por el id de usuario
+     * Método para leer todas las direcciones 
      */
-    public function listarPorIdUsuario($usuario)
-    {
+    public function listarDirecciones()
+   {
         $direcciones = [];
-        $consulta = $this->conexion->prepare("SELECT * FROM `direcciones` WHERE `id_usuarios` = ?");
-        $consulta->bind_param("i", $usuario);
-        $consulta->execute();
-        $resultado = $consulta->get_result();
-        $consulta->close();
+        $resultado = $this->conexion->query("SELECT * FROM `direcciones` ORDER BY `id`");
         while ($fila = $resultado->fetch_assoc()) {
             $direccion = new Direccion();
             $direccion->definirId($fila["id"]);
@@ -210,14 +212,32 @@ public function crearUsuario($usuario){
             $direccion->definirCiudad($fila["ciudad"]);
             $direccion->definirCodigoPostal($fila["codigo_postal"]);
             $direccion->definirCalle($fila["calle"]);
-            $direccion->definirImagen1($fila["imagen1"]);
-            $direccion->definirImagen2($fila["imagen2"]);
-            $direccion->definirImagen3($fila["imagen3"]);
-            $direccion->definirImagen4($fila["imagen4"]);
+            array_push($direcciones, $direccion);
+        }
+       return $direcciones;
+   }
+    /**
+     * Método para leer direcciones por el id
+     */
+    public function listarPorId($id)
+    {
+        $direcciones = [];
+        $consulta = $this->conexion->prepare("SELECT * FROM `direcciones` WHERE `id` = ?");
+        $consulta->bind_param("i", $id);
+        $consulta->execute();
+        $resultado = $consulta->get_result();
+        $consulta->close();
+        while ($fila = $resultado->fetch_assoc()) {
+            $direccion = new Direccion();
+            $direccion->definirUsuario($fila["id_usuarios"]);
+            $direccion->definirPais($fila["pais"]);
+            $direccion->definirCiudad($fila["ciudad"]);
+            $direccion->definirCodigoPostal($fila["codigo_postal"]);
+            $direccion->definirCalle($fila["calle"]);
             array_push($direcciones, $direccion);
         }
 
-        return $direccioens;
+        return $direcciones;
     }
 
     /**
@@ -225,8 +245,14 @@ public function crearUsuario($usuario){
      */
     public function actualizar(){
 
-        $consulta = $this->conexion->prepare("UPDATE direcciones SET id_usuarios = ?, pais =?, ciudad = ?, codigo_postal = ?, calle = ?, imagen1 = ?, imagen2 = ?, imagen3 =?, imagen4 = ? WHERE id = ?");
-        $consulta->bind_param("issssssssi", $this->usuario, $this->pais, $this->ciudad, $this->codigoPostal, $this->calle, $this->imagen1, $this->imagen2, $this->imagen3, $this->imagen4, $this->id);
+        $consulta = $this->conexion->prepare("UPDATE direcciones SET id_usuarios = ?, pais =?, ciudad = ?, codigo_postal = ?, calle = ?, WHERE id = ?");
+        $consulta->bind_param("issssi", 
+            $this->usuario, 
+            $this->pais, 
+            $this->ciudad, 
+            $this->codigoPostal, 
+            $this->calle, 
+            $this->id);
         $resultado = $consulta->execute();
         $consulta->close();
         return $resultado;

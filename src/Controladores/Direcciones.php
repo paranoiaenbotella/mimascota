@@ -1,5 +1,5 @@
 <?php
-
+require_once(dirname(__DIR__) . "/Modelos/Direccion.php");
 require_once(dirname(__DIR__) . "/Controlador.php");
 require_once(dirname(__DIR__) . "/Modelos/Usuario.php");
 
@@ -18,6 +18,16 @@ class Direcciones extends Controlador
     }
 
 /**
+ * Mediante este método se muestran las direcciones
+ */
+    public function getListar()
+    {
+        $direccion = new Direccion();
+        $direcciones = $direccion->listarDirecciones();
+        $this->renderizar("Listar.php", ["direcciones"=>$direcciones]);
+    }
+
+/**
  * Método que muestra el formulario para 
  * crear direcciones
  */
@@ -31,18 +41,59 @@ class Direcciones extends Controlador
  * de las direcciones en la bd
  */
     public function postCrear()
-    {
-       
+    {  
+        $usuario = new Usuario();
+        $usuario = Sesion::obtenerUsuario();
+        $direccion = new Direccion();
+        $direccion->definirPais($_POST["pais"]);
+        $direccion->definirCiudad($_POST["ciudad"]);
+        $direccion->definirCodigoPostal($_POST["codigoPostal"]);
+        $direccion->definirCalle($_POST["calle"]);
+        $direccion->crearUsuario($usuario);
+        if ($direccion->insertar()) {
+                Sesion::definirAcierto("Operación realizada.", "succes");
+                Sesion::limpiarFormulario();
+                header("Location: /direcciones/crear");
+            } else {
+                header("Location: /direcciones/crear");
+
+            }
    
     }
 
-/**
- * Mediante este método se muestra por pantalla los registros de direcciones
- */
-    public function getListar()
+ /**
+     * Mediante este método se muestra por pantalla el
+     * formulario para editar la dirección
+     */
+    public function getEditar($id)
     {
-        
-       $this->renderizar("Listar.php");
+        $direccion = new Direccion();
+        $direccion = $direccion->listarPorId($id);
+        $this->renderizar("Editar.php", ["direccion" => $direccion]);
     }
 
+/**
+ * Método para editar una dirección
+ */
+/**
+    public function postEditar($id)
+    {   
+        $usuario = new Usuario();
+        $usuario = Sesion::obtenerUsuario();
+
+        $direccion = new Direccion();
+        $direccion = $direccion->listarPorId($id);
+        $direccion->definirPais($_POST["pais"]);
+        $direccion->definirCiudad($_POST["ciudad"]);
+        $direccion->definirCodigoPostal($_POST["codigoPostal"]);
+        $direccion->definirCalle($_POST["calle"]);
+        $direccion->definirUsuario($usuario);
+        if ($direccion->actualizar()) {
+            Sesion::definirAcierto("Operación realizada.", "nombreDireccion");
+            header("Location: /direcciones/editar/$id");
+        } else {
+            header("Location: /direcciones/editar/$id");
+        }
+    }
+*/
 }
