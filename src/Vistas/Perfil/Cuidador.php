@@ -31,28 +31,32 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="nombre">Nombre:</span>
                                     </div>
-                                    <input type="text" class="form-control" name="nombre" aria-label="Nombre" aria-describedby="nombre" value="<?php echo($datos["usuario"]->obtenerNombre()); ?>">
+                                    <input type="text" class="form-control" name="nombre" aria-label="Nombre" aria-describedby="nombre" value="<?php echo($datos["usuario"]->obtenerNombre(
+                                    )); ?>">
                                 </div>
                                 <!--APELLIDOS-->
                                 <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="apellidos">Apellidos:</span>
                                     </div>
-                                    <input type="text" class="form-control" name="apellidos" aria-label="Apellidos" aria-describedby="apellidos" value="<?php echo($datos["usuario"]->obtenerApellidos()); ?>">
+                                    <input type="text" class="form-control" name="apellidos" aria-label="Apellidos" aria-describedby="apellidos" value="<?php echo($datos["usuario"]->obtenerApellidos(
+                                    )); ?>">
                                 </div>
                                 <!--MOVIL-->
                                 <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="movil">Móvil:</span>
                                     </div>
-                                    <input type="text" class="form-control" name="movil" aria-label="Móvil" aria-describedby="movil" value="<?php echo($datos["usuario"]->obtenerMovil()); ?>">
+                                    <input type="text" class="form-control" name="movil" aria-label="Móvil" aria-describedby="movil" value="<?php echo($datos["usuario"]->obtenerMovil(
+                                    )); ?>">
                                 </div>
                                 <!--CORREO ELECTRONICO-->
                                 <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="email">Email:</span>
                                     </div>
-                                    <input type="text" class="form-control" name="email" aria-label="Email" aria-describedby="email" value="<?php echo($datos["usuario"]->obtenerEmail()); ?>">
+                                    <input type="text" class="form-control" name="email" aria-label="Email" aria-describedby="email" value="<?php echo($datos["usuario"]->obtenerEmail(
+                                    )); ?>">
                                 </div>
                                 <div class="input-group mb-2">
                                     <button class="btn btn-secondary" type="submit">Editar</button>

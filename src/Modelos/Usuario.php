@@ -1,11 +1,11 @@
 <?php
-
 /**
  *requiere_once, instrucción de incluir el archivo Modelo.php,
  *se verifica una vez dicha inclusión.
  *dirname(__DIR__) . "/Modelo.php", dirección completa del archivo.
  */
 require_once(dirname(__DIR__) . "/Modelo.php");
+require_once(dirname(__DIR__) . "/Modelos/Rol.php");
 
 /**
  * La clase contiene las operaciones contra la BD, los métodos
@@ -16,6 +16,8 @@ require_once(dirname(__DIR__) . "/Modelo.php");
  */
 class Usuario extends Modelo
 {
+    const DIRECTORY_IMG = __DIR__ . "/../../public/img";
+
     /**
      * Declaración de propiedades de la clase.
      * Las propiedades son privadas, por lo cual para
@@ -94,14 +96,13 @@ class Usuario extends Modelo
     public function actualizar()
     {
         $consulta = $this->conexion->prepare(
-            "UPDATE `usuarios` SET `id_roles` = ?, `email` = ?, `movil` = ?, `contrasena` = ?, `nombre` = ?, `apellidos` = ?, `imagen` = ? WHERE `id` =?"
+            "UPDATE `usuarios` SET `id_roles` = ?, `email` = ?, `movil` = ?, `nombre` = ?, `apellidos` = ?, `imagen` = ? WHERE `id` =?"
         );
         $consulta->bind_param(
-            "issssssi",
+            "isssssi",
             $this->rol,
             $this->email,
             $this->movil,
-            $this->contrasena,
             $this->nombre,
             $this->apellidos,
             $this->imagen,
@@ -169,7 +170,6 @@ class Usuario extends Modelo
         } else {
             $this->contrasena = $contrasenaValida;
         }
-            
     }
 
     /**
@@ -198,11 +198,16 @@ class Usuario extends Modelo
      */
     public function definirImagen($imagen)
     {
-        $imagenValida = filter_var($imagen, FILTER_SANITIZE_URL);
-        if ($imagenValida === false) {
-            throw new Exception("La ruta de la imagen es incorrecta");
+        if (is_array($imagen)) {
+            $imagenNombre = sha1($imagen["tmp_name"]);
+            $imagenDireccion = sprintf("%s/%s", self::DIRECTORY_IMG, $imagenNombre);
+            if (move_uploaded_file($imagen["tmp_name"], $imagenDireccion)) {
+                $this->imagen = sprintf("/img/%s", $imagenNombre);
+            } else {
+                Sesion::definirError("Tu puta madre.", "imagen");
+            }
         } else {
-            $this->imagen = $imagenValida;
+            $this->imagen = $imagen;
         }
     }
 
@@ -260,14 +265,12 @@ class Usuario extends Modelo
 
     public function identificar($email, $contrasena)
     {
-        
-            $cuenta = $this->listarPorEmail($email);
-            if ( isset($cuenta) && $cuenta->obtenerContrasena() === sha1($contrasena)) {
-                return $cuenta;
-            } else {
-                Sesion::definirError("Las credenciales son incorrectas.", "cuenta");
-            }
-       
+        $cuenta = $this->listarPorEmail($email);
+        if (isset($cuenta) && $cuenta->obtenerContrasena() === sha1($contrasena)) {
+            return $cuenta;
+        } else {
+            Sesion::definirError("Las credenciales son incorrectas.", "cuenta");
+        }
     }
 
     /**

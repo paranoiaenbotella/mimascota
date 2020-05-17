@@ -1,5 +1,4 @@
 <?php
-
 require_once(dirname(__DIR__) . "/Modelos/Usuario.php");
 require_once(dirname(__DIR__) . "/Controlador.php");
 
@@ -9,10 +8,9 @@ require_once(dirname(__DIR__) . "/Controlador.php");
  */
 class Perfil extends Controlador
 {
-
-/**
- * Método que devuelve la vista
- */
+    /**
+     * Método que devuelve la vista
+     */
     protected function obtenerDirectorioVistas()
     {
         return dirname(__DIR__) . "/Vistas/Perfil";
@@ -21,11 +19,28 @@ class Perfil extends Controlador
     public function getInicio()
     {
         $usuario = Sesion::obtenerUsuario();
-        $this->renderizar("Inicio.php", ["usuario" => $usuario]);
+        if (Sesion::esCuidador()) {
+            $this->renderizar("Cuidador.php", ["usuario" => $usuario]);
+        } else {
+            $this->renderizar("Propietario.php", ["usuario" => $usuario]);
+        }
     }
 
     public function postInicio()
     {
-        var_dump($_POST); // TODO: Implementar este metodo.
+        $usuario = Sesion::obtenerUsuario();
+        $usuario->definirNombre($_POST["nombre"]);
+        $usuario->definirApellidos($_POST["apellidos"]);
+        $usuario->definirMovil($_POST["movil"]);
+        $usuario->definirEmail($_POST["email"]);
+        if (isset($_FILES["imagen"])) {
+            $usuario->definirImagen($_FILES["imagen"]);
+        }
+        if ($usuario->actualizar()) {
+            header("Location: /perfil");
+        } else {
+            var_dump("Algo ha follado");
+        }
+        header("Location: /perfil");
     }
 }
