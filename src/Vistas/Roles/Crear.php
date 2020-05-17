@@ -16,10 +16,11 @@
                             <p class="succes"><?php echo(Sesion::obtenerAcierto("succes")); ?></p>
                         </div>
                     <?php endif; ?>
+                    </div>
                     <div class="form-group my-2">
                         <input class="btn btn-block btn-success" type="submit" value="Crear">
                     </div>
-                </div>
+                
             </form>
         </div>
     </div>

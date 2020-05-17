@@ -65,6 +65,9 @@ class Roles extends Controlador
         $this->renderizar("Editar.php", ["rol" => $rol]);
     }
 
+/**
+ * Método para editar un rol
+ */
     public function postEditar($id)
     {
         $rol = new Rol();
