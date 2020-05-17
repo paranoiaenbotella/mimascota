@@ -41,11 +41,11 @@ class AnimalesTipos extends Controlador
      * Método que muestra el formulario de edición
      * de tipo de animales
      */
-    public function getEditar()
+    public function getEditar($id)
     {
         $animalTipo = new AnimalTipo();
-        $animalesTipo = $animalTipo->listarPorId(1);
-        $this->renderizar("Editar.php", ["animalesTipo" => $animalesTipo]);
+        $animalTipo = $animalTipo->listarPorId($id);
+        $this->renderizar("Editar.php", ["animalTipo" => $animalTipo]);
     }
 
     /**
@@ -68,16 +68,17 @@ class AnimalesTipos extends Controlador
      * Mediante este método se controla la actualización
      * del tipo de animal en la BD
      */
-    public function postEditar()
+    public function postEditar($id)
     {
         $animalTipo = new AnimalTipo();
+        $animalTipo = $animalTipo->listarPorId($id);
         $animalTipo->definirNombre($_POST["nombre"]);
         if ($animalTipo->actualizar()) {
             Sesion::definirAcierto("Operación realizada.", "succes");
-            header("Location: /animales/tipos/editar");
+            header("Location: /animales/tipos/editar/$id");
         } else {
             Sesion::definirError("El campo está vacío o el nombre existe.", "nombreTipoAnimal");
-            header("Location: /animales/tipos/editar");
+            header("Location: /animales/tipos/editar/$id");
         }
     }
 }
