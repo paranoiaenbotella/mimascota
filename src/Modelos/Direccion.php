@@ -201,10 +201,13 @@ public function crearUsuario($usuario){
     /**
      * Método para leer todas las direcciones
      */
-    public function listarDirecciones()
-   {
-        $direcciones = [];
-        $resultado = $this->conexion->query("SELECT * FROM `direcciones` ORDER BY `id`");
+    public function listarDirecciones($idUsuario)
+    {
+        $consulta = $this->conexion->prepare("SELECT * FROM `direcciones` WHERE `id_usuarios` = ? ORDER BY `id`");
+        $consulta->bind_param("i", $idUsuario);
+        $consulta->execute();
+        $resultado = $consulta->get_result();
+        $consulta->close();
         while ($fila = $resultado->fetch_assoc()) {
             $direccion = new Direccion();
             $direccion->definirId($fila["id"]);
@@ -213,9 +216,8 @@ public function crearUsuario($usuario){
             $direccion->definirCiudad($fila["ciudad"]);
             $direccion->definirCodigoPostal($fila["codigo_postal"]);
             $direccion->definirCalle($fila["calle"]);
-            array_push($direcciones, $direccion);
+            return $direccion;
         }
-       return $direcciones;
    }
     /**
      * Método para leer direcciones por el id

@@ -23,10 +23,10 @@ class Direcciones extends Controlador
     public function getListar()
     {
         $direccion = new Direccion();
-        $direcciones = $direccion->listarDirecciones();
+        $direccion = $direccion->listarDirecciones(Sesion::obtenerUsuario()->obtenerId());
         $usuario = new Usuario();
         $usuario = $usuario->listarUsuarios();
-        $this->renderizar("Listar.php", ["direcciones"=>$direcciones, "usuario" => $usuario]);
+        $this->renderizar("Listar.php", ["direccion" => $direccion, "usuario" => $usuario]);
     }
 
 /**
@@ -80,8 +80,7 @@ class Direcciones extends Controlador
   {
    $usuario = new Usuario();
    $usuario = Sesion::obtenerUsuario();
- 
- $direccion = new Direccion();
+      $direccion = new Direccion();
          $direccion = $direccion->listarPorId($id);
          $direccion->definirPais($_POST["pais"]);
          $direccion->definirCiudad($_POST["ciudad"]);

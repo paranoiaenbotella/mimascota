@@ -8,9 +8,13 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="/perfil">Perfil</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/direcciones/editar/<?php echo($direccion->obtenerId()); ?>">Direcciones</a>
-                        </li>
+                        <?php if (isset($datos["direccion"])): ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/direcciones/editar/<?php echo($datos["direccion"]->obtenerId(
+                                )); ?>">Direcciones
+                                </a>
+                            </li>
+                        <?php endif; ?>
                         <li class="nav-item">
                             <a class="nav-link" href="#" tabindex="-1">Anuncio</a>
                         </li>

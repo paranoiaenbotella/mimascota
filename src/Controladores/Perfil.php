@@ -1,4 +1,6 @@
 <?php
+
+require_once(dirname(__DIR__) . "/Modelos/Direccion.php");
 require_once(dirname(__DIR__) . "/Modelos/Usuario.php");
 require_once(dirname(__DIR__) . "/Controlador.php");
 
@@ -20,7 +22,9 @@ class Perfil extends Controlador
     {
         $usuario = Sesion::obtenerUsuario();
         if (Sesion::esCuidador()) {
-            $this->renderizar("Cuidador.php", ["usuario" => $usuario]);
+            $direccion = new Direccion();
+            $direccion = $direccion->listarDirecciones($usuario->obtenerId());
+            $this->renderizar("Cuidador.php", ["direccion" => $direccion, "usuario" => $usuario]);
         } else {
             $this->renderizar("Propietario.php", ["usuario" => $usuario]);
         }
