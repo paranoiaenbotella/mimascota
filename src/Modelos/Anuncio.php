@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__DIR__)."Modelo.php");
+require_once(dirname(__DIR__)."/Modelo.php");
 
 /**
  * Operaciones contra la tabla anuncios
@@ -117,11 +117,16 @@ public function obtenerFecha()
  */
     public function definirImagen1($imagen1)
     {
-        $imagen1Valida = filter_var($imagen1, FILTER_SANITIZE_URL);
-        if ($imagen1Valida === false) {
-            throw new Exception("La ruta de la imagen es incorrecta");
-        }   else {
-            $this->imagen1 = $imagen1Valida;
+        if (is_array($imagen1)) {
+            $imagen1Nombre = sha1($imagen1["tmp_name"]);
+            $imagen1Direccion = sprintf("%s/%s", self::DIRECTORY_IMG, $imagen1Nombre);
+            if (move_uploaded_file($imagen1["tmp_name"], $imagen1Direccion)) {
+                $this->imagen1 = sprintf("/img/%s", $imagen1Nombre);
+            } else {
+                Sesion::definirError("La imagen no es valida, prueba .jpg o .png .", "imagen");
+            }
+        } else {
+            $this->imagen1 = $imagen1;
         }
     }
 
@@ -130,11 +135,16 @@ public function obtenerFecha()
  */
     public function definirImagen2($imagen2)
     {
-        $imagen2Valida = filter_var($imagen2, FILTER_SANITIZE_URL);
-        if ($imagen2Valida === false) {
-            throw new Exception("La ruta de la imagen es incorrecta");
-        }   else {
-            $this->iamgen2 = $imagen2Valida;
+        if (is_array($imagen2)) {
+            $imagen2Nombre = sha1($imagen2["tmp_name"]);
+            $imagen2Direccion = sprintf("%s/%s", self::DIRECTORY_IMG, $imagen2Nombre);
+            if (move_uploaded_file($imagen2["tmp_name"], $imagen2Direccion)) {
+                $this->imagen2 = sprintf("/img/%s", $imagen2Nombre);
+            } else {
+                Sesion::definirError("La imagen no es valida, prueba .jpg o .png .", "imagen");
+            }
+        } else {
+            $this->imagen2 = $imagen2;
         }
     }
 
@@ -143,11 +153,16 @@ public function obtenerFecha()
  */
     public function definirImagen3($imagen3)
     {
-        $imagen3Valida = filter_var($imagen3, FILTER_SANITIZE_URL);
-        if ($imagen3Valida === false) {
-            throw new Exception("La ruta de la imagen es incorrecta");
-        }   else {
-            $this->imagen3 = $imagen3Valida;
+        if (is_array($imagen3)) {
+            $imagen3Nombre = sha1($imagen3["tmp_name"]);
+            $imagen3Direccion = sprintf("%s/%s", self::DIRECTORY_IMG, $imagen3Nombre);
+            if (move_uploaded_file($imagen3["tmp_name"], $imagen3Direccion)) {
+                $this->imagen3 = sprintf("/img/%s", $imagen3Nombre);
+            } else {
+                Sesion::definirError("La imagen no es valida, prueba .jpg o .png .", "imagen");
+            }
+        } else {
+            $this->imagen3 = $imagen3;
         }
     }
 
@@ -156,11 +171,16 @@ public function obtenerFecha()
  */
     public function definirImagen4($imagen4)
     {
-        $imagen4Valida = filter_var($imagen4, FILTER_SANITIZE_URL);
-        if ($imagen4Valida === false) {
-            throw new Exception("La ruta de la imagen es incorrecta");
-        }   else {
-            $this->iamgen4 = $imagen4Valida;
+        if (is_array($imagen4)) {
+            $imagen4Nombre = sha1($imagen4["tmp_name"]);
+            $imagen4Direccion = sprintf("%s/%s", self::DIRECTORY_IMG, $imagen4Nombre);
+            if (move_uploaded_file($imagen4["tmp_name"], $imagen4Direccion)) {
+                $this->imagen4 = sprintf("/img/%s", $imagen4Nombre);
+            } else {
+                Sesion::definirError("La imagen no es valida, prueba .jpg o .png .", "imagen");
+            }
+        } else {
+            $this->imagen4 = $imagen4;
         }
     }
 
