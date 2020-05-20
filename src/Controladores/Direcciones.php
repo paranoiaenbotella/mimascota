@@ -24,7 +24,9 @@ class Direcciones extends Controlador
     {
         $direccion = new Direccion();
         $direcciones = $direccion->listarDirecciones();
-        $this->renderizar("Listar.php", ["direcciones"=>$direcciones]);
+        $usuario = new Usuario();
+        $usuario = $usuario->listarUsuarios();
+        $this->renderizar("Listar.php", ["direcciones"=>$direcciones, "usuario" => $usuario]);
     }
 
 /**
@@ -73,25 +75,25 @@ class Direcciones extends Controlador
 /**
  * Método para editar una dirección
  */
-/**
- * public function postEditar($id)
- * {
- * $usuario = new Usuario();
- * $usuario = Sesion::obtenerUsuario();
- *
-* $direccion = new Direccion();
-        * $direccion = $direccion->listarPorId($id);
-        * $direccion->definirPais($_POST["pais"]);
-        * $direccion->definirCiudad($_POST["ciudad"]);
-        * $direccion->definirCodigoPostal($_POST["codigoPostal"]);
-        * $direccion->definirCalle($_POST["calle"]);
-        * $direccion->definirUsuario($usuario);
-        * if ($direccion->actualizar()) {
-            * Sesion::definirAcierto("Operación realizada.", "nombreDireccion");
-            * header("Location: /direcciones/editar/$id");
-        * } else {
-            * header("Location: /direcciones/editar/$id");
-        * }
-    * }
-*/
+
+  public function postEditar($id)
+  {
+   $usuario = new Usuario();
+   $usuario = Sesion::obtenerUsuario();
+ 
+ $direccion = new Direccion();
+         $direccion = $direccion->listarPorId($id);
+         $direccion->definirPais($_POST["pais"]);
+         $direccion->definirCiudad($_POST["ciudad"]);
+         $direccion->definirCodigoPostal($_POST["codigoPostal"]);
+         $direccion->definirCalle($_POST["calle"]);
+         $direccion->definirUsuario($usuario);
+         if ($direccion->actualizar()) {
+             Sesion::definirAcierto("Operación realizada.", "nombreDireccion");
+             header("Location: /direcciones/editar/$id");
+         } else {
+             header("Location: /direcciones/editar/$id");
+         }
+     }
+
 }
