@@ -1,5 +1,7 @@
 <?php
 
+require_once(dirname(__DIR__) . "/src/Modelos/Rol.php");
+require_once(dirname(__DIR__) . "/src/Modelos/Usuario.php");
 require_once(dirname(__DIR__) . "/src/Sesion.php");
 Sesion::instanciar();
 /**
@@ -16,7 +18,7 @@ switch (1) {
         $accion = "getInicio";
         break;
     /**
-     * Perfil 
+     * Perfil
      */
     case preg_match("`^/perfil$`", $_SERVER["REQUEST_URI"]):
         if (Sesion::esInvitado()) {
@@ -29,10 +31,10 @@ switch (1) {
             }
             $fichero = dirname(__DIR__) . "/src/Controladores/Perfil.php";
             $clase = "Perfil";
-           
+
         }
     break;
-   
+
     /**
      * Usuarios
      */
@@ -83,7 +85,7 @@ switch (1) {
             $accion = "postCrear";
         } else {
             $accion = "getCrear";
-        } 
+       }
         $fichero = dirname(__DIR__) . "/src/Controladores/Roles.php";
         $clase = "Roles";
         break;
@@ -98,7 +100,7 @@ switch (1) {
             $accion = "postCrear";
                 } else {
                 $accion = "getCrear";
-        } 
+            }
         $fichero = dirname(__DIR__) . "/src/Controladores/Roles.php";
         $clase = "Roles";
         $accion = "getListar";
@@ -278,7 +280,7 @@ switch (1) {
     case preg_match("`/direcciones$`", $_SERVER["REQUEST_URI"]):
         if (Sesion::esInvitado()) {
             header("Location: /identificacion", 301);
-        } else { 
+        } else {
             $fichero = dirname(__DIR__) . "/src/Controladores/Direcciones.php";
             $clase = "Direcciones";
             $accion = "getListar";
@@ -288,9 +290,9 @@ switch (1) {
      * Crear direcciones
      */
     case preg_match("`/direcciones/crear$`", $_SERVER["REQUEST_URI"]):
-     if (Sesion::esInvitado()) {
+        if (Sesion::esInvitado()) {
             header("Location: /identificacion", 301);
-        } else { 
+        } else {
             $fichero = dirname(__DIR__) . "/src/Controladores/Direcciones.php";
             $clase = "Direcciones";
             if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -306,7 +308,7 @@ switch (1) {
     case preg_match("`/direcciones/editar/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches ):
         if (Sesion::esInvitado()) {
             header("Location: /identificacion", 301);
-        } else { 
+        } else {
             $fichero = dirname(__DIR__) . "/src/Controladores/Direcciones.php";
             $clase = "Direcciones";
             $argumento = $matches["id"];
@@ -324,11 +326,11 @@ switch (1) {
     break;
     /**
      * Crear anuncios
-     */    
+     */
     case preg_match("`/anuncios/crear$`", $_SERVER["REQUEST_URI"]):
-    if (Sesion::esInvitado()) {
+        if (Sesion::esInvitado()) {
             header("Location: /identificacion", 301);
-        } else { 
+        } else {
             $fichero = dirname(__DIR__) . "/src/Controladores/Anuncios.php";
             $clase = "Anuncios";
             if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -342,9 +344,9 @@ switch (1) {
      * Editar anuncios
      */
     case preg_match("`/anuncios/editar(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
-    if (Sesion::esInvitado()) {
+        if (Sesion::esInvitado()) {
             header("Location: /identificacion", 301);
-        } else { 
+        } else {
             $fichero = dirname(__DIR__) . "/src/Controladores/Anuncios.php";
             $clase = "Anuncios";
             $argumento = $matches["id"];

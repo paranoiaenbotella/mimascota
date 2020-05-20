@@ -30,23 +30,31 @@ class Sesion
 
     public static function esAdministrador()
     {
-        if (self::obtenerUsuario()->obtenerRol()->obtenerNombre() === "Administrador") {
+        $rol = new Rol();
+        $rol = $rol->listarPorId(self::obtenerUsuario()->obtenerRol());
+        if ($rol->obtenerNombre() === "Administrador") {
             return true;
         } else {
             return false;
         }
     }
 
-    public static function esPropietario(){
-        if (self::obtenerUsuario()->obtenerRol()->obtenerNombre() === "Propietario"){
+    public static function esPropietario()
+    {
+        $rol = new Rol();
+        $rol = $rol->listarPorId(self::obtenerUsuario()->obtenerRol());
+        if ($rol->obtenerNombre() === "Propietario") {
             return true;
         } else {
             return false;
         }
     }
 
-    public static function esCuidador(){
-        if (self::obtenerUsuario()->obtenerRol()->obtenerNombre() === "Cuidador"){
+    public static function esCuidador()
+    {
+        $rol = new Rol();
+        $rol = $rol->listarPorId(self::obtenerUsuario()->obtenerRol());
+        if ($rol->obtenerNombre() === "Cuidador") {
             return true;
         } else {
             return false;

@@ -37,7 +37,7 @@ class Acceso extends Controlador
             $usuario = new Usuario();
         if ($cuenta = $usuario->identificar($_POST["email"], $_POST["contrasena"])) {
             Sesion::definirUsuario($cuenta->obtenerId());
-            header("Location: /");
+            header("Location: /perfil");
         } else {
             header("Location: /identificacion");
         }
