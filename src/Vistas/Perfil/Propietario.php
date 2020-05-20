@@ -19,7 +19,7 @@
                             <div class="card">
                                 <img alt="imagen de perfil" class="img-thumbnail" src="<?php echo($datos["usuario"]->obtenerImagen(
                                 )); ?>">
-                                <h6 class="text-center">Avatar</h6>
+                                <h6 class="text-center mt-2">Avatar</h6>
                             </div>
                         </div>
                         <!--NOMBRE-->
@@ -59,12 +59,12 @@
                                 <!--IMAGEN-->
                                 <div class="input-group mb-2">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="email">Imagen:</span>
+                                        <span class="input-group-text" id="imagen">Avatar:</span>
                                     </div>
                                     <input type="file" class="form-control" name="imagen" aria-label="Imagen" aria-describedby="file">
                                 </div>
                                 <div class="input-group mb-2">
-                                    <button class="btn btn-secondary" type="submit">Editar</button>
+                                    <button class="btn btn-secondary" type="submit">Actualizar</button>
                                 </div>
                             </form>
                         </div>
