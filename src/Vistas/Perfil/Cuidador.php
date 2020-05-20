@@ -6,13 +6,13 @@
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Perfil</a>
+                            <a class="nav-link active" href="/perfil">Perfil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Direcciones</a>
+                            <a class="nav-link" href="/direcciones/editar/<?php echo($direccion->obtenerId()); ?>">Direcciones</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" tabindex="-1">Anuncios</a>
+                            <a class="nav-link" href="#" tabindex="-1">Anuncio</a>
                         </li>
                     </ul>
                 </div>
@@ -20,13 +20,14 @@
                     <div class="row">
                         <div class="col-sm-3  col-md-3 col-lg-3">
                             <div class="card" style="width: 7rem;">
-                                <img src="..." class="rounded float-left" alt="imagen de perfil">
-                                <h6>Avatar</h6>
+                                <img alt="imagen de perfil" class="img-thumbnail" src="<?php echo($datos["usuario"]->obtenerImagen(
+                                )); ?>">
+                                <h6 class="text-center mt-2">Avatar</h6>
                             </div>
                         </div>
                         <!--NOMBRE-->
                         <div class="col-sm-9  col-md-9 col-lg-9">
-                            <form method="post">
+                            <form enctype="multipart/form-data" method="post">
                                 <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="nombre">Nombre:</span>
@@ -58,8 +59,15 @@
                                     <input type="text" class="form-control" name="email" aria-label="Email" aria-describedby="email" value="<?php echo($datos["usuario"]->obtenerEmail(
                                     )); ?>">
                                 </div>
+                                <!--IMAGEN-->
                                 <div class="input-group mb-2">
-                                    <button class="btn btn-secondary" type="submit">Editar</button>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="imagen">Avatar:</span>
+                                    </div>
+                                    <input type="file" class="form-control" name="imagen" aria-label="Imagen" aria-describedby="file">
+                                </div>
+                                <div class="input-group mb-2">
+                                    <button class="btn btn-secondary" type="submit">Actualizar</button>
                                 </div>
                             </form>
                         </div>
