@@ -1,7 +1,7 @@
 <!--Crear anuncio-->
 <section class="container">
     <div class="row">
-        <div class="col-sm-12  col-md-10 offset-md-1 col-lg-10 offset-lg-1 ">
+        <div class="col-sm-12  col-md-12 col-lg-12  ">
             <div class="card ">
                 <div class="card-header">
                     <h4>Crear anuncio</h4>
@@ -32,10 +32,10 @@
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span class="sr-only">Siguiente</span>
                                 </a>
-                            </div>
-                      <!--DESCRIPCIÓN--> 
+                            
+                      <!--DESCRIPCIÓN CUIDADOR--> 
                       <form enctype="multipart/form-data" method="post">   
-                            <div class="form-group my-0">
+                    <div class="form-group my-0">
                     <label for="descripcion" class="mb-0">Sobre el cuidador y  alojamiento:</label>
                     <textarea class="form-control form-control-sm" id="descripcion" name="descripcion" rows="13"></textarea>
                     <?php if (Sesion::existeError("descripcionAnuncio")): ?>
@@ -48,42 +48,65 @@
                         </div>
                     <?php endif; ?>
                 </div>
-            </div>
-                        
+                </div>
+                      
                        
-                        <div class="col-sm-6  col-md-6 col-lg-6">
-                            
+                        <div class="col-sm-7  col-md-7 col-lg-7">
+                    <h5>Crear servicios </h5>
+                    <div class="form-group my-0">
+                    <label for="nombre" class="mb-0">Nombre servicio:</label>
+                    <input class="form-control form-control-sm" id="nombre" name="nombre" type="text" placeholder="Ej. Alojamiento de noche">
+                    <?php if (Sesion::existeError("nombreServicio")): ?>
+                        <div>
+                            <p class="error"><?php echo(Sesion::obtenerError("nombreServicio")); ?></p>
+                        </div>
+                    <?php elseif (Sesion::existeAcierto("succes")): ?>
+                        <div>
+                            <p class="succes"><?php echo(Sesion::obtenerAcierto("succes")); ?></p>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <!--DESCRIPCIÓN-->
+
+                <div class="form-group my-0">
+                    <label for="descripcion" class="mb-0">Descripcion del servicio:</label>
+                    <textarea class="form-control form-control-sm" id="descripcion" name="descripcion" rows="3" placeholder="Ej. desde las 19 las 9. Aquí se puede incluir otras prestaciones se se desea... "></textarea>
+                    <?php if (Sesion::existeError("descripcionServicio")): ?>
+                        <div>
+                            <p class="error"><?php echo(Sesion::obtenerError("descripcionServicio")); ?></p>
+                        </div>
+                    <?php elseif (Sesion::existeAcierto("succes")): ?>
+                        <div>
+                            <p class="succes"><?php echo(Sesion::obtenerAcierto("succes")); ?></p>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                 <!--PRECIO-->
+                <div class="form-group my-0">
+                    <label for="precio" class="mb-0">Precio del servicio:</label>
+                    <input class="form-control form-control-sm" id="precio" name="precio" type="text">
+                    <?php if (Sesion::existeError("precio")): ?>
+                        <div>
+                            <p class="error"><?php echo(Sesion::obtenerError("precio")); ?></p>
+                        </div>
+                    <?php elseif (Sesion::existeAcierto("succes")): ?>
+                        <div>
+                            <p class="succes"><?php echo(Sesion::obtenerAcierto("succes")); ?></p>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <!--IMAGENES-->
+                <div class="form-group mb-2">
+                <label for="imagen" class="mb-0"> Imagen:</label>
+                <input type="file" class="form-control " name="imagen">
+                </div>
+                                
                                 <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="nombre">Nombre:</span>
-                                    </div>
-                                    <input type="text" class="form-control" name="nombre" aria-label="Nombre" aria-describedby="nombre" value="<?php echo($datos["usuario"]->obtenerNombre()); ?>">
+                                    <button class="btn btn-secondary" type="submit">Guardar</button>
                                 </div>
-                                <!--APELLIDOS-->
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="apellidos">Apellidos:</span>
-                                    </div>
-                                    <input type="text" class="form-control" name="apellidos" aria-label="Apellidos" aria-describedby="apellidos" value="<?php echo($datos["usuario"]->obtenerApellidos()); ?>">
-                                </div>
-                                <!--MOVIL-->
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="movil">Móvil:</span>
-                                    </div>
-                                    <input type="text" class="form-control" name="movil" aria-label="Móvil" aria-describedby="movil" value="<?php echo($datos["usuario"]->obtenerMovil()); ?>">
-                                </div>
-                                <!--CORREO ELECTRONICO-->
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="email">Email:</span>
-                                    </div>
-                                    <input type="text" class="form-control" name="email" aria-label="Email" aria-describedby="email" value="<?php echo($datos["usuario"]->obtenerEmail()); ?>">
-                                </div>
-                                <div class="input-group mb-2">
-                                    <button class="btn btn-secondary" type="submit">Editar</button>
-                                </div>
+                        </div>
                             </form>
+                        
                         </div>
                     </div>
                 </div>
