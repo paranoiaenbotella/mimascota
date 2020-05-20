@@ -11,9 +11,9 @@ class Opinion extends Modelo
 {
     private $id;
 
-    private $propietario;
+    private $usuario;
 
-    private $cuidador;
+    private $anuncio;
 
     private $mensaje;
 
@@ -41,45 +41,45 @@ class Opinion extends Modelo
     }
 
     /**
-     * Se crea el propietario
+     * Se crea el anuncio
      */
-    public function crearPropietario($propietario)
+    public function crearAnuncio($anuncio)
     {
-        if ($propietario instanceof Usuario) {
-            $this->propietario = $propietario->obtenerId();
+        if ($anuncio instanceof Anuncio) {
+            $this->anuncio = $anuncio->obtenerId();
         } else {
-            throw new Exception("El parámetro facilitado no es una instancia de la clase Usuario.");
+            throw new Exception("El parámetro facilitado no es una instancia de la clase Anuncio.");
         }
     }
 
     /**
-     * Método para definir el propietario
+     * Método para definir el anuncio
      * quien comparte su opinión
      */
-    public function definirPropietario($propietario)
+    public function definirAnuncio($anuncio)
     {
-        $this->propietario = int($propietario);
+        $this->anuncio = int($anuncio);
     }
 
     /**
-     * Se crea el cuidador
+     * Se crea el usuario
      */
-    public function crearCuidador($cuidador)
+    public function crearUsuario($usuario)
     {
-        if ($cuidador instanceof Usuario) {
-            $this->cuidador = $cuidador->obtenerId();
+        if ($usuario instanceof Usuario) {
+            $this->usuario = $usuario->obtenerId();
         } else {
             throw new Exception("El parámetro facilitado no es una instancia de la clase Usuario.");
         }
     }
 
     /**
-     * Método para definir el cuidador
-     * a quien va dirigida la  opinión
+     * Método para definir el usuario
+     * que escribe la opinión
      */
-    public function definirCuidador($cuidador)
+    public function definirUsuario($usuario)
     {
-        $this->cuidador = int($cuidador);
+        $this->usuario = int($usuario);
     }
 
 /**
@@ -88,8 +88,8 @@ class Opinion extends Modelo
  	public function definirMensaje($mensaje)
  	{
  		$mensajeValido = filter_var($mensaje, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-		if ($mensajeValido === false) {
-			throw new Exception("El mensaje introducido no es valido");
+		if (empty($mensajeValido)) {
+			Sesion::definirError("Mensaje vacío o existe", "mensaje");
 
 		} 	else {
 			$this->mensaje = $mensajeValido;
@@ -97,27 +97,27 @@ class Opinion extends Modelo
  	}
 
 /**
- * Método para obtener el propietario
+ * Método para obtener el anuncio
  */
- 	public function obtenerPropietario()
+ 	public function obtenerAnuncio()
  	{
-		if (is_null($this->propietario)){
-		throw new Exception("El propietario no esta definido");
+		if (is_null($this->anuncio)){
+		throw new Exception("El anuncio no esta definido");
 
 		} 	else {
-			return $this->propietario;
+			return $this->anuncio;
 		}
 	}
 
 /**
  * Método para obtener el cuidador
  */
- 	public function obtenerCuidador()
+ 	public function obtenerUsuario()
  	{
-		if (is_null($this->cuidador)){
-		throw new Exception("El cuidador no esta definido");
+		if (is_null($this->usuario)){
+		throw new Exception("El usuario no esta definido");
         } 	else {
-			return $this->cuidador;
+			return $this->usuario;
 		}
 	}
 
@@ -138,67 +138,103 @@ class Opinion extends Modelo
  */
 public function insertar(){
         $consulta = $this->conexion->prepare(
-            "INSERT INTO `opiniones` (`propietario`, `cuidador`, `mensaje`) VALUES (?, ?, ?)");
-        $consulta->bind_param("iis", $this->propietario, $this->cuidador, $this->mensaje);
+            "INSERT INTO `opiniones` (`id_anuncios`, `id_usuarios`, `mensaje`) VALUES (?, ?, ?)");
+        $consulta->bind_param("iis", $this->anuncio, $this->usuario, $this->mensaje);
         $resultado = $consulta->execute();
         $consulta->close();
     return $resultado;
 	}
 
 /**
- * Método para listar opiniones por propietario
+ * Método para listar opiniones por anuncio
  */
-public function leerPorPropietario($propietario){
-		$opiniones = [];
-		$consulta = $this->conexion->prepare("SELECT * FROM `opiniones` WHERE `propietario` = ?");
-        $consulta->bind_param("i", $propietario);
+public function listarPorAnuncio($anuncio){
+		
+		$consulta = $this->conexion->prepare("SELECT * FROM `opiniones` WHERE `anuncio` = ?");
+        $consulta->bind_param("i", $anuncio);
         $consulta->execute();
         $resultado = $consulta->get_result();
         $consulta->close();
 
-        while ($fila = $resultado->fetch_assoc()) {
-        	$opinion = new Opinion();
-        	$opinion->definirId($fila["id"]);
-        	$opinion->definirCuidador($fila["cuidador"]);
-        	$opinion->definirMensaje($fila["mensaje"]);
-        	array_push($opiniones, $opinion);
+        if (empty($resultado->num_rows)) {
+        	throw new Exception("Servicio no encontrado");
+            
+        } else{
+            $anuncio = new Anuncio();
+            $anuncio->definirId($fila["id"]);
+            $anuncio->definirCuidador($fila["id_usuarios"]);
+            $anuncio->definirMensaje($fila["id_anuncios"]);
+            $anuncio->definirMensaje($fila["mensaje"]); 
+            return $anuncio;
         }
-        return $opiniones;
+       
 }
 
 /**
- * Método para listar opiniones por cuidador
+ * Método para listar opiniones por anuncio
  */
-    public function leerPorCuidador($cuidador)
+public function listarPorId($id){
+        
+        $consulta = $this->conexion->prepare("SELECT * FROM `opiniones` WHERE `id` = ?");
+        $consulta->bind_param("i", $id);
+        $consulta->execute();
+        $resultado = $consulta->get_result();
+        $consulta->close();
+
+        if (empty($resultado->num_rows)) {
+            throw new Exception("Servicio no encontrado");
+            
+        } else{
+            $anuncio = new Anuncio();
+            $anuncio->definirId($fila["id"]);
+            $anuncio->definirCuidador($fila["id_usuarios"]);
+            $anuncio->definirMensaje($fila["id_anuncios"]);
+            $anuncio->definirMensaje($fila["mensaje"]); 
+            return $anuncio;
+        }
+       
+}
+
+/**
+ * Método para listar opiniones por usuario
+ */
+    public function listarPorUsuario($usuario)
     {
-        $opiniones = [];
-        $consulta = $this->conexion->prepare("SELECT * FROM `opiniones` WHERE `cuidador` = ?");
-        $consulta->bind_param("i", $cuidador);
+       
+        $consulta = $this->conexion->prepare("SELECT * FROM `opiniones` WHERE `usuario` = ?");
+        $consulta->bind_param("i", $usuario);
         $consulta->execute();
         $resultado = $consulta->get_result();
         $consulta->close();
-        while ($fila = $resultado->fetch_assoc()) {
-            $opinion = new Opinion();
-            $opinion->definirId($fila["id"]);
-        	$opinion->definirPropietario($fila["propietario"]);
-        	$opinion->definirMensaje($fila["mensaje"]);
-        	array_push($opiniones, $opinion);
+            if (empty($resultado->num_rows)) {
+            throw new Exception("Servicio no encontrado");
+            
+        } else{
+            $anuncio = new Anuncio();
+            $anuncio->definirId($fila["id"]);
+            $anuncio->definirCuidador($fila["id_usuarios"]);
+            $anuncio->definirMensaje($fila["id_anuncios"]);
+            $anuncio->definirMensaje($fila["mensaje"]); 
+            return $anuncio;
+        	
         }
-        return $opiniones;
+       
 }
 
 /**
- * Método para actualizar los opiniones por id
+ * Método para actualizar las opiniones por id
  */
     public function actualizar(){
 
-        $consulta = $this->conexion->prepare("UPDATE opiniones SET propietario = ?, cuidador = ?, mensaje = ? WHERE id = ?");
-        $consulta->bind_param("iisi", $this->propietario, $this->cuidador, $this->mensaje, $this->id);
+        $consulta = $this->conexion->prepare("UPDATE opiniones SET usuario = ?, anuncio = ?, mensaje = ? WHERE id = ?");
+        $consulta->bind_param("iisi", $this->usuario, $this->anuncio, $this->mensaje, $this->id);
+        $resultado = $consulta->execute();
+        $consulta->close();
         return $resultado;
     }
 
 /**
- * Método para eliminar opinion por id
+ * Método para eliminar opinión por id
  */
     public function eliminar(){
         $consulta = $this->conexion->prepare("DELETE FROM opiniones WHERE id = ?");
