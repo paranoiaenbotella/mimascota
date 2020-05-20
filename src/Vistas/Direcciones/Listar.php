@@ -30,7 +30,9 @@
                             </a>
                         </td>
                         <td>
-                            <a href="" class="btn btn-sm btn-danger">Eliminar</a>
+                            <a href="/direcciones/eliminar/<?php echo($datos["direccion"]->obtenerId(
+                            )); ?>" class="btn btn-sm btn-danger">Eliminar
+                            </a>
                         </td>
                     </tr>
                 </tbody>

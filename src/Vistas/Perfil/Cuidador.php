@@ -8,13 +8,15 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="/perfil">Perfil</a>
                         </li>
-                        <?php if (isset($datos["direccion"])): ?>
-                            <li class="nav-item">
+                        <li class="nav-item">
+                            <?php if (isset($datos["direccion"])): ?>
                                 <a class="nav-link" href="/direcciones/editar/<?php echo($datos["direccion"]->obtenerId(
                                 )); ?>">Direcciones
                                 </a>
-                            </li>
-                        <?php endif; ?>
+                            <?php else: ?>
+                                <a class="nav-link" href="/direcciones/crear">Crear Dreccion</a>
+                            <?php endif; ?>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#" tabindex="-1">Anuncio</a>
                         </li>
