@@ -1,8 +1,8 @@
 <?php
 
-require_once(dirname(__DIR__) . "/Modelos/Servicios.php");
+require_once(dirname(__DIR__) . "/Modelos/Servicio.php");
 require_once(dirname(__DIR__) . "/Modelos/Anuncio.php");
-require_once(dirname(__DIR__) . "Controlador.php");
+require_once(dirname(__DIR__) . "/Controlador.php");
 
 /**
  * Mediante esta clase se controla las operaciones sobre la tabla 'servicios'
@@ -21,7 +21,10 @@ class Servicios extends Controlador{
  * Método que muestra el formulario
  * para crear servicios
  */
-public function getCrear(){
+	public function getCrear(){
+		
+		
+		$this->renderizar("Crear.php");
 
 }
 
@@ -29,7 +32,7 @@ public function getCrear(){
  * Método para controlar la inserción de los 
  * servicios en la bd
  */
-public function postCrear(){
+	public function postCrear(){
 
 
 }
