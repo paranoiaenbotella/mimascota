@@ -8,15 +8,17 @@ require_once(dirname(__DIR__)."/Modelo.php");
 
 class Anuncio extends Modelo
 {
-	private $id;
+    private $id;
 
-	private $usuario;
+    private $usuario;
 
-	private $tarifa;
+    private $servicio;
 
-	private $fecha;
+    private $descripcion;
 
-	private $imagen1;
+    private $fecha;
+
+    private $imagen1;
 
     private $imagen2;
 
@@ -46,15 +48,35 @@ class Anuncio extends Modelo
         }
     }
 
+    public function definirDescripcion()
+    {
+    }
+
+    public function obtenerDescripcion()
+    {
+    }
+
+    public function crearServicio()
+    {
+    }
+
+    public function definirServicio()
+    {
+    }
+
+    public function obtenerServicio()
+    {
+    }
+
     /**
      * Se crea al usuario propietario del anuncio
      */
-public function crearUsuario($usuario){
-
-    if ($usuario instanceof Usuario){
-        $this->usuario = $usuario->obtenerId();
-    } else {
-        throw new Exception("El parámetro facilitado no es una instancia de la clase Usuario.");
+    public function crearUsuario($usuario)
+    {
+        if ($usuario instanceof Usuario) {
+            $this->usuario = $usuario->obtenerId();
+        } else {
+            throw new Exception("El parámetro facilitado no es una instancia de la clase Usuario.");
 
     }
 }
