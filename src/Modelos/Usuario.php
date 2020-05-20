@@ -193,8 +193,7 @@ class Usuario extends Modelo
     }
 
     /**
-     * Definir imagen.
-     * El filtro aplicado es de saneamiento de una url
+     * Definir imagen
      */
     public function definirImagen($imagen)
     {
@@ -204,7 +203,7 @@ class Usuario extends Modelo
             if (move_uploaded_file($imagen["tmp_name"], $imagenDireccion)) {
                 $this->imagen = sprintf("/img/%s", $imagenNombre);
             } else {
-                Sesion::definirError("Tu puta madre.", "imagen");
+                Sesion::definirError("La imagen no es valida, prueba .jpg o .png .", "imagen");
             }
         } else {
             $this->imagen = $imagen;
@@ -477,8 +476,7 @@ class Usuario extends Modelo
         if (is_null($this->rol)) {
             throw new Exception("El rol no está definido");
         } else {
-            $rol = new Rol();
-            return $rol->listarPorId($this->rol);
+            return $this->rol;
         }
     }
 }
