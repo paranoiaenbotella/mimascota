@@ -208,6 +208,7 @@ public function crearUsuario($usuario){
         while ($fila = $resultado->fetch_assoc()) {
             $direccion = new Direccion();
             $direccion->definirId($fila["id"]);
+            $direccion->definirUsuario($fila["id_usuarios"]);
             $direccion->definirPais($fila["pais"]);
             $direccion->definirCiudad($fila["ciudad"]);
             $direccion->definirCodigoPostal($fila["codigo_postal"]);
