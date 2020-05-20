@@ -2,7 +2,7 @@
 <section class="container">
     <div class="row">
         <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
-            <h4>Crear Animales</h4>
+            <h4>Crear Animal</h4>
             <form method="POST">
                 <div class="form-group my-0">
                     <label for="nombre" class="mb-0">Nombre animal:</label>

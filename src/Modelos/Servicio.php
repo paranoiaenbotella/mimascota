@@ -187,6 +187,29 @@ public function obtenerDescripcion(){
 	}
 
 /**
+ * Método para leer las servicios por usuario
+ */
+public function listarPorId($id){
+    $consulta = $this->conexion->prepare(" SELECT FROM servicios WHERE id= ?");
+    $consulta->bind_param("i", $id);
+    $consulta->execute();
+    $resultado = $consulta->get_result();
+    $consulta->close();
+    if(empty($resultado->num_rows)){
+        throw new Exception("Servicio no encontrado");    
+    } else {
+        $fila = $resultado->fetch_assoc();
+        $servicio = new Servicio();
+        $servicio->definirId($fila["id"]);
+        $servicio->definirAnuncio($fila["id_anuncios"]);
+        $servicio->definirNombre($fila["nombre"]);
+        $servicio->definirDescripcion($fila["descripcion"]);
+        $servicio->definirPrecio($fila["precio"]);
+        return $servicio;
+    }
+}
+
+/**
  * Método para actualizar tarifas por id
  */
 	public function actualizar(){
@@ -195,9 +218,9 @@ public function obtenerDescripcion(){
         $consulta->bind_param("issfi",  
             $this->anuncio, 
             $this->nombre, 
-            $this->descripcion;
+            $this->descripcion,
             $this->precio, 
-            $this->id);
+            $this->id );
         $resultado = $consulta->execute();
         $consulta->close();
         return $resultado;
