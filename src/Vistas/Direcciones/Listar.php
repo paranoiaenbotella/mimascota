@@ -7,6 +7,7 @@
                 <thead>
                     <tr class="bg-success text-white">
                         <th>Id</th>
+                        <th>Usuario</th>
                         <th>País</th>
                         <th>Ciudad</th>
                         <th>Código Postal</th>
@@ -18,6 +19,7 @@
                     <?php foreach ($datos["direcciones"] as $direccion): ?>
                         <tr>
                             <td><?php echo $direccion->obtenerId(); ?></td>
+                            <td><?php echo $direccion->obtenerUsuario(); ?></td>
                             <td><?php echo $direccion->obtenerPais(); ?></td>
                             <td><?php echo $direccion->obtenerCiudad(); ?></td>
                             <td><?php echo $direccion->obtenerCodigoPostal(); ?></td>
