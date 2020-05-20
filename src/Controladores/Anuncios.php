@@ -2,6 +2,7 @@
 
 require_once(dirname(__DIR__) . "/Modelos/Anuncio.php");
 require_once(dirname(__DIR__) . "/Modelos/Usuario.php");
+require_once(dirname(__DIR__) . "/Modelos/Servicio.php");
 require_once(dirname(__DIR__) . "/Controlador.php");
 
 /**
@@ -23,7 +24,7 @@ class Anuncios extends Controlador
   */
 
 public function getCrear(){
-
+      $this->renderizar("Crear.php");
 }
 
 /**
