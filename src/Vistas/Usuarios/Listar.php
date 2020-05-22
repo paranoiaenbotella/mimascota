@@ -32,7 +32,8 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="" class="btn btn-sm btn-danger">Eliminar</a>
+                                <a href="/usuarios/eliminar/<?php echo($usuario->obtenerId(
+                            )); ?>" class="btn btn-sm btn-danger">Eliminar</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
