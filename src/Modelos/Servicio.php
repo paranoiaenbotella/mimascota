@@ -6,7 +6,7 @@ require_once(dirname(__DIR__) . "/Modelo.php");
  * La clase contiene las operaciones contra la BD y los métodos
  * que definen, obtienen y validan los datos.
  */
-class Tarifa extends Modelo
+class Servicio extends Modelo
 {
     private $descripcion;
 
@@ -27,7 +27,7 @@ class Tarifa extends Modelo
     }
 
     /**
-     * Método para actualizar tarifas por id
+     * Método para actualizar servicios por id
      */
     public function actualizar()
     {
@@ -61,14 +61,14 @@ class Tarifa extends Modelo
      */
     public function definirDescripcion($descripcion)
     {
-        if (empty($descripcion) || strlen($descripcion) > 512) {
+        if (empty($descripcion) || strlen($descripcion) > 256) {
             Sesion::definirError(
-                "No se ha introducido una descripción o tiene mas de 512 caracteres.",
+                "No se ha introducido una descripción o tiene mas de 256 caracteres.",
                 "descripcionServicio"
             );
         } else {
             $this->descripcion = filter_var($descripcion, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            Sesion::definirFormulario("descripcionServicio", $descripcion);
+            
         }
         return $this;
     }
@@ -93,11 +93,11 @@ class Tarifa extends Modelo
      */
     public function definirPrecio($precio)
     {
-        $precioValido = filter_var($precio, FILTER_SANITIZE_NUMBER_FLOAT);
-        if ($precioValido === false) {
-            throw new Exception("El precio introducido no es valido");
+        $precioValido = filter_var($precio, FILTER_VALIDATE_FLOAT);
+        if ( empty($precioValido)) {
+            Sesion::definirError("El precio introducido no es valido", "precio");
         } else {
-            $this->precio = $precioValido;
+            $this->precio = (float)$precioValido;
         }
     }
 
@@ -113,7 +113,7 @@ class Tarifa extends Modelo
     }
 
     /**
-     * Método para eliminar tarifa por id
+     * Método para eliminar servicio por id
      */
     public function eliminar()
     {
@@ -152,7 +152,7 @@ class Tarifa extends Modelo
             throw new Exception("Servicio no encontrado");
         } else {
             $fila = $resultado->fetch_assoc();
-            $servicio = new Tarifa();
+            $servicio = new Servicio();
             $servicio->definirId($fila["id"]);
             $servicio->definirNombre($fila["nombre"]);
             $servicio->definirDescripcion($fila["descripcion"]);
@@ -172,7 +172,7 @@ class Tarifa extends Modelo
         $consulta->execute();
         $resultado = $consulta->get_result();
         while ($fila = $resultado->fetch_assoc()) {
-            $servicio = new Tarifa();
+            $servicio = new Servicio();
             $servicio->definirId($fila["id"]);
             $servicio->definirNombre($fila["nombre"]);
             $servicio->definirDescripcion($fila["descripcion"]);
@@ -200,7 +200,7 @@ class Tarifa extends Modelo
     public function obtenerId()
     {
         if (is_null($this->id)) {
-            throw new Exception("El identificador del tarifa no está definido.");
+            throw new Exception("El identificador del servicio no está definido.");
         } else {
             return $this->id;
         }
