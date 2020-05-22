@@ -48,24 +48,65 @@ class Anuncio extends Modelo
         }
     }
 
+/**
+ * Método para definir la descripción
+ */
     public function definirDescripcion()
     {
+      if (empty($descripcion)) {
+            Sesion::definirError(
+                "No se ha introducido una descripción.",
+                "descripcionAnuncio");
+        } else {
+            $this->descripcion = filter_var($descripcion, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        }
+        return $this;
     }
 
+/**
+ * Método para obtener la descripción
+ */
     public function obtenerDescripcion()
     {
+      if (is_null($this->descripcion)) {
+            throw new Exception("La descripción no esta definida.");
+        } else {
+            return $this->descripcion;
+        }
     }
 
+    /**
+     * Se crea el servicio
+     */
     public function crearServicio()
     {
+          if ($servicio instanceof Servicio){
+        $this->servicio = $servicio->obtenerId();
+    } else {
+        throw new Exception("El parámetro facilitado no es una instancia de la clase Servicio.");
+
+    }
+
+    /**
+     * Definir servicio
+     */
     }
 
     public function definirServicio()
     {
+      $this->servicio = (int)$servicio;
     }
 
+/**
+ * Método para obtener el servicio
+ */
     public function obtenerServicio()
     {
+      if (is_null($this->servicio)){
+        throw new Exception("El servicio no está definido");
+    } else {
+        return $this->servicio;
+          }
     }
 
     /**
