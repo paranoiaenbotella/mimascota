@@ -18,9 +18,8 @@
                     <?php endif; ?>
                     </div>
                     <div class="form-group my-2">
-                        <input class="btn btn-block btn-success" type="submit" value="Crear">
-                    </div>
-                
+                        <input class="btn btn-block btn-success" type="submit" value="Guardar">
+                    </div>               
             </form>
         </div>
     </div>

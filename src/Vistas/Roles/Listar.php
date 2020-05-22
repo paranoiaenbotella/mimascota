@@ -20,12 +20,14 @@
                                 <a href="/roles/editar/<?php echo($rol->obtenerId()); ?>" class="btn btn-sm btn-info">Editar</a>
                             </td>
                             <td>
-                                <a href="" class="btn btn-sm btn-danger">Eliminar</a>
+                                <a href="/roles/eliminar/<?php echo($rol->obtenerId(
+                            )); ?>" class="btn btn-sm btn-danger">Eliminar</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <a href="/roles/crear" class="btn btn-sm btn-light">Regresar a crear roles</a>
         </div>
     </div>
 </section>
