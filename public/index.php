@@ -37,10 +37,23 @@ switch (1) {
      * Usuarios
      */
     case preg_match("`^/usuarios$`", $_SERVER["REQUEST_URI"]):
-        $fichero = dirname(__DIR__) . "/src/Controladores/Usuarios.php";
-        $clase = "Usuarios";
-        $accion = "getListar";
+         if ( Sesion::esInvitado()) {
+            header("Location: /identificacion");
+        } else {
+
+            if (!(Sesion::esAdministrador())) {
+                header("Location: /perfil");
+            } else {
+                
+            $fichero = dirname(__DIR__) . "/src/Controladores/Usuarios.php";
+            $clase = "Usuarios";
+            $accion = "getListar";
+            }
+        }
         break;
+    /**
+     * Editar usuarios
+     */
     case preg_match("`^/usuarios/editar/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
         $fichero = dirname(__DIR__) . "/src/Controladores/Usuarios.php";
         $clase = "Usuarios";
@@ -49,6 +62,19 @@ switch (1) {
             $accion = "postEditar";
         } else {
             $accion = "getEditar";
+        }
+        break;
+    /**
+     * Eliminar usuarios
+     */
+        case preg_match("`/usuarios/eliminar/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
+        if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
+        } else {
+            $fichero = dirname(__DIR__) . "/src/Controladores/Usuarios.php";
+            $clase = "Usuarios";
+            $argumento = $matches["id"];
+            $accion = "getEliminar";
         }
         break;
     /**
@@ -79,26 +105,40 @@ switch (1) {
      * Roles crear
      */
     case preg_match("`^/roles/crear$`", $_SERVER["REQUEST_URI"]):
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            $accion = "postCrear";
+        if ( Sesion::esInvitado()) {
+            header("Location: /identificacion");
         } else {
-            $accion = "getCrear";
+            if (!(Sesion::esAdministrador())) {
+                header("Location: /perfil");
+            } else {
+                if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                        $accion = "postCrear";
+                } else {
+                        $accion = "getCrear";
+                }
         }
         $fichero = dirname(__DIR__) . "/src/Controladores/Roles.php";
         $clase = "Roles";
+    }
         break;
     /**
      * Roles ver
      */
     case preg_match("`^/roles$`", $_SERVER["REQUEST_URI"]):
-        if (!(Sesion::esAdministrador())) {
-            header("Location: /");
+        if ( Sesion::esInvitado()) {
+            header("Location: /identificacion");
         } else {
-            if ($_SERVER["REQUEST_METHOD"] === "POST") {
-                $accion = "postCrear";
+
+            if (!(Sesion::esAdministrador())) {
+                header("Location: /perfil");
             } else {
-                $accion = "getCrear";
-            }
+                if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                    $accion = "postCrear";
+                } else {
+                    $accion = "getCrear";
+                }
+             }
+            
             $fichero = dirname(__DIR__) . "/src/Controladores/Roles.php";
             $clase = "Roles";
             $accion = "getListar";
@@ -108,13 +148,41 @@ switch (1) {
      * Roles editar
      */
     case preg_match("`^/roles/editar/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
+         if ( Sesion::esInvitado()) {
+            header("Location: /identificacion");
+        } else {
+
+            if (!(Sesion::esAdministrador())) {
+                header("Location: /perfil");
+            } else {
+        
+                if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                        $accion = "postEditar";
+                } else {
+                        $accion = "getEditar";
+                }
+            }
         $fichero = dirname(__DIR__) . "/src/Controladores/Roles.php";
         $clase = "Roles";
         $argumento = $matches["id"];
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            $accion = "postEditar";
+        }
+        break;
+    /**
+     * Roles eliminar
+     */
+    case preg_match("`/roles/eliminar/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
+        if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
         } else {
-            $accion = "getEditar";
+
+            if (!(Sesion::esAdministrador())) {
+                header("Location: /perfil");
+            } else {
+            $fichero = dirname(__DIR__) . "/src/Controladores/Roles.php";
+            $clase = "Roles";
+            $argumento = $matches["id"];
+            $accion = "getEliminar";
+        }
         }
         break;
     /**
@@ -126,18 +194,35 @@ switch (1) {
         $accion = "getInicio";
         break;
     /**
+     * Eliminar opinion
+     */
+    case preg_match("`/opiniones/eliminar/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
+        if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
+        } else {
+            $fichero = dirname(__DIR__) . "/src/Controladores/Opiniones.php";
+            $clase = "Opiniones";
+            $argumento = $matches["id"];
+            $accion = "getEliminar";
+        }
+        break;
+    /**
      * Crear tipo de animales
      */
     case preg_match("`^/animales/tipos/crear$`", $_SERVER["REQUEST_URI"]):
         if (Sesion::esInvitado()) {
             header("Location: /identificacion", 301);
         } else {
+            if (!(Sesion::esAdministrador())) {
+                header("Location: /perfil");
+            } else {
             $fichero = dirname(__DIR__) . "/src/Controladores/Animales/Tipos.php";
             $clase = "AnimalesTipos";
             if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $accion = "postCrear";
             } else {
                 $accion = "getCrear";
+                }
             }
         }
         break;
@@ -147,7 +232,11 @@ switch (1) {
     case preg_match("`^/animales/tipos/editar/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
         if (Sesion::esInvitado()) {
             header("Location: /identificacion", 301);
-        } else {
+        } else 
+        {
+            if (!(Sesion::esAdministrador())) {
+                header("Location: /perfil");
+            } else {
             $fichero = dirname(__DIR__) . "/src/Controladores/Animales/Tipos.php";
             $clase = "AnimalesTipos";
             $argumento = $matches["id"];
@@ -156,6 +245,7 @@ switch (1) {
             } else {
                 $accion = "getEditar";
             }
+        }
         }
         break;
     /**
@@ -168,6 +258,34 @@ switch (1) {
             $fichero = dirname(__DIR__) . "/src/Controladores/Animales/Tipos.php";
             $clase = "AnimalesTipos";
             $accion = "getListar";
+        }
+        break;
+    case preg_match("`/animales/tipos/eliminar/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
+        if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
+        } else {
+            $fichero = dirname(__DIR__) . "/src/Controladores/Animales/Tipos.php";
+            $clase = "AnimalesTipos";
+            $argumento = $matches["id"];
+            $accion = "getEliminar";
+        }
+        break;
+    /**
+     * Eliminar tipos de animales
+     */
+    case preg_match("`^/animales/tipos/eliminar/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
+        if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
+        } else 
+        {
+            if (!(Sesion::esAdministrador())) {
+                header("Location: /perfil");
+            } else {
+            $fichero = dirname(__DIR__) . "/src/Controladores/Animales/Tipos.php";
+            $clase = "AnimalesTipos";
+            $argumento = $matches["id"];
+            $accion = "getEliminar";           
+            }
         }
         break;
     /**
@@ -216,19 +334,37 @@ switch (1) {
         }
         break;
     /**
+     * Eliminar Animales
+     */
+    case preg_match("`/animales/eliminar/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
+        if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
+        } else {
+            $fichero = dirname(__DIR__) . "/src/Controladores/Animales.php";
+            $clase = "Animales";
+            $argumento = $matches["id"];
+            $accion = "getEliminar";
+        }
+        break;
+    /**
      * Crear servicios
      */
     case preg_match("`^/servicios/crear$`", $_SERVER["REQUEST_URI"]):
         if (Sesion::esInvitado()) {
             header("Location: /identificacion", 301);
-        } else {
+            } else {
+                if (!(Sesion::esCuidador())){
+                header("Location: /");
+                    } else {
+            
+                        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                            $accion = "postCrear";
+                            } else {
+                            $accion = "getCrear";
+                }
+            }
             $fichero = dirname(__DIR__) . "/src/Controladores/Servicios.php";
             $clase = "Servicios";
-            if ($_SERVER["REQUEST_METHOD"] === "POST") {
-                $accion = "postCrear";
-            } else {
-                $accion = "getCrear";
-            }
         }
         break;
     /**
@@ -249,15 +385,32 @@ switch (1) {
     case preg_match("`^/servicios/editar/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
         if (Sesion::esInvitado()) {
             header("Location: /identificacion", 301);
+        } else { 
+            if(!(Sesion::esCuidador())){
+                header("Location: /");
+            } else{           
+                 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                $accion = "postEditar";
+                } else {
+                $accion = "getEditar";
+                }
+            }
+            $fichero = dirname(__DIR__) . "/src/Controladores/Servicios.php";
+            $clase = "Servicios";
+            $argumento = $matches["id"];
+        }
+        break;
+    /**
+     * Eliminar servicios
+     */
+    case preg_match("`/servicios/eliminar/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
+        if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
         } else {
             $fichero = dirname(__DIR__) . "/src/Controladores/Servicios.php";
             $clase = "Servicios";
             $argumento = $matches["id"];
-            if ($_SERVER["REQUEST_METHOD"] === "POST") {
-                $accion = "postEditar";
-            } else {
-                $accion = "getEditar";
-            }
+            $accion = "getEliminar";
         }
         break;
     /**
@@ -317,6 +470,9 @@ switch (1) {
             }
         }
         break;
+    /**
+     * Eliminar direcciones
+     */
     case preg_match("`/direcciones/eliminar/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
         if (Sesion::esInvitado()) {
             header("Location: /identificacion", 301);
@@ -331,6 +487,9 @@ switch (1) {
      * Ver anuncios
      */
     case preg_match("`/anuncios$`", $_SERVER["REQUEST_URI"]):
+        $fichero = dirname(__DIR__) . "/src/Controladores/Anuncios.php";
+        $clase = "Anuncios";
+        $accion = "getInicio";
         break;
     /**
      * Crear anuncios
@@ -363,6 +522,20 @@ switch (1) {
             } else {
                 $accion = "getEditar";
             }
+        }
+        break;
+    /**
+     * Eliminar anuncio
+     */
+    case preg_match("`/anuncios/eliminar(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
+        if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
+        } else {
+            $fichero = dirname(__DIR__) . "/src/Controladores/Anuncios.php";
+            $clase = "Anuncios";
+            $argumento = $matches["id"];
+            $accion = "getEditar";
+            
         }
         break;
     default:
