@@ -81,4 +81,18 @@ class AnimalesTipos extends Controlador
             header("Location: /animales/tipos/editar/$id");
         }
     }
+/**
+ * Método para eliminar un tipo de animal
+ */
+    public function getEliminar($id)
+    {
+        if (Sesion::esAdministrador()) {
+            $animalTipo = new AnimalTipo();
+            $animalTipo = $animalTipo->listarPorId($id);
+            if (isset($animalTipo) && $animalTipo->obtenerId() === (int)$id) {
+                $animalTipo->eliminar();
+                }
+        } else {header("Location: /");}
+        header("Location: /animales");
+    }
 }

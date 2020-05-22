@@ -51,11 +51,26 @@ class Usuarios extends Controlador
         $usuario->definirMovil($_POST["movil"]);
         $usuario->definirEmail($_POST["email"]);
         if ($usuario->actualizar()) {
-            Sesion::definirAcierto("El usuario se ha actualizado.", "usuario");
-            header("Location: /usuarios/editar/$id");
+            
+            header("Location: /usuarios");
         } else {
             header("Location: /usuarios/editar/$id");
         }
     }
 
+    /**
+     * Método para eliminar usuario
+     */
+    public function getEliminar($id){
+
+        if (Sesion::esAdministrador()) {
+             $usuario = new Usuario();
+             $usuario = $usuario->listarPorId($id);
+            if (isset($usuario) && $usuario->obtenerId() === (int)$id) {
+                $usuario->eliminar();
+                }
+        } else {header("Location: /");}
+        header("Location: /usuarios");
+        }
     }
+  

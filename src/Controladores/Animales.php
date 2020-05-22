@@ -54,8 +54,7 @@ class Animales extends Controlador
         $animal->crearAnimalTipo($animalTipo);
         $animal->crearUsuario($usuario);
         if ($animal->insertar()) {
-            Sesion::definirAcierto("Operación realizada.", "succes");
-            header("Location: /animales/crear");
+            header("Location: /animales");
         } else {
             Sesion::definirError("El campo esta vacío o el nombre exite", "nombreAnimal");
             header("Location: /animales/crear");
@@ -90,8 +89,7 @@ class Animales extends Controlador
         $animal->definirAnimalTipo($animalTipo->obtenerId());
         $animal->definirUsuario($usuario->obtenerId());
         if ($animal->actualizar()) {
-            Sesion::definirAcierto("El animal se ha actualizado.", "nombreAnimal");
-            header("Location: /animales/editar/$id");
+            header("Location: /animales");
         } else {
             header("Location: /animales/editar/$id");
         }
@@ -100,12 +98,11 @@ class Animales extends Controlador
 /**
  * Método para eliminar el animal
  */
-public function postEliminar(){
+public function getEliminar($id){
 
-    $animal = new Animal($id);
+    $animal = new Animal();
     $animal = $animal->listarPorId($id);
     if ($animal->eliminar()) {
-            Sesion::definirAcierto("El animal se ha actualizado.", "nombreAnimal");
             header("Location: /animales");
         } else {
             header("Location: /animales");

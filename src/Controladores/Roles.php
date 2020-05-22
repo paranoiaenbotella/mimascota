@@ -46,8 +46,8 @@ class Roles extends Controlador
             $rol = new Rol();
             $roles = $rol->definirNombre($_POST["nombre"]);
             if ($rol->insertar()) {
-                Sesion::definirAcierto("Operación realizada.", "succes");
-                header("Location: /roles/crear");
+                
+                header("Location: /roles");
             } else {
                 Sesion::definirError("El campo esta vacío o el nombre exite", "nombreRol");
                 header("Location: /roles/crear");
@@ -75,9 +75,25 @@ class Roles extends Controlador
         $rol->definirNombre($_POST["nombre"]);
         if ($rol->actualizar()) {
             Sesion::definirAcierto("El rol se ha actualizado.", "nombreRol");
-            header("Location: /roles/editar/$id");
+            header("Location: /roles");
         } else {
             header("Location: /roles/editar/$id");
         }
     }
+
+/**
+ * Método para eliminar un rol
+ */
+    public function getEliminar($id)
+    {
+        if (Sesion::esAdministrador()) {
+            $rol = new Rol();
+            $rol = $rol->listarPorId($id);
+            if (isset($rol) && $rol->obtenerId() === (int)$id) {
+                $rol->eliminar();
+                }
+        } else {header("Location: /");}
+        header("Location: /roles");
+    }
+
 }
