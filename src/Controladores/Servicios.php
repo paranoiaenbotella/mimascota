@@ -19,7 +19,7 @@ class Servicios extends Controlador
   /**
     * Método que muestra el formulario
     * para crear servicios
-    */  
+    */
     public function getListar(){
         $servicio = new Servicio();
         $servicios = $servicio->listarPorUsuario(Sesion::obtenerUsuario()->obtenerId());
@@ -44,12 +44,11 @@ class Servicios extends Controlador
      * de los servicios
      */
     public function getEditar($id)
-    {   
+    {
         $usuario = Sesion::obtenerUsuario()->obtenerId();
-        $usuario->listarPorId($id);
         $servicio = new Servicio();
         $servicio = $servicio->listarPorId($id);
-        
+
         $this->renderizar("Editar.php", ["servicio" => $servicio, "usuario"=>$usuario]);
     }
 
@@ -77,7 +76,6 @@ class Servicios extends Controlador
      */
     public function postEditar($id)
     {
-        
         $usuario = Sesion::obtenerUsuario();
         $servicio = new Servicio();
         $servicio = $servicio->listarPorId($id);
@@ -90,7 +88,6 @@ class Servicios extends Controlador
         } else {
             header("Location: /servicios/editar/$id");
         }
-
     }
 
     /**
@@ -105,6 +102,6 @@ class Servicios extends Controlador
                 $servicio->eliminar();
                 }
         } else {header("Location: /");}
-        header("Location: /servicios"); 
+        header("Location: /servicios");
     }
 }

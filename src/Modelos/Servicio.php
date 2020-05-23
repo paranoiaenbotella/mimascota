@@ -35,7 +35,7 @@ class Servicio extends Modelo
             "UPDATE `servicios` SET `id_usuarios` =?, `nombre` = ?, `descripcion` = ?, `precio` =? WHERE `id` = ?"
         );
         $consulta->bind_param(
-            "issfi",
+            "issdi",
             $this->usuario,
             $this->nombre,
             $this->descripcion,
@@ -68,7 +68,6 @@ class Servicio extends Modelo
             );
         } else {
             $this->descripcion = filter_var($descripcion, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            
         }
         return $this;
     }
