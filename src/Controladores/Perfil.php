@@ -3,6 +3,7 @@
 require_once(dirname(__DIR__) . "/Modelos/Direccion.php");
 require_once(dirname(__DIR__) . "/Modelos/Usuario.php");
 require_once(dirname(__DIR__) . "/Controlador.php");
+require_once(dirname(__DIR__) . "/Modelos/Servicio.php");
 
 /**
  * Mediante esta clase se controla las operaciones relacionadas con la creacion
@@ -24,7 +25,9 @@ class Perfil extends Controlador
         if (Sesion::esCuidador()) {
             $direccion = new Direccion();
             $direccion = $direccion->listarDirecciones($usuario->obtenerId());
-            $this->renderizar("Cuidador.php", ["direccion" => $direccion, "usuario" => $usuario]);
+            $servicio = new Servicio();
+            $servicios = $servicio->listarPorUsuario($usuario->obtenerId());
+            $this->renderizar("Cuidador.php", ["direccion" => $direccion, "usuario" => $usuario, "servicios"=>$servicios]);
         } else {
             $this->renderizar("Propietario.php", ["usuario" => $usuario]);
         }

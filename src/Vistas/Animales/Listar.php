@@ -30,7 +30,8 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="" class="btn btn-sm btn-danger">Eliminar</a>
+                                <a href="/animales/eliminar/<?php echo($animal->obtenerId(
+                                )); ?>" class="btn btn-sm btn-danger">Eliminar</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

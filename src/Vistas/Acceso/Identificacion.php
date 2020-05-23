@@ -21,5 +21,6 @@
                 <input type="submit" class="btn btn-block btn-success" value="Identificarse">
             </div>
         </form>
+        <a href="/registro" class="btn btn-block btn-sm btn-light">Registrarse</a>
     </div>
 </section>

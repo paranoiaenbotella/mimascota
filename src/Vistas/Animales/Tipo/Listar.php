@@ -20,7 +20,7 @@
                                 <a href="/animales/tipos/editar/<?php echo ($animalTipo->obtenerId());?>" class="btn btn-sm btn-info">Editar</a>
                             </td>
                             <td>
-                                <a href="" class="btn btn-sm btn-danger">Eliminar</a>
+                                <a href="/animales/tipos/eliminar/<?php echo ($animalTipo->obtenerId());?>" class="btn btn-sm btn-danger">Eliminar</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

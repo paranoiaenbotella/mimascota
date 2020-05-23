@@ -60,9 +60,6 @@
             <div class="form-group my-2">
                 <input class="btn btn-block btn-success" type="submit" value="Guardar">
             </div>
-            <div class="input-group input-group-sm mt-4">
-                <a href="/direcciones" class="btn btn-block btn-sm btn-secondary">Regresar a la lista de direcciones</a>
-            </div>
         </form>
     </div>
 </div>

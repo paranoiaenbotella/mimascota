@@ -23,8 +23,10 @@ class Anuncios extends Controlador
      */
     public function getCrear()
     {
-        $servicio = new Tarifa();
+        $servicio = new Servicio();
         $servicios = $servicio->listarPorUsuario(Sesion::obtenerUsuario()->obtenerId());
+        $anuncio = new Anuncio();
+        
         $this->renderizar("Crear.php", ["servicios" => $servicios]);
     }
 
