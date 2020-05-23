@@ -25,8 +25,6 @@ class Anuncios extends Controlador
     {
         $servicio = new Servicio();
         $servicios = $servicio->listarPorUsuario(Sesion::obtenerUsuario()->obtenerId());
-        $anuncio = new Anuncio();
-        
         $this->renderizar("Crear.php", ["servicios" => $servicios]);
     }
 
@@ -34,8 +32,13 @@ class Anuncios extends Controlador
      * Mediante este método se muestra por pantalla el
      * formulario para editar el anuncio
      */
-    public function getEditar()
+    public function getEditar($id)
     {
+        $anuncio = new Anuncio();
+        $anuncio = $anuncio->listarPorId($id);
+        $servicio = new Servicio();
+        $servicios = $servicio->listarPorUsuario(Sesion::obtenerUsuario()->obtenerId());
+        $this->renderizar("Editar.php", ["anuncio" => $anuncio, "servicios" => $servicios]);
     }
 
     /**
@@ -46,6 +49,35 @@ class Anuncios extends Controlador
         $anuncio = new Anuncio();
         $anuncio->definirUsuario(Sesion::obtenerUsuario()->obtenerId());
         $anuncio->definirServicio($_POST["servicio"]);
+        $anuncio->definirDescripcion($_POST["descripcion"]);
+        $anuncio->definirImagen1($_FILES["imagen1"]);
+        $anuncio->definirImagen2($_FILES["imagen2"]);
+        $anuncio->definirImagen3($_FILES["imagen3"]);
+        $anuncio->definirImagen4($_FILES["imagen4"]);
+        if ($anuncio->insertar()) {
+            header("Location: /anuncios");
+        } else {
+            header("Location: /anuncios/crear");
+        }
+    }
+
+    public function postEditar($id)
+    {
+        $usuario = Sesion::obtenerUsuario();
+        $anuncio = new Anuncio();
+        $anuncio = $anuncio->listarPorId($id);
+        $anuncio->definirUsuario($usuario->obtenerId());
+        $anuncio->definirServicio($_POST["servicio"]);
+        $anuncio->definirDescripcion($_POST["descripcion"]);
+        $anuncio->definirImagen1($_FILES["imagen1"]);
+        $anuncio->definirImagen2($_FILES["imagen2"]);
+        $anuncio->definirImagen3($_FILES["imagen3"]);
+        $anuncio->definirImagen4($_FILES["imagen4"]);
+        if ($anuncio->actualizar()) {
+            header("Location: /anuncios");
+        } else {
+            header("Location: /anuncios/editar/$id");
+        }
     }
 
     /**

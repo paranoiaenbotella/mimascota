@@ -51,12 +51,10 @@ class Anuncio extends Modelo
 /**
  * Método para definir la descripción
  */
-    public function definirDescripcion()
+    public function definirDescripcion($descripcion)
     {
-      if (empty($descripcion)) {
-            Sesion::definirError(
-                "No se ha introducido una descripción.",
-                "descripcionAnuncio");
+        if (empty($descripcion)) {
+            Sesion::definirError("No se ha introducido una descripción.", "descripcionAnuncio");
         } else {
             $this->descripcion = filter_var($descripcion, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         }
@@ -78,23 +76,21 @@ class Anuncio extends Modelo
     /**
      * Se crea el servicio
      */
-    public function crearServicio()
+    public function crearServicio($servicio)
     {
-          if ($servicio instanceof Servicio){
-        $this->servicio = $servicio->obtenerId();
-    } else {
-        throw new Exception("El parámetro facilitado no es una instancia de la clase Servicio.");
-
-    }
-
-    /**
-     * Definir servicio
+        if ($servicio instanceof Servicio) {
+            $this->servicio = $servicio->obtenerId();
+        } else {
+            throw new Exception("El parámetro facilitado no es una instancia de la clase Servicio.");
+        }
+        /**
+         * Definir servicio
      */
     }
 
-    public function definirServicio()
+    public function definirServicio($servicio)
     {
-      $this->servicio = (int)$servicio;
+        $this->servicio = (int)$servicio;
     }
 
 /**
@@ -182,7 +178,7 @@ public function obtenerFecha()
     {
         if (is_array($imagen1)) {
             $imagen1Nombre = sha1($imagen1["tmp_name"]);
-            $imagen1Direccion = sprintf("%s/%s", self::DIRECTORY_IMG, $imagen1Nombre);
+            $imagen1Direccion = sprintf("%s/public/img/%s", dirname(dirname(__DIR__)), $imagen1Nombre);
             if (move_uploaded_file($imagen1["tmp_name"], $imagen1Direccion)) {
                 $this->imagen1 = sprintf("/img/%s", $imagen1Nombre);
             } else {
@@ -200,7 +196,7 @@ public function obtenerFecha()
     {
         if (is_array($imagen2)) {
             $imagen2Nombre = sha1($imagen2["tmp_name"]);
-            $imagen2Direccion = sprintf("%s/%s", self::DIRECTORY_IMG, $imagen2Nombre);
+            $imagen2Direccion = sprintf("%s/public/img/%s", dirname(dirname(__DIR__)), $imagen2Nombre);
             if (move_uploaded_file($imagen2["tmp_name"], $imagen2Direccion)) {
                 $this->imagen2 = sprintf("/img/%s", $imagen2Nombre);
             } else {
@@ -218,7 +214,7 @@ public function obtenerFecha()
     {
         if (is_array($imagen3)) {
             $imagen3Nombre = sha1($imagen3["tmp_name"]);
-            $imagen3Direccion = sprintf("%s/%s", self::DIRECTORY_IMG, $imagen3Nombre);
+            $imagen3Direccion = sprintf("%s/public/img/%s", dirname(dirname(__DIR__)), $imagen3Nombre);
             if (move_uploaded_file($imagen3["tmp_name"], $imagen3Direccion)) {
                 $this->imagen3 = sprintf("/img/%s", $imagen3Nombre);
             } else {
@@ -236,7 +232,7 @@ public function obtenerFecha()
     {
         if (is_array($imagen4)) {
             $imagen4Nombre = sha1($imagen4["tmp_name"]);
-            $imagen4Direccion = sprintf("%s/%s", self::DIRECTORY_IMG, $imagen4Nombre);
+            $imagen4Direccion = sprintf("%s/public/img/%s", dirname(dirname(__DIR__)), $imagen4Nombre);
             if (move_uploaded_file($imagen4["tmp_name"], $imagen4Direccion)) {
                 $this->imagen4 = sprintf("/img/%s", $imagen4Nombre);
             } else {
@@ -295,5 +291,68 @@ public function obtenerFecha()
         }
     }
 
+    public function insertar()
+    {
+        $consulta = $this->conexion->prepare(
+            "INSERT INTO `anuncios` (`ID_USUARIOS`, `ID_SERVICIOS`, `DESCRIPCION`, `IMAGEN1`, `IMAGEN2`, `IMAGEN3`, `IMAGEN4`) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        );
+        $consulta->bind_param(
+            "iisssss",
+            $this->usuario,
+            $this->servicio,
+            $this->descripcion,
+            $this->imagen1,
+            $this->imagen2,
+            $this->imagen3,
+            $this->imagen4
+        );
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado;
+    }
 
+    public function listarPorId($id)
+    {
+        $consulta = $this->conexion->prepare("select * from `anuncios` where id = ?");
+        $consulta->bind_param("i", $id);
+        $consulta->execute();
+        $resultado = $consulta->get_result();
+        $consulta->close();
+        if (empty($resultado->num_rows)) {
+            throw new Exception("Anuncio no encontrado");
+        } else {
+            $fila = $resultado->fetch_assoc();
+            $anuncio = new Anuncio();
+            $anuncio->definirId($fila["id"]);
+            $anuncio->definirUsuario($fila["id_usuarios"]);
+            $anuncio->definirServicio($fila["id_servicios"]);
+            $anuncio->definirDescripcion($fila["descripcion"]);
+            $anuncio->definirImagen1($fila["imagen1"]);
+            $anuncio->definirImagen2($fila["imagen2"]);
+            $anuncio->definirImagen3($fila["imagen3"]);
+            $anuncio->definirImagen4($fila["imagen4"]);
+            return $anuncio;
+        }
+    }
+
+    public function actualizar()
+    {
+        $consulta = $this->conexion->prepare(
+            "UPDATE `anuncios` SET `id_usuarios` = ?, `id_servicios` = ?, `descripcion` = ?, `imagen1` = ?, `imagen2` = ?, `imagen3` = ?, `imagen4` = ? WHERE `id` = ?"
+        );
+        $consulta->bind_param(
+            "iisssssi",
+            $this->usuario,
+            $this->servicio,
+            $this->descripcion,
+            $this->imagen1,
+            $this->imagen2,
+            $this->imagen3,
+            $this->imagen4,
+            $this->id
+        );
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado;
+    }
 }
