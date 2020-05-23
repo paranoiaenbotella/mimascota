@@ -310,4 +310,49 @@ public function obtenerFecha()
         $consulta->close();
         return $resultado;
     }
+
+    public function listarPorId($id)
+    {
+        $consulta = $this->conexion->prepare("select * from `anuncios` where id = ?");
+        $consulta->bind_param("i", $id);
+        $consulta->execute();
+        $resultado = $consulta->get_result();
+        $consulta->close();
+        if (empty($resultado->num_rows)) {
+            throw new Exception("Anuncio no encontrado");
+        } else {
+            $fila = $resultado->fetch_assoc();
+            $anuncio = new Anuncio();
+            $anuncio->definirId($fila["id"]);
+            $anuncio->definirUsuario($fila["id_usuarios"]);
+            $anuncio->definirServicio($fila["id_servicios"]);
+            $anuncio->definirDescripcion($fila["descripcion"]);
+            $anuncio->definirImagen1($fila["imagen1"]);
+            $anuncio->definirImagen2($fila["imagen2"]);
+            $anuncio->definirImagen3($fila["imagen3"]);
+            $anuncio->definirImagen4($fila["imagen4"]);
+            return $anuncio;
+        }
+    }
+
+    public function actualizar()
+    {
+        $consulta = $this->conexion->prepare(
+            "UPDATE `anuncios` SET `id_usuarios` = ?, `id_servicios` = ?, `descripcion` = ?, `imagen1` = ?, `imagen2` = ?, `imagen3` = ?, `imagen4` = ? WHERE `id` = ?"
+        );
+        $consulta->bind_param(
+            "iisssssi",
+            $this->usuario,
+            $this->servicio,
+            $this->descripcion,
+            $this->imagen1,
+            $this->imagen2,
+            $this->imagen3,
+            $this->imagen4,
+            $this->id
+        );
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado;
+    }
 }
