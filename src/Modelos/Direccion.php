@@ -247,7 +247,7 @@ public function crearUsuario($usuario){
     public function actualizar()
     {
         $consulta = $this->conexion->prepare(
-            "UPDATE `direcciones` SET `id_usuarios` = ?, `pais` =?, `ciudad` = ?, `codigo_postal` = ?, `calle` = ?, `where` `id` = ?"
+            "UPDATE `direcciones` SET `id_usuarios` = ?, `pais` =?, `ciudad` = ?, `codigo_postal` = ?, `calle` = ? WHERE `id` = ?"
         );
         $consulta->bind_param(
             "issssi",

@@ -34,7 +34,9 @@ class Direcciones extends Controlador
     {
         $direccion = new Direccion();
         $direccion = $direccion->listarPorId($id);
-        $this->renderizar("Editar.php", ["direccion" => $direccion]);
+        $usuario = new Usuario;
+        $usuario->listarPorId(Sesion::obtenerUsuario()->obtenerId());
+        $this->renderizar("Editar.php", ["direccion" => $direccion, "usuario"=>$usuario]);
     }
 
     public function getEliminar($id)
@@ -91,7 +93,6 @@ class Direcciones extends Controlador
      */
     public function postEditar($id)
     {
-        $usuario = new Usuario();
         $usuario = Sesion::obtenerUsuario();
         $direccion = new Direccion();
         $direccion = $direccion->listarPorId($id);
@@ -99,12 +100,14 @@ class Direcciones extends Controlador
         $direccion->definirCiudad($_POST["ciudad"]);
         $direccion->definirCodigoPostal($_POST["codigoPostal"]);
         $direccion->definirCalle($_POST["calle"]);
-        $direccion->definirUsuario($usuario);
+        $direccion->definirUsuario($usuario->obtenerId());
         if ($direccion->actualizar()) {
-            Sesion::definirAcierto("Operación realizada.", "nombreDireccion");
-            header("Location: /direcciones/editar/$id");
+            header("Location: /direcciones");
+
         } else {
             header("Location: /direcciones/editar/$id");
+
         }
+
     }
 }

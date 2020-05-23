@@ -40,6 +40,7 @@
                     <p>No hay direcciones definidas.</p>
                 <?php endif; ?>
             </table>
+            <a href="/perfil" class="btn btn-block btn-sm btn-light">Regresar a perfil</a>
         </div>
     </div>
 </section>
