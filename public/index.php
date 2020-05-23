@@ -186,6 +186,23 @@ switch (1) {
         }
         break;
     /**
+     * Crear opiniones
+     */
+    case preg_match("`^/opiniones/crear$`", $_SERVER["REQUEST_URI"]):
+        if ( Sesion::esInvitado()) {
+            header("Location: /identificacion");
+        }  else {
+                if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                        $accion = "postCrear";
+                } else {
+                        $accion = "getCrear";
+                }
+       
+        $fichero = dirname(__DIR__) . "/src/Controladores/Opiniones.php";
+        $clase = "Opiniones";
+         }
+        break;
+    /**
      * Opiniones Ver
      */
     case preg_match("`^/opiniones$`", $_SERVER["REQUEST_URI"]):
@@ -194,7 +211,7 @@ switch (1) {
         $accion = "getInicio";
         break;
     /**
-     * Eliminar opinion
+     * Eliminar opinión
      */
     case preg_match("`/opiniones/eliminar/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
         if (Sesion::esInvitado()) {
@@ -206,6 +223,25 @@ switch (1) {
             $accion = "getEliminar";
         }
         break;
+    /**
+     * Editar opinión
+     */
+        case preg_match("`/opiniones/editar/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
+        if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
+        } else {
+            if ($_SERVER["REQUEST_METHOD"] === "POST"){
+                $accion = "postCrear";
+            } else {
+                $accion = "getEditar";
+            }
+            $fichero = dirname(__DIR__) . "/src/Controladores/Opiniones.php";
+            $clase = "Opiniones";
+            $argumento = $matches["id"];
+            $accion = "getEditar";
+        }
+        break;
+
     /**
      * Crear tipo de animales
      */
