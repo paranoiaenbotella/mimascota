@@ -182,15 +182,15 @@ public function listarPorId($id){
         $consulta->close();
 
         if (empty($resultado->num_rows)) {
-            throw new Exception("Servicio no encontrado");
+            throw new Exception("Opinión no encontrada");
             
         } else{
-            $anuncio = new Anuncio();
-            $anuncio->definirId($fila["id"]);
-            $anuncio->definirCuidador($fila["id_usuarios"]);
-            $anuncio->definirMensaje($fila["id_anuncios"]);
-            $anuncio->definirMensaje($fila["mensaje"]); 
-            return $anuncio;
+            $opinion = new Opinion();
+            $opinion->definirId($fila["id"]);
+            $opinion->definirUsuario($fila["id_usuarios"]);
+            $opinion->definirAnuncio($fila["id_anuncios"]);
+            $opinion->definirMensaje($fila["mensaje"]); 
+            return $opinion;
         }
        
 }
@@ -207,15 +207,16 @@ public function listarPorId($id){
         $resultado = $consulta->get_result();
         $consulta->close();
             if (empty($resultado->num_rows)) {
-            throw new Exception("Servicio no encontrado");
+            throw new Exception("Opinion no encontrada");
             
         } else{
-            $anuncio = new Anuncio();
-            $anuncio->definirId($fila["id"]);
-            $anuncio->definirCuidador($fila["id_usuarios"]);
-            $anuncio->definirMensaje($fila["id_anuncios"]);
-            $anuncio->definirMensaje($fila["mensaje"]); 
-            return $anuncio;
+            $fila = $resultado->fetch_assoc();
+            $opinion = new Opinion();
+            $opinion->definirId($fila["id"]);
+            $opinion->definirUsuario($fila["id_usuarios"]);
+            $opinion->definirAnuncio($fila["id_anuncios"]);
+            $opinion->definirMensaje($fila["mensaje"]); 
+            return $opinion;
         	
         }
        
