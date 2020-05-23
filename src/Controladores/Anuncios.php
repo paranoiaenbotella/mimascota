@@ -25,8 +25,6 @@ class Anuncios extends Controlador
     {
         $servicio = new Servicio();
         $servicios = $servicio->listarPorUsuario(Sesion::obtenerUsuario()->obtenerId());
-        $anuncio = new Anuncio();
-        
         $this->renderizar("Crear.php", ["servicios" => $servicios]);
     }
 
@@ -46,6 +44,16 @@ class Anuncios extends Controlador
         $anuncio = new Anuncio();
         $anuncio->definirUsuario(Sesion::obtenerUsuario()->obtenerId());
         $anuncio->definirServicio($_POST["servicio"]);
+        $anuncio->definirDescripcion($_POST["descripcion"]);
+        $anuncio->definirImagen1($_FILES["imagen1"]);
+        $anuncio->definirImagen2($_FILES["imagen2"]);
+        $anuncio->definirImagen3($_FILES["imagen3"]);
+        $anuncio->definirImagen4($_FILES["imagen4"]);
+        if ($anuncio->insertar()) {
+            header("Location: /anuncios");
+        } else {
+            header("Location: /anuncios/crear");
+        }
     }
 
     /**
