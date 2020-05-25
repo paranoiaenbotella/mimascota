@@ -2,7 +2,7 @@
 <section class="container">
     <div class="row">
         <div class="col-sm-12 col-md-12  col-lg-12  shadow-sm p-3 mb-5 rounded">
-            <h6 class="mb-3"> Direcciones en la base de datos</h6>
+            <h6 class="mb-3"> Dirección:</h6>
             <?php if (isset($datos["direccion"])): ?>
             <table class="table table-sm table-hover border border-success">
                 <thead>

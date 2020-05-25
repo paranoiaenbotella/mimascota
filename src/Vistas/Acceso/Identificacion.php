@@ -1,5 +1,5 @@
 <section class="container">
-    <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
+    <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2">
         <h4>Acceso</h4>
         <form method="post" novalidate>
             <!-- EMAIL -->

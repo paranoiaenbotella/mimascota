@@ -1,7 +1,7 @@
 <!--Form para editar Roles-->
 <section class="container">
     <div class="row">
-        <div class="col-sm-10 offset-sm-1 col-md-10 offset-md-1 col-lg-6 offset-lg-3">
+        <div class="col-sm-10 offset-sm-1 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
             <h4>Editar animales</h4>
             <form method="POST" novalidate>
                 <div class="form-group mb-1">

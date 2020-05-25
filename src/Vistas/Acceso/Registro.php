@@ -1,7 +1,7 @@
 <!--Form para registro de usuarios-->
 <section class="container">
     <div class="row">
-        <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
+        <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2">
             <h4>Formulario de Registro</h4>
             <!--FORMULARIO REGISTRO-->
             <form method="post" novalidate>

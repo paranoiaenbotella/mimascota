@@ -1,13 +1,13 @@
-<!--Form para crear servicio-->
+<!--Form para crear opinion-->
 <section class="container">
     <div class="row">
-        <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
-            <h4>Crear servicio</h4>
+        <div class="col-sm-10 offset-sm-1 col-md-10 offset-md-1 col-lg-10 offset-lg-1">
+            <h4>Opinion</h4>
             <form method="POST">
                 <!--NOMBRE-->
                 <div class="form-group my-0">
                     <label for="mensaje" class="mb-0">Escribe tu opinión</label>
-                    <input class="form-control form-control-sm" id="mensaje" name="mensaje" type="text" placeholder="Ej. Alojamiento Noche">
+                    <textarea class="form-control form-control-sm" id="mensaje" name="mensaje" rows="10" ></textarea>
                     <?php if (Sesion::existeError("mensaje")): ?>
                         <div>
                             <p class="error"><?php echo(Sesion::obtenerError("mensaje")); ?></p>
