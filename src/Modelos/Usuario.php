@@ -334,7 +334,7 @@ class Usuario extends Modelo
         $consulta->execute();
         $resultado = $consulta->get_result();
         if (empty($resultado->num_rows)) {
-            throw new Exception("Usuario no encontrado");
+            throw new Exception("Usuario no encontrado.");
         } else {
             $fila = $resultado->fetch_assoc();
             $usuario = new Usuario();
