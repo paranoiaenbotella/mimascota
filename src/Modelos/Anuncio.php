@@ -12,8 +12,6 @@ class Anuncio extends Modelo
 
     private $usuario;
 
-    private $servicio;
-
     private $descripcion;
 
     private $fecha;
@@ -74,38 +72,6 @@ class Anuncio extends Modelo
     }
 
     /**
-     * Se crea el servicio
-     */
-    public function crearServicio($servicio)
-    {
-        if ($servicio instanceof Servicio) {
-            $this->servicio = $servicio->obtenerId();
-        } else {
-            throw new Exception("El parámetro facilitado no es una instancia de la clase Servicio.");
-        }
-        /**
-         * Definir servicio
-     */
-    }
-
-    public function definirServicio($servicio)
-    {
-        $this->servicio = (int)$servicio;
-    }
-
-/**
- * Método para obtener el servicio
- */
-    public function obtenerServicio()
-    {
-      if (is_null($this->servicio)){
-        throw new Exception("El servicio no está definido");
-    } else {
-        return $this->servicio;
-          }
-    }
-
-    /**
      * Se crea al usuario propietario del anuncio
      */
     public function crearUsuario($usuario)
@@ -138,19 +104,15 @@ class Anuncio extends Modelo
         }
     }
 
-
-
-
-
 /**
  * Método para definir la fecha de creación
  */
 
-public function definirFecha($fecha)
+public function definirFecha($fecha) // TODO: What is this?
 {
     if (is_null($fecha)) {
     } else {
-        $this->fecha = date("d/m/y ",strtotime( $fecha ));
+        $this->fecha = date("d/m/y ", strtotime($fecha));
     }
     return $this;
 }
@@ -288,15 +250,14 @@ public function obtenerFecha()
         }
     }
 
-    public function insertar()
+    public function insertar() // FIX: The query must be reviewed and improved.
     {
         $consulta = $this->conexion->prepare(
-            "INSERT INTO `anuncios` (`ID_USUARIOS`, `ID_SERVICIOS`, `DESCRIPCION`, `IMAGEN1`, `IMAGEN2`, `IMAGEN3`, `IMAGEN4`) VALUES (?, ?, ?, ?, ?, ?, ?)"
+            "INSERT INTO `anuncios` (`id_usuarios`, `descripcion`, `imagen1`, `imagen2`, `imagen3`, `imagen4`) VALUES (?, ?, ?, ?, ?, ?)"
         );
         $consulta->bind_param(
-            "iisssss",
+            "isssss",
             $this->usuario,
-            $this->servicio,
             $this->descripcion,
             $this->imagen1,
             $this->imagen2,
@@ -310,7 +271,7 @@ public function obtenerFecha()
 
     public function listarPorId($id)
     {
-        $consulta = $this->conexion->prepare("select * from `anuncios` where id = ?");
+        $consulta = $this->conexion->prepare("SELECT * FROM `anuncios` WHERE `id` = ?");
         $consulta->bind_param("i", $id);
         $consulta->execute();
         $resultado = $consulta->get_result();
@@ -322,7 +283,6 @@ public function obtenerFecha()
             $anuncio = new Anuncio();
             $anuncio->definirId($fila["id"]);
             $anuncio->definirUsuario($fila["id_usuarios"]);
-            $anuncio->definirServicio($fila["id_servicios"]);
             $anuncio->definirDescripcion($fila["descripcion"]);
             $anuncio->definirFecha($fila["fecha_creacion"]);
             $anuncio->definirImagen1($fila["imagen1"]);
@@ -347,7 +307,6 @@ public function obtenerFecha()
             $anuncio = new Anuncio();
             $anuncio->definirId($fila["id"]);
             $anuncio->definirUsuario($fila["id_usuarios"]);
-            $anuncio->definirServicio($fila["id_servicios"]);
             $anuncio->definirDescripcion($fila["descripcion"]);
             $anuncio->definirFecha($fila["fecha_creacion"]);
             $anuncio->definirImagen1($fila["imagen1"]);
@@ -358,15 +317,14 @@ public function obtenerFecha()
         }
     }
 
-    public function actualizar()
+    public function actualizar() // FIX: The query must be reviewed and improved.
     {
         $consulta = $this->conexion->prepare(
-            "UPDATE `anuncios` SET `id_usuarios` = ?, `id_servicios` = ?, `descripcion` = ?, `imagen1` = ?, `imagen2` = ?, `imagen3` = ?, `imagen4` = ? WHERE `id` = ?"
+            "UPDATE `anuncios` SET `id_usuarios` = ?, `descripcion` = ?, `imagen1` = ?, `imagen2` = ?, `imagen3` = ?, `imagen4` = ? WHERE `id` = ?"
         );
         $consulta->bind_param(
-            "iisssssi",
+            "isssssi",
             $this->usuario,
-            $this->servicio,
             $this->descripcion,
             $this->imagen1,
             $this->imagen2,
@@ -387,7 +345,6 @@ public function obtenerFecha()
             $anuncio = new Anuncio();
             $anuncio->definirId($fila["id"]);
             $anuncio->definirUsuario($fila["id_usuarios"]);
-            $anuncio->definirServicio($fila["id_servicios"]);
             $anuncio->definirDescripcion($fila["descripcion"]);
             $anuncio->definirFecha($fila["fecha_creacion"]);
             $anuncio->definirImagen1($fila["imagen1"]);
