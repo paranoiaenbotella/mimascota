@@ -1,20 +1,17 @@
 <?php
 
-require_once(dirname(__DIR__)."/Modelo.php");
+require_once(dirname(__DIR__) . "/Modelo.php");
 
 /**
  * Operaciones contra la tabla anuncios
  */
-
 class Anuncio extends Modelo
 {
-    private $id;
-
-    private $usuario;
-
     private $descripcion;
 
     private $fecha;
+
+    private $id;
 
     private $imagen1;
 
@@ -24,8 +21,11 @@ class Anuncio extends Modelo
 
     private $imagen4;
 
+    private $nombre;
 
-     /**
+    private $usuario;
+
+    /**
      * Se define y se fuerza que el tipo
      * de la $id sea Int
      */
@@ -34,41 +34,24 @@ class Anuncio extends Modelo
         $this->id = (int)$id;
     }
 
-/**
- * Método para obtener el id
- */
-    public function obtenerId()
+    public function actualizar() // FIX: The query must be reviewed and improved.
     {
-        if (is_null($this->id)) {
-            throw new Exception("El identificador del anuncio no está definido.");
-        } else {
-            return $this->id;
-        }
-    }
-
-/**
- * Método para definir la descripción
- */
-    public function definirDescripcion($descripcion)
-    {
-        if (empty($descripcion)) {
-            Sesion::definirError("No se ha introducido una descripción.", "descripcionAnuncio");
-        } else {
-            $this->descripcion = filter_var($descripcion, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        }
-        return $this;
-    }
-
-/**
- * Método para obtener la descripción
- */
-    public function obtenerDescripcion()
-    {
-      if (is_null($this->descripcion)) {
-            throw new Exception("La descripción no esta definida.");
-        } else {
-            return $this->descripcion;
-        }
+        $consulta = $this->conexion->prepare(
+            "UPDATE `anuncios` SET `id_usuarios` = ?, `descripcion` = ?, `imagen1` = ?, `imagen2` = ?, `imagen3` = ?, `imagen4` = ? WHERE `id` = ?"
+        );
+        $consulta->bind_param(
+            "isssssi",
+            $this->usuario,
+            $this->descripcion,
+            $this->imagen1,
+            $this->imagen2,
+            $this->imagen3,
+            $this->imagen4,
+            $this->id
+        );
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado;
     }
 
     /**
@@ -80,59 +63,37 @@ class Anuncio extends Modelo
             $this->usuario = $usuario->obtenerId();
         } else {
             throw new Exception("El parámetro facilitado no es una instancia de la clase Usuario.");
-
-    }
-}
-
-    /**
-     * Se define y se fuerza que el tipo
-     * de la $usuario sea Int
-     */
-    public function definirUsuario($usuario){
-        $this->usuario = (int)$usuario;
-    }
-
-/**
- * Método para obtener el usuario
- */
-    public function obtenerUsuario()
-    {
-        if (is_null($this->usuario)) {
-            throw new Exception("El usuario no está definido");
-        } else {
-            return $this->usuario;
         }
     }
 
-/**
- * Método para definir la fecha de creación
- */
-
-public function definirFecha($fecha) // TODO: What is this?
-{
-    if (is_null($fecha)) {
-    } else {
-        $this->fecha = date("d/m/y ", strtotime($fecha));
+    /**
+     * Método para definir la descripción
+     */
+    public function definirDescripcion($descripcion)
+    {
+        if (empty($descripcion)) {
+            Sesion::definirError("No se ha introducido una descripción.", "descripcionAnuncio");
+        } else {
+            $this->descripcion = filter_var($descripcion, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        }
+        return $this;
     }
-    return $this;
-}
 
-/**
- * Método para obtener la fecha de creación
- */
-public function obtenerFecha()
-{
-	if(is_null($this->fecha)) {
-        throw new Exception("La fecha no está definida");
-    } else {
+    /**
+     * Método para definir la fecha de creación
+     */
+    public function definirFecha($fecha) // TODO: What is this?
+    {
+        if (is_null($fecha)) {
+        } else {
+            $this->fecha = date("d/m/y ", strtotime($fecha));
+        }
+        return $this;
+    }
 
-		return $this->fecha;
-	}
-}
-
-/**
- * Método para definir la imagen 1
- */
+    /**
+     * Método para definir la imagen 1
+     */
     public function definirImagen1($imagen1)
     {
         if (is_array($imagen1)) {
@@ -148,9 +109,9 @@ public function obtenerFecha()
         }
     }
 
-/**
- * Método para definir la imagen 2
- */
+    /**
+     * Método para definir la imagen 2
+     */
     public function definirImagen2($imagen2)
     {
         if (is_array($imagen2)) {
@@ -166,9 +127,9 @@ public function obtenerFecha()
         }
     }
 
-/**
- * Método para definir la imagen 3
- */
+    /**
+     * Método para definir la imagen 3
+     */
     public function definirImagen3($imagen3)
     {
         if (is_array($imagen3)) {
@@ -184,9 +145,9 @@ public function obtenerFecha()
         }
     }
 
-/**
- * Método para definir la imagen 4
- */
+    /**
+     * Método para definir la imagen 4
+     */
     public function definirImagen4($imagen4)
     {
         if (is_array($imagen4)) {
@@ -202,52 +163,13 @@ public function obtenerFecha()
         }
     }
 
- /**
- * Método para obtener la imagen 1
- */
-    public function obtenerImagen1()
+    /**
+     * Se define y se fuerza que el tipo
+     * de la $usuario sea Int
+     */
+    public function definirUsuario($usuario)
     {
-        if (is_null($this->imagen1)){
-        throw new Exception("Ruta de la imagen no definida");
-        }   else {
-            return $this->imagen1;
-        }
-    }
-
-/**
- * Método para obtener la imagen 2
- */
-    public function obtenerImagen2()
-    {
-        if (is_null($this->imagen2)){
-        throw new Exception("Ruta de la imagen no definida");
-        }   else {
-            return $this->imagen2;
-        }
-    }
-
-/**
- * Método para obtener la imagen 3
- */
-    public function obtenerImagen3()
-    {
-        if (is_null($this->imagen3)){
-        throw new Exception("Ruta de la imagen no definida");
-        }   else {
-            return $this->imagen3;
-        }
-    }
-
-/**
- * Método para obtener la imagen 4
- */
-    public function obtenerImagen4()
-    {
-        if (is_null($this->imagen4)) {
-            throw new Exception("Ruta de la imagen no definida");
-        } else {
-            return $this->imagen4;
-        }
+        $this->usuario = (int)$usuario;
     }
 
     public function insertar() // FIX: The query must be reviewed and improved.
@@ -267,6 +189,25 @@ public function obtenerFecha()
         $resultado = $consulta->execute();
         $consulta->close();
         return $resultado;
+    }
+
+    public function listarAnuncios()
+    {
+        $anuncios = [];
+        $resultado = $this->conexion->query("SELECT * FROM `anuncios` ORDER BY `fecha_creacion`");
+        while ($fila = $resultado->fetch_assoc()) {
+            $anuncio = new Anuncio();
+            $anuncio->definirId($fila["id"]);
+            $anuncio->definirUsuario($fila["id_usuarios"]);
+            $anuncio->definirDescripcion($fila["descripcion"]);
+            $anuncio->definirFecha($fila["fecha_creacion"]);
+            $anuncio->definirImagen1($fila["imagen1"]);
+            $anuncio->definirImagen2($fila["imagen2"]);
+            $anuncio->definirImagen3($fila["imagen3"]);
+            $anuncio->definirImagen4($fila["imagen4"]);
+            array_push($anuncios, $anuncio);
+        }
+        return $anuncios;
     }
 
     public function listarPorId($id)
@@ -317,43 +258,99 @@ public function obtenerFecha()
         }
     }
 
-    public function actualizar() // FIX: The query must be reviewed and improved.
+    /**
+     * Método para obtener la descripción
+     */
+    public function obtenerDescripcion()
     {
-        $consulta = $this->conexion->prepare(
-            "UPDATE `anuncios` SET `id_usuarios` = ?, `descripcion` = ?, `imagen1` = ?, `imagen2` = ?, `imagen3` = ?, `imagen4` = ? WHERE `id` = ?"
-        );
-        $consulta->bind_param(
-            "isssssi",
-            $this->usuario,
-            $this->descripcion,
-            $this->imagen1,
-            $this->imagen2,
-            $this->imagen3,
-            $this->imagen4,
-            $this->id
-        );
-        $resultado = $consulta->execute();
-        $consulta->close();
-        return $resultado;
-    }
-
- public function listarAnuncios()
-    {
-        $anuncios = [];
-        $resultado = $this->conexion->query("SELECT * FROM `anuncios` ORDER BY `fecha_creacion`");
-        while ($fila = $resultado->fetch_assoc()) {
-            $anuncio = new Anuncio();
-            $anuncio->definirId($fila["id"]);
-            $anuncio->definirUsuario($fila["id_usuarios"]);
-            $anuncio->definirDescripcion($fila["descripcion"]);
-            $anuncio->definirFecha($fila["fecha_creacion"]);
-            $anuncio->definirImagen1($fila["imagen1"]);
-            $anuncio->definirImagen2($fila["imagen2"]);
-            $anuncio->definirImagen3($fila["imagen3"]);
-            $anuncio->definirImagen4($fila["imagen4"]);
-            array_push($anuncios, $anuncio);
+        if (is_null($this->descripcion)) {
+            throw new Exception("La descripción no esta definida.");
+        } else {
+            return $this->descripcion;
         }
-        return $anuncios;
     }
 
+    /**
+     * Método para obtener la fecha de creación
+     */
+    public function obtenerFecha()
+    {
+        if (is_null($this->fecha)) {
+            throw new Exception("La fecha no está definida");
+        } else {
+            return $this->fecha;
+        }
+    }
+
+    /**
+     * Método para obtener el id
+     */
+    public function obtenerId()
+    {
+        if (is_null($this->id)) {
+            throw new Exception("El identificador del anuncio no está definido.");
+        } else {
+            return $this->id;
+        }
+    }
+
+    /**
+     * Método para obtener la imagen 1
+     */
+    public function obtenerImagen1()
+    {
+        if (is_null($this->imagen1)) {
+            throw new Exception("Ruta de la imagen no definida");
+        } else {
+            return $this->imagen1;
+        }
+    }
+
+    /**
+     * Método para obtener la imagen 2
+     */
+    public function obtenerImagen2()
+    {
+        if (is_null($this->imagen2)) {
+            throw new Exception("Ruta de la imagen no definida");
+        } else {
+            return $this->imagen2;
+        }
+    }
+
+    /**
+     * Método para obtener la imagen 3
+     */
+    public function obtenerImagen3()
+    {
+        if (is_null($this->imagen3)) {
+            throw new Exception("Ruta de la imagen no definida");
+        } else {
+            return $this->imagen3;
+        }
+    }
+
+    /**
+     * Método para obtener la imagen 4
+     */
+    public function obtenerImagen4()
+    {
+        if (is_null($this->imagen4)) {
+            throw new Exception("Ruta de la imagen no definida");
+        } else {
+            return $this->imagen4;
+        }
+    }
+
+    /**
+     * Método para obtener el usuario
+     */
+    public function obtenerUsuario()
+    {
+        if (is_null($this->usuario)) {
+            throw new Exception("El usuario no está definido");
+        } else {
+            return $this->usuario;
+        }
+    }
 }
