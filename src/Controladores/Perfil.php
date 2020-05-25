@@ -28,12 +28,15 @@ class Perfil extends Controlador
             $direccion = $direccion->listarDirecciones($usuario->obtenerId());
             $servicio = new Servicio();
             $servicios = $servicio->listarPorUsuario($usuario->obtenerId());
+            $anuncio = new Anuncio();
+            $anuncio = $anuncio->listarPorUsuario($usuario->obtenerId());
             $this->renderizar(
                 "Cuidador.php",
                 [
                     "direccion" => $direccion,
                     "usuario" => $usuario,
                     "servicios" => $servicios,
+                    "anuncio" => $anuncio,
                 ]
             );
         } else {

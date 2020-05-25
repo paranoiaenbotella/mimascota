@@ -26,10 +26,10 @@
                             <?php endif; ?>
                         </li>
                         <li class="nav-item">
-                            <?php if (isset($datos["anuncio"])): ?>
-                                <a class="nav-link" href="/anuncios" tabindex="-1">Anuncio</a>
+                            <?php if (is_object($datos["anuncio"])): ?>
+                                <a class="nav-link" href="/anuncios">Anuncio</a>
                             <?php else: ?>
-                                <a class="nav-link" href="/anuncios/crear" tabindex="-1">Crear Anuncio</a>
+                                <a class="nav-link" href="/anuncios/crear">Crear Anuncio</a>
                             <?php endif; ?>
                         </li>
                     </ul>
