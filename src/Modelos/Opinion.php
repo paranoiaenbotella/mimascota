@@ -157,15 +157,15 @@ public function listarPorAnuncio($anuncio){
         $consulta->close();
 
         if (empty($resultado->num_rows)) {
-        	throw new Exception("Servicio no encontrado");
+        	throw new Exception("Opinion no encontrada");
             
         } else{
-            $anuncio = new Anuncio();
-            $anuncio->definirId($fila["id"]);
-            $anuncio->definirCuidador($fila["id_usuarios"]);
-            $anuncio->definirMensaje($fila["id_anuncios"]);
-            $anuncio->definirMensaje($fila["mensaje"]); 
-            return $anuncio;
+            $opinion = new Opinion();
+            $opinion->definirId($fila["id"]);
+            $opinion->definirUsuario($fila["id_usuarios"]);
+            $opinion->definirAnuncio($fila["id_anuncios"]);
+            $opinion->definirMensaje($fila["mensaje"]); 
+            return $opinion;
         }
        
 }
@@ -198,29 +198,25 @@ public function listarPorId($id){
 /**
  * Método para listar opiniones por usuario
  */
-    public function listarPorUsuario($usuario)
-    {
-       
-        $consulta = $this->conexion->prepare("SELECT * FROM `opiniones` WHERE `usuario` = ?");
+    public function listarPorUsuario($usuario){
+
+        $consulta = $this->conexion->prepare( "SELECT * FROM opiniones WHERE $usuario = ?");
         $consulta->bind_param("i", $usuario);
         $consulta->execute();
         $resultado = $consulta->get_result();
-        $consulta->close();
-            if (empty($resultado->num_rows)) {
-            throw new Exception("Opinion no encontrada");
-            
-        } else{
+        
+        if (empty($resultado->num_rows)){
+            throw new Exception("Opinion no encontrada.");
+        } else {
             $fila = $resultado->fetch_assoc();
             $opinion = new Opinion();
             $opinion->definirId($fila["id"]);
-            $opinion->definirUsuario($fila["id_usuarios"]);
             $opinion->definirAnuncio($fila["id_anuncios"]);
-            $opinion->definirMensaje($fila["mensaje"]); 
+            $opinion->definirUsuario($fila["id_usuarios"]);
+            $opinion->definirMensaje($fila["mensaje"]);
             return $opinion;
-        	
         }
-       
-}
+    }
 
 /**
  * Método para actualizar las opiniones por id

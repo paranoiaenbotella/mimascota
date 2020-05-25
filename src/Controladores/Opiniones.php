@@ -27,7 +27,13 @@ class Opiniones extends Controlador
  * Listar opiniones
  */
 	public function getListar(){
-		$this->renderizar("Listar.php");
+        $usuario = new Usuario();
+        $usuario = $usuario->listarPorId(Sesion::obtenerUsuario()->obtenerId());
+        $anuncio = new Anuncio();
+        $anuncio = $anuncio->listarPorUsuario(Sesion::obtenerUsuario()->obtenerId());
+        $opinion = new Opinion();
+        $opiniones = $opinion->listarPorUsuario(Sesion::obtenerUsuario()->obtenerId());
+		$this->renderizar("Listar.php", ["usuario"=>$usuario, "anuncio"=>$anuncio, "opiniones"=>$opinion]);
 	}
 
 /**
@@ -35,10 +41,11 @@ class Opiniones extends Controlador
  * crear opiniones
  */
 	public function getCrear()
-    {
-        $opinion = new Opinion();
-        $opinion = $opinion->listarPorUsuario(Sesion::obtenerUsuario()->obtenerId());
-        $this->renderizar("Crear.php", ["opinion" => $opinion]);
+    {   
+        $usuario = Sesion::obtenerUsuario()->obtenerId();
+        $anuncio = new Anuncio();
+        $anuncios = $anuncio->listarAnuncios();
+        $this->renderizar("Crear.php", ["anuncios" => $anuncios]);
     }
 
 /**
@@ -49,9 +56,10 @@ public function getEditar($id)
     {
         $usuario = Sesion::obtenerUsuario()->obtenerId();
         $anuncio = new Anuncio();
-        $anuncio = $anuncio->listarPorId($id);
-
-        $this->renderizar("Editar.php", ["anuncio" => $anuncio, "usuario"=>$usuario]);
+       
+        $opinion = new Opinion();
+        $opinion = $opinion->listarPorId($id);
+        $this->renderizar("Editar.php", ["anuncios" => $anuncios, "usuario"=>$usuario, "opinion"=>$opinion]);
     }
 
 /**
@@ -59,11 +67,13 @@ public function getEditar($id)
  */
 	public function postCrear()
     {	
-    		$anuncio = new Anuncio();
-    		$anuncios = $anuncio->listarPorUsuario(Sesion::obtenerUsuario());
+        $usuario = Sesion::obtenerUsuario();
+    	$anuncio = new Anuncio();
+    	$anuncio->listarAnuncios();
         $opinion = new Opinion();
-        $opinion->definirNombre($_POST["mensaje"]);
-        $opinion->crearUsuario(Sesion::obtenerUsuario());
+        $opinion->definirMensaje($_POST["mensaje"]);
+        $opinion->crearUsuario($usuario->obtenerId());
+        $opinion->crearAnuncio($anuncio);
         
         if ($opinion->insertar()) {
             header("Location: /opiniones");
@@ -78,16 +88,17 @@ public function getEditar($id)
 	public function postEditar($id)
     {
         $usuario = Sesion::obtenerUsuario();
-        $servicio = new Servicio();
-        $servicio = $servicio->listarPorId($id);
-        $servicio->definirNombre($_POST["nombre"]);
-        $servicio->definirDescripcion($_POST["descripcion"]);
-        $servicio->definirPrecio($_POST["precio"]);
-        $servicio->definirUsuario($usuario->obtenerId());
-        if ($servicio->actualizar()) {
-            header("Location: /servicios");
+        $anuncio = new Anuncio;
+        $anuncio = $anuncio->listarPorUsuario($usuario->obtenerId());
+        $opinion = new Opinion();
+        $opinion = $opinion->listarPorId($id);
+        $opinion->definirMensaje($_POST["mensaje"]);
+        $opinion->definirAnuncio($anuncio);
+        $opinion->definirUsuario($usuario->obtenerId());
+        if ($opinion->actualizar()) {
+            header("Location: /opiniones");
         } else {
-            header("Location: /servicios/editar/$id");
+            header("Location: /opiniones/editar/$id");
         }
     }
 /**
@@ -96,13 +107,13 @@ public function getEditar($id)
  public function getEliminar($id)
     {
        if (Sesion::esCuidador()) {
-            $servicio = new Servicio();
-            $servicio = $servicio->listarPorId($id);
-            if (isset($servicio) && $servicio->obtenerId() === (int)$id) {
-                $servicio->eliminar();
+            $opinion = new Opinion();
+            $opinion = $opinion->listarPorId($id);
+            if (isset($opinion) && $opinion->obtenerId() === (int)$id) {
+                $opinion->eliminar();
                 }
         } else {header("Location: /");}
-        header("Location: /servicios");
+        header("Location: /opiniones");
     }
 
 }
