@@ -2,6 +2,12 @@
 
 class Sesion
 {
+    public static function cerrar()
+    {
+        session_destroy();
+        header("Location: /identificacion");
+    }
+
     public static function definirAcierto($texto, $nombre)
     {
         $_SESSION["aciertos"][$nombre] = $texto;
@@ -39,17 +45,6 @@ class Sesion
         }
     }
 
-    public static function esPropietario()
-    {
-        $rol = new Rol();
-        $rol = $rol->listarPorId(self::obtenerUsuario()->obtenerRol());
-        if ($rol->obtenerNombre() === "Propietario") {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public static function esCuidador()
     {
         $rol = new Rol();
@@ -64,6 +59,17 @@ class Sesion
     public static function esInvitado()
     {
         return self::obtenerInvitado();
+    }
+
+    public static function esPropietario()
+    {
+        $rol = new Rol();
+        $rol = $rol->listarPorId(self::obtenerUsuario()->obtenerRol());
+        if ($rol->obtenerNombre() === "Propietario") {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static function existeAcierto($nombre)

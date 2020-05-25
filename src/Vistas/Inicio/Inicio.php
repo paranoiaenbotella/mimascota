@@ -16,6 +16,9 @@
             </div>
         </nav>
         <section></section>
-        <footer></footer>
+        <footer>
+            <a href="/aviso-de-privacidad">Aviso de Privacidad</a>
+            <a href="/sobre-nosotros">Sobre Nosotros</a>
+        </footer>
     </body>
 </html>
