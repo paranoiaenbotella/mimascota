@@ -163,6 +163,16 @@ class Anuncio extends Modelo
         }
     }
 
+    public function definirNombre($nombre)
+    {
+        $nombreValido = filter_var($nombre, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if ($nombreValido === false) {
+            // IMPROVE: Something went wrong.
+        } else {
+            $this->nombre = $nombreValido;
+        }
+    }
+
     /**
      * Se define y se fuerza que el tipo
      * de la $usuario sea Int
@@ -339,6 +349,15 @@ class Anuncio extends Modelo
             throw new Exception("Ruta de la imagen no definida");
         } else {
             return $this->imagen4;
+        }
+    }
+
+    public function obtenerNombre()
+    {
+        if (is_null($this->nombre)) {
+            // IMPROVE: The property nombre is not defined.
+        } else {
+            return $this->nombre;
         }
     }
 
