@@ -18,6 +18,13 @@ class Anuncios extends Controlador
         return dirname(__DIR__) . "/Vistas/Anuncios";
     }
 
+    public function getListar(){
+
+        $anuncio = new Anuncio();
+        $anuncios = $anuncio->listarAnuncios();
+        $this->renderizar("Listar.php", ["anuncios"=>$anuncios]);
+    }
+
     /**
      * Método que muestra el formulario de crear un anuncio
      */

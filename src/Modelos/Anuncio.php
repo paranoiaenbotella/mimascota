@@ -149,9 +149,8 @@ class Anuncio extends Modelo
 public function definirFecha($fecha)
 {
     if (is_null($fecha)) {
-        Sesion::definirError("No hay una fecha creada.", "fecha");
     } else {
-        $this->fecha = date_format(strtotime($fecha), "d/m/y");
+        $this->fecha = date("d/m/y ",strtotime( $fecha ));
     }
     return $this;
 }
@@ -164,8 +163,6 @@ public function obtenerFecha()
 	if(is_null($this->fecha)) {
         throw new Exception("La fecha no está definida");
     } else {
-
-
 
 		return $this->fecha;
 	}
@@ -327,6 +324,7 @@ public function obtenerFecha()
             $anuncio->definirUsuario($fila["id_usuarios"]);
             $anuncio->definirServicio($fila["id_servicios"]);
             $anuncio->definirDescripcion($fila["descripcion"]);
+            $anuncio->definirFecha($fila["fecha_creacion"]);
             $anuncio->definirImagen1($fila["imagen1"]);
             $anuncio->definirImagen2($fila["imagen2"]);
             $anuncio->definirImagen3($fila["imagen3"]);
@@ -335,6 +333,30 @@ public function obtenerFecha()
         }
     }
 
+    public function listarPorUsuario($usuario){
+       $consulta = $this->conexion->prepare("select * from `anuncios` where id_usuarios = ?");
+        $consulta->bind_param("i", $usuario);
+        $consulta->execute();
+        $resultado = $consulta->get_result();
+        $consulta->close();
+        if (empty($resultado->num_rows)) {
+            throw new Exception("Anuncio no encontrado");
+        } else {
+            $fila = $resultado->fetch_assoc();
+            $anuncio = new Anuncio();
+            $anuncio->definirId($fila["id"]);
+            $anuncio->definirUsuario($fila["id_usuarios"]);
+            $anuncio->definirServicio($fila["id_servicios"]);
+            $anuncio->definirDescripcion($fila["descripcion"]);
+             $anuncio->definirFecha($fila["fecha_creacion"]);
+            $anuncio->definirImagen1($fila["imagen1"]);
+            $anuncio->definirImagen2($fila["imagen2"]);
+            $anuncio->definirImagen3($fila["imagen3"]);
+            $anuncio->definirImagen4($fila["imagen4"]);
+            return $anuncio;
+    }
+  }
+  
     public function actualizar()
     {
         $consulta = $this->conexion->prepare(
@@ -355,4 +377,25 @@ public function obtenerFecha()
         $consulta->close();
         return $resultado;
     }
+
+ public function listarAnuncios()
+    {
+        $anuncios = [];
+        $resultado = $this->conexion->query("SELECT * FROM `anuncios` ORDER BY `fecha_creacion`");
+        while ($fila = $resultado->fetch_assoc()) {
+            $anuncio = new Anuncio();
+            $anuncio->definirId($fila["id"]);
+            $anuncio->definirUsuario($fila["id_usuarios"]);
+            $anuncio->definirServicio($fila["id_servicios"]);
+            $anuncio->definirDescripcion($fila["descripcion"]);
+            $anuncio->definirFecha($fila["fecha_creacion"]);
+            $anuncio->definirImagen1($fila["imagen1"]);
+            $anuncio->definirImagen2($fila["imagen2"]);
+            $anuncio->definirImagen3($fila["imagen3"]);
+            $anuncio->definirImagen4($fila["imagen4"]);
+            array_push($anuncios, $anuncio);
+        }
+        return $anuncios;
+    }
+
 }
