@@ -4,7 +4,7 @@
     <div class="col-sm-12  col-md-12 col-lg-12">
       <div class="card ">
         <div class="card-header">
-          <h4>Editar anuncio</h4>
+          <h4>Anuncio</h4>
         </div>
         <div class="card-body">
          <div class="row"> 
