@@ -4,26 +4,20 @@ h4, h5, h6
     font-weight: bold;
 }
 
+
 .container {
     width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
     margin-right: auto;
-    margin-left: auto;
-   
+    margin-left: auto;  
 }
 
-.col-sm-10, .col-md-8, .col-md-10, 
-.col-lg-6, .col-lg-4
-{
-     background-color: #effcef; 
-     margin:auto;
-}
+
+.carousel-inner > .carousel-item > img { height: 360px; width: 100% }
 
 .col-md-8, .col-lg-4,
 .col-md-10,.col-lg-6
 {
-    padding: 2rem 4rem;
+    
     margin-top: 2rem;
 } 
 
