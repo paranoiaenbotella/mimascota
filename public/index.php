@@ -206,9 +206,13 @@ switch (1) {
      * Opiniones Ver
      */
     case preg_match("`^/opiniones$`", $_SERVER["REQUEST_URI"]):
+    if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
+        } else {
         $fichero = dirname(__DIR__) . "/src/Controladores/Opiniones.php";
         $clase = "Opiniones";
-        $accion = "getInicio";
+        $accion = "getListar";
+    }
         break;
     /**
      * Eliminar opinión
@@ -520,9 +524,13 @@ switch (1) {
      * Ver anuncios
      */
     case preg_match("`/anuncios$`", $_SERVER["REQUEST_URI"]):
+         if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
+        } else {
         $fichero = dirname(__DIR__) . "/src/Controladores/Anuncios.php";
         $clase = "Anuncios";
-        $accion = "getInicio";
+        $accion = "getListar";
+    }
         break;
     /**
      * Crear anuncios
