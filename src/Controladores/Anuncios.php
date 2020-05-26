@@ -1,5 +1,6 @@
 <?php
 
+require_once(dirname(__DIR__) . "/Modelos/AnimalTipo.php");
 require_once(dirname(__DIR__) . "/Modelos/Anuncio.php");
 require_once(dirname(__DIR__) . "/Modelos/Usuario.php");
 require_once(dirname(__DIR__) . "/Modelos/Servicio.php");
@@ -18,13 +19,6 @@ class Anuncios extends Controlador
         return dirname(__DIR__) . "/Vistas/Anuncios";
     }
 
-    public function getListar(){
-
-        $anuncio = new Anuncio();
-        $anuncios = $anuncio->listarAnuncios();
-        $this->renderizar("Listar.php", ["anuncios"=>$anuncios]);
-    }
-
     /**
      * Método que muestra el formulario de crear un anuncio
      */
@@ -32,7 +26,15 @@ class Anuncios extends Controlador
     {
         $servicio = new Servicio();
         $servicios = $servicio->listarPorUsuario(Sesion::obtenerUsuario()->obtenerId());
-        $this->renderizar("Crear.php", ["servicios" => $servicios]);
+        $animalTipo = new AnimalTipo();
+        $animalTipos = $animalTipo->listarTiposAnimales();
+        $this->renderizar(
+            "Crear.php",
+            [
+                "animalTipos" => $animalTipos,
+                "servicios" => $servicios,
+            ]
+        );
     }
 
     /**
@@ -48,6 +50,13 @@ class Anuncios extends Controlador
         $this->renderizar("Editar.php", ["anuncio" => $anuncio, "servicios" => $servicios]);
     }
 
+    public function getListar()
+    {
+        $anuncio = new Anuncio();
+        $anuncios = $anuncio->listarAnuncios();
+        $this->renderizar("Listar.php", ["anuncios" => $anuncios]);
+    }
+
     /**
      * Mediante este método se controla la inserción del anuncio en la bd
      */
@@ -55,7 +64,6 @@ class Anuncios extends Controlador
     {
         $anuncio = new Anuncio();
         $anuncio->definirUsuario(Sesion::obtenerUsuario()->obtenerId());
-        $anuncio->definirServicio($_POST["servicio"]);
         $anuncio->definirDescripcion($_POST["descripcion"]);
         $anuncio->definirImagen1($_FILES["imagen1"]);
         $anuncio->definirImagen2($_FILES["imagen2"]);

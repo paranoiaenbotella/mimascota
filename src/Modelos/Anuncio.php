@@ -13,6 +13,10 @@ class Anuncio extends Modelo
 
     private $id;
 
+    private $idAnimalesTipos;
+
+    private $idServicios;
+
     private $imagen1;
 
     private $imagen2;
@@ -89,6 +93,15 @@ class Anuncio extends Modelo
             $this->fecha = date("d/m/y ", strtotime($fecha));
         }
         return $this;
+    }
+
+    public function definirIdAnimalesTipos($idAnimalesTipos)
+    {
+        if (is_array($this->idAnimalesTipos)) {
+            $this->idAnimalesTipos = $idAnimalesTipos;
+        } else {
+            // TODO: Something went wrong.
+        }
     }
 
     /**
@@ -302,6 +315,16 @@ class Anuncio extends Modelo
         } else {
             return $this->id;
         }
+    }
+
+    public function obtenerIdAnimalesTipos()
+    {
+        $animalesTipos = [];
+        foreach ($this->idAnimalesTipos as $idAnimalesTipo) {
+            $animalTipo = new AnimalTipo();
+            array_push($animalesTipos, $animalTipo->listarPorId($idAnimalesTipo));
+        }
+        return $animalesTipos;
     }
 
     /**
