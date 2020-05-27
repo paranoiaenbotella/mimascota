@@ -4,7 +4,7 @@
         <div class="col-sm-10 offset-sm-1 col-md-10 offset-md-1 col-lg-10 offset-lg-1">
             <h4>Opinion</h4>
             <form method="POST">
-                <!--NOMBRE-->
+                <!--MENSAJE-->
                 <div class="form-group my-0">
                     <label for="mensaje" class="mb-0">Escribe tu opinión</label>
                     <textarea class="form-control form-control-sm" id="mensaje" name="mensaje" rows="10" ></textarea>
