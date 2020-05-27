@@ -538,6 +538,7 @@ switch (1) {
             $clase = "Anuncios";
             $accion = "getListar";
         }
+        break;
     case preg_match("`^/ver-anuncios$`", $_SERVER["REQUEST_URI"]):
         $fichero = dirname(__DIR__) . "/src/Controladores/Anuncios.php";
         $clase = "Anuncios";
