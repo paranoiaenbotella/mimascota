@@ -7,32 +7,28 @@
                 <table class="table table-sm table-hover border border-success">
                     <thead>
                         <tr class="bg-success text-white">
-                            <th>Servicio</th>
+                            <th>Nombre</th>
                             <th>Descripción</th>
                             <th>Fecha Creación</th>
                             <th colspan="2">Acción</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($datos["anuncios"] as $anuncio): ?>
-                            <tr>
-                                <td><?php echo $anuncio->obtenerId(); ?></td>
-                                <td><?php echo $anuncio->obtenerUsuario(); ?></td>
-                                <td><?php echo $anuncio->obtenerServicio(); ?></td>
-                                <td><?php echo $anuncio->obtenerDescripcion(); ?></td>
-                                <td><?php echo $anuncio->obtenerFecha(); ?></td>
-                                <td>
-                                    <a href="/anuncios/editar/<?php echo($anuncio->obtenerId(
-                                    )); ?>" class="btn btn-sm btn-info">Editar
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="/anuncios/eliminar/<?php echo($anuncio->obtenerId(
-                                    )); ?>" class="btn btn-sm btn-danger">Eliminar
-                                    </a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                        <tr>
+                            <td><?php echo $datos["anuncio"]->obtenerNombre(); ?></td>
+                            <td><?php echo $datos["anuncio"]->obtenerDescripcion(); ?></td>
+                            <td><?php echo $datos["anuncio"]->obtenerFecha(); ?></td>
+                            <td>
+                                <a href="/anuncios/editar/<?php echo($datos["anuncio"]->obtenerId(
+                                )); ?>" class="btn btn-sm btn-info">Editar
+                                </a>
+                            </td>
+                            <td>
+                                <a href="/anuncios/eliminar/<?php echo($datos["anuncio"]->obtenerId(
+                                )); ?>" class="btn btn-sm btn-danger">Eliminar
+                                </a>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             <?php else: ?>

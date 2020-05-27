@@ -36,7 +36,7 @@
                                 <a class="nav-link" href="/servicios">Servicios</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/anuncios">Anuncios</a>
+                                <a class="nav-link" href="/anuncios">Anuncio</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/perfil">Perfil</a>
@@ -45,22 +45,24 @@
                                 <a class="nav-link" href="/salir">Salir</a>
                             </li>
                         </ul>
-
-                      <?php elseif (Sesion::esPropietario()): ?>
-                           <ul class="navbar-nav ml-auto">
+                    <?php elseif (Sesion::esPropietario()): ?>
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/ver-anuncios">Ver Anuncios</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/opiniones">Opiniones</a>
                             </li>
-                               <li class="nav-item">
-                                   <a class="nav-link" href="/animales">Animales</a>
-                               </li>
-                               <li class="nav-item">
-                                   <a class="nav-link" href="/perfil">Perfil</a>
-                               </li>
-                               <li class="nav-item">
-                                   <a class="nav-link" href="/salir">Salir</a>
-                               </li>
-                           </ul>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/animales">Animales</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/perfil">Perfil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/salir">Salir</a>
+                            </li>
+                        </ul>
                     <?php else: ?>
                             <ul class="navbar-nav ml-auto">
                             <li class="nav-item">

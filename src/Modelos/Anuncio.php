@@ -123,6 +123,15 @@ class Anuncio extends Modelo
         }
     }
 
+    public function definirIdServicios(array $idServicios)
+    {
+        if (is_array($this->idAnimalesTipos)) {
+            $this->idServicios = $idServicios;
+        } else {
+            // TODO: Something went wrong.
+        }
+    }
+
     /**
      * Método para definir la imagen 1
      */
@@ -234,7 +243,7 @@ class Anuncio extends Modelo
         $this->definirId($this->conexion->insert_id);
         if ($resultado) {
             $consulta2 = $this->conexion->prepare(
-                "insert into `anuncios_animales_tipos` (`id_anuncios`, `id_animales_tipos`) VALUES (?, ?)"
+                "INSERT INTO `anuncios_animales_tipos` (`id_anuncios`, `id_animales_tipos`) VALUES (?, ?)"
             );
             foreach ($this->idAnimalesTipos as $idServicio) {
                 $consulta2->bind_param("ii", $this->id, $idServicio);
@@ -242,7 +251,7 @@ class Anuncio extends Modelo
             }
             $consulta2->close();
             $consulta3 = $this->conexion->prepare(
-                "insert into `anuncios_servicios` (`id_anuncios`, `id_servicios`) VALUES (?, ?)"
+                "INSERT INTO `anuncios_servicios` (`id_anuncios`, `id_servicios`) VALUES (?, ?)"
             );
             foreach ($this->idServicios as $idServicio) {
                 $consulta3->bind_param("ii", $this->id, $idServicio);
@@ -263,12 +272,33 @@ class Anuncio extends Modelo
             $anuncio = new Anuncio();
             $anuncio->definirId($fila["id"]);
             $anuncio->definirUsuario($fila["id_usuarios"]);
+            $anuncio->definirNombre($fila["nombre"]);
             $anuncio->definirDescripcion($fila["descripcion"]);
             $anuncio->definirFecha($fila["fecha_creacion"]);
             $anuncio->definirImagen1($fila["imagen1"]);
             $anuncio->definirImagen2($fila["imagen2"]);
             $anuncio->definirImagen3($fila["imagen3"]);
             $anuncio->definirImagen4($fila["imagen4"]);
+            $consulta2 = $this->conexion->prepare("SELECT * FROM `anuncios_animales_tipos` WHERE `id_anuncios` = ?");
+            $consulta2->bind_param("i", $anuncio->id);
+            $consulta2->execute();
+            $resultado2 = $consulta2->get_result();
+            $consulta2->close();
+            $idAnimalesTipos = [];
+            while ($fila2 = $resultado2->fetch_assoc()) {
+                array_push($idAnimalesTipos, $fila2["id_animales_tipos"]);
+            }
+            $anuncio->definirIdAnimalesTipos($idAnimalesTipos);
+            $consulta3 = $this->conexion->prepare("SELECT * FROM `anuncios_servicios` WHERE `id_anuncios` = ?");
+            $consulta3->bind_param("i", $anuncio->id);
+            $consulta3->execute();
+            $resultado2 = $consulta3->get_result();
+            $consulta3->close();
+            $idServicios = [];
+            while ($fila3 = $resultado2->fetch_assoc()) {
+                array_push($idServicios, $fila3["id_servicios"]);
+            }
+            $anuncio->definirIdServicios($idServicios);
             array_push($anuncios, $anuncio);
         }
         return $anuncios;
@@ -312,15 +342,35 @@ class Anuncio extends Modelo
             $anuncio = new Anuncio();
             $anuncio->definirId($fila["id"]);
             $anuncio->definirUsuario($fila["id_usuarios"]);
+            $anuncio->definirNombre($fila["nombre"]);
             $anuncio->definirDescripcion($fila["descripcion"]);
             $anuncio->definirFecha($fila["fecha_creacion"]);
             $anuncio->definirImagen1($fila["imagen1"]);
             $anuncio->definirImagen2($fila["imagen2"]);
             $anuncio->definirImagen3($fila["imagen3"]);
             $anuncio->definirImagen4($fila["imagen4"]);
-            array_push($anuncios, $anuncio);
+            $consulta2 = $this->conexion->prepare("SELECT * FROM `anuncios_animales_tipos` WHERE `id_anuncios` = ?");
+            $consulta2->bind_param("i", $anuncio->id);
+            $consulta2->execute();
+            $resultado2 = $consulta2->get_result();
+            $consulta2->close();
+            $idAnimalesTipos = [];
+            while ($fila2 = $resultado2->fetch_assoc()) {
+                array_push($idAnimalesTipos, $fila2["id_animales_tipos"]);
+            }
+            $anuncio->definirIdAnimalesTipos($idAnimalesTipos);
+            $consulta3 = $this->conexion->prepare("SELECT * FROM `anuncios_servicios` WHERE `id_anuncios` = ?");
+            $consulta3->bind_param("i", $anuncio->id);
+            $consulta3->execute();
+            $resultado2 = $consulta3->get_result();
+            $consulta3->close();
+            $idServicios = [];
+            while ($fila3 = $resultado2->fetch_assoc()) {
+                array_push($idServicios, $fila3["id_servicios"]);
+            }
+            $anuncio->definirIdServicios($idServicios);
         }
-        return $anuncios;
+        return $anuncio;
     }
 
     /**

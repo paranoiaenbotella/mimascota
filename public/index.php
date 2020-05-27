@@ -198,30 +198,29 @@ switch (1) {
      * Crear opiniones
      */
     case preg_match("`^/opiniones/crear$`", $_SERVER["REQUEST_URI"]):
-        if ( Sesion::esInvitado()) {
+        if (Sesion::esInvitado()) {
             header("Location: /identificacion");
-        }  else {
-                if ($_SERVER["REQUEST_METHOD"] === "POST") {
-                        $accion = "postCrear";
-                } else {
-                        $accion = "getCrear";
-                }
-       
-        $fichero = dirname(__DIR__) . "/src/Controladores/Opiniones.php";
-        $clase = "Opiniones";
-         }
+        } else {
+            if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                $accion = "postCrear";
+            } else {
+                $accion = "getCrear";
+            }
+            $fichero = dirname(__DIR__) . "/src/Controladores/Opiniones.php";
+            $clase = "Opiniones";
+        }
         break;
     /**
      * Opiniones Ver
      */
     case preg_match("`^/opiniones$`", $_SERVER["REQUEST_URI"]):
-    if (Sesion::esInvitado()) {
+        if (Sesion::esInvitado()) {
             header("Location: /identificacion", 301);
         } else {
-        $fichero = dirname(__DIR__) . "/src/Controladores/Opiniones.php";
-        $clase = "Opiniones";
-        $accion = "getListar";
-    }
+            $fichero = dirname(__DIR__) . "/src/Controladores/Opiniones.php";
+            $clase = "Opiniones";
+            $accion = "getListar";
+        }
         break;
     /**
      * Eliminar opinión
@@ -239,11 +238,11 @@ switch (1) {
     /**
      * Editar opinión
      */
-        case preg_match("`/opiniones/editar/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
+    case preg_match("`/opiniones/editar/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
         if (Sesion::esInvitado()) {
             header("Location: /identificacion", 301);
         } else {
-            if ($_SERVER["REQUEST_METHOD"] === "POST"){
+            if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $accion = "postCrear";
             } else {
                 $accion = "getEditar";
@@ -254,7 +253,6 @@ switch (1) {
             $accion = "getEditar";
         }
         break;
-
     /**
      * Crear tipo de animales
      */
@@ -533,25 +531,29 @@ switch (1) {
      * Ver anuncios
      */
     case preg_match("`/anuncios$`", $_SERVER["REQUEST_URI"]):
-         if (Sesion::esInvitado()) {
+        if (Sesion::esInvitado()) {
             header("Location: /identificacion", 301);
         } else {
+            $fichero = dirname(__DIR__) . "/src/Controladores/Anuncios.php";
+            $clase = "Anuncios";
+            $accion = "getListar";
+        }
+    case preg_match("`^/ver-anuncios$`", $_SERVER["REQUEST_URI"]):
         $fichero = dirname(__DIR__) . "/src/Controladores/Anuncios.php";
         $clase = "Anuncios";
-        $accion = "getListar";
-    }
+        $accion = "getInicio";
         break;
     /**
      * Ver ultimos 10 anuncios
      */
     case preg_match("`/anuncios/ultimos$`", $_SERVER["REQUEST_URI"]):
-         if (Sesion::esInvitado()) {
+        if (Sesion::esInvitado()) {
             header("Location: /identificacion", 301);
         } else {
-        $fichero = dirname(__DIR__) . "/src/Controladores/Anuncios.php";
-        $clase = "Anuncios";
-        $accion = "getListarUltimosAnuncios";
-    }
+            $fichero = dirname(__DIR__) . "/src/Controladores/Anuncios.php";
+            $clase = "Anuncios";
+            $accion = "getListarUltimosAnuncios";
+        }
         break;
     /**
      * Crear anuncios

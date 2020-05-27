@@ -37,6 +37,13 @@ class Anuncios extends Controlador
         );
     }
 
+    public function getInicio()
+    {
+        $anuncio = new Anuncio();
+        $anuncios = $anuncio->listarAnuncios();
+        $this->renderizar("Inicio.php", ["anuncios" => $anuncios]);
+    }
+
     /**
      * Mediante este método se muestra por pantalla el
      * formulario para editar el anuncio
@@ -53,8 +60,8 @@ class Anuncios extends Controlador
     public function getListar()
     {
         $anuncio = new Anuncio();
-        $anuncios = $anuncio->listarAnuncios();
-        $this->renderizar("Listar.php", ["anuncios" => $anuncios]);
+        $anuncio = $anuncio->listarPorUsuario(Sesion::obtenerUsuario()->obtenerId());
+        $this->renderizar("Listar.php", ["anuncio" => $anuncio]);
     }
 
     /**

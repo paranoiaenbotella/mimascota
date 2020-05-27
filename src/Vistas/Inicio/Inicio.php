@@ -10,7 +10,7 @@
         <nav>
             <div class="logo"></div>
             <div class="enlaces">
-                <a href="/cuidadores">Ver Cuidadores</a>
+                <a href="/ver-anuncios">Ver Anuncios</a>
                 <a href="/registro">Registrarse</a>
                 <a href="/identificacion">Iniciar Sesi&oacute;n</a>
             </div>
