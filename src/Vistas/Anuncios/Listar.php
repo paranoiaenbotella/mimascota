@@ -37,7 +37,7 @@
                     <?php endforeach; ?>
                 </tbody>                                  
             </table>
-             <a href="/perfil" class="btn btn-sm btn-outline-success">Regresar a perfil</a>
+             
         </div>
     </div>
 </section>
