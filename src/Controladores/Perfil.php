@@ -40,7 +40,12 @@ class Perfil extends Controlador
                 ]
             );
         } else {
-            $this->renderizar("Propietario.php", ["usuario" => $usuario]);
+            if (Sesion::esPropietario()){
+              $this->renderizar("Propietario.php", ["usuario" => $usuario]);
+            } else {
+              $this->renderizar("Administrador.php", ["usuario"=>$usuario]);
+            }
+            
         }
     }
 
