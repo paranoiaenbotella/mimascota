@@ -35,7 +35,7 @@ class Animales extends Controlador
 	public function getListar()
     {
         $animal = new Animal();
-        $animales = $animal->listarAnimales();
+        $animales = $animal->listarAnimalesPorIdUsuario(Sesion::obtenerUsuario()->obtenerId());
         $animalTipo = new AnimalTipo();
         $animalTipos = $animalTipo->listarTiposAnimales();
         $this->renderizar("Listar.php", ["animales" => $animales, "animalTipos" => $animalTipos]);

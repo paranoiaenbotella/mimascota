@@ -6,24 +6,20 @@
             <table class="table table-sm table-hover border border-success">
                 <thead>
                     <tr class="bg-success text-white">
-                        <th>Id</th>
                         <th>Nombre</th>
                         <th>Tipo</th>
-                        <th>Usuario</th>
                         <th colspan="2">Acción</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($datos["animales"] as $animal): ?>
                         <tr>
-                            <td><?php echo $animal->obtenerId(); ?></td>
                             <td><?php echo $animal->obtenerNombre(); ?></td>
                             <?php foreach ($datos["animalTipos"] as $animalTipo): ?>
                                 <?php if ($animal->obtenerAnimalTipo() === $animalTipo->obtenerId()): ?>
                                     <td><?php echo $animalTipo->obtenerNombre(); ?></td>
                                 <?php endif; ?>
                             <?php endforeach; ?>
-                            <td><?php echo $animal->obtenerUsuario(); ?></td>
                             <td>
                                 <a href="/animales/editar/<?php echo($animal->obtenerId(
                                 )); ?>" class="btn btn-sm btn-info">Editar
