@@ -204,7 +204,7 @@ class Anuncio extends Modelo
     public function listarAnuncios()
     {
         $anuncios = [];
-        $resultado = $this->conexion->query("SELECT * FROM `anuncios` ORDER BY `fecha_creacion`");
+        $resultado = $this->conexion->query("SELECT * FROM `anuncios` ORDER BY `fecha_creacion` DESC");
         while ($fila = $resultado->fetch_assoc()) {
             $anuncio = new Anuncio();
             $anuncio->definirId($fila["id"]);
@@ -228,7 +228,7 @@ class Anuncio extends Modelo
         $resultado = $consulta->get_result();
         $consulta->close();
         if (empty($resultado->num_rows)) {
-            throw new Exception("Anuncio no encontrado");
+            return false;
         } else {
             $fila = $resultado->fetch_assoc();
             $anuncio = new Anuncio();
@@ -264,10 +264,32 @@ class Anuncio extends Modelo
             $anuncio->definirImagen2($fila["imagen2"]);
             $anuncio->definirImagen3($fila["imagen3"]);
             $anuncio->definirImagen4($fila["imagen4"]);
-            return $anuncio;
+            array_push($anuncios, $anuncio);
         }
+        return $anuncios;
     }
 
+    /**
+     * Listar ultimos 10 anuncios
+     */
+    public function listarUltimosDiez()
+    {   
+        $anuncios = [];
+        $resultado = $this->conexion->query("SELECT * FROM `anuncios` ORDER BY `fecha_creacion` LIMIT 10");
+        while ($fila = $resultado->fetch_assoc()) {
+            $anuncio = new Anuncio();
+            $anuncio->definirId($fila["id"]);
+            $anuncio->definirUsuario($fila["id_usuarios"]);
+            $anuncio->definirDescripcion($fila["descripcion"]);
+            $anuncio->definirFecha($fila["fecha_creacion"]);
+            $anuncio->definirImagen1($fila["imagen1"]);
+            $anuncio->definirImagen2($fila["imagen2"]);
+            $anuncio->definirImagen3($fila["imagen3"]);
+            $anuncio->definirImagen4($fila["imagen4"]);
+            array_push($anuncios, $anuncio);
+        }
+        return $anuncios;
+    }
     /**
      * Método para obtener la descripción
      */
