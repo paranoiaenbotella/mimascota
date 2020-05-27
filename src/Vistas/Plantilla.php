@@ -27,7 +27,7 @@
                                 <a class="nav-link" href="/identificacion">Identificaci&oacute;n</a>
                             </li>
                         </ul>
-                    <?php else: ?>
+                    <?php elseif (Sesion::esCuidador()): ?>
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
                                 <a class="nav-link" href="/direcciones">Direcciones</a>
@@ -45,7 +45,48 @@
                                 <a class="nav-link" href="/salir">Salir</a>
                             </li>
                         </ul>
-                    <?php endif; ?>
+                       
+                      <?php elseif (Sesion::esPropietario()): ?>
+                           <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/opiniones">Opiniones</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/animales">Animales</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/perfil">Perfil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/salir">Salir</a>
+                            </li>
+                        </ul> 
+
+                        <?php else: ?>
+                            <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/usuarios">Usuarios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/animales/tipos">Tipos de animales</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/roles">Roles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/anuncios">Anuncios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/anuncios/ultimos">Ultimos anuncios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/perfil">Perfil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/salir">Salir</a>
+                            </li>
+                        </ul>
+                     <?php endif; ?>
                 </div>
             </div>
         </nav>
