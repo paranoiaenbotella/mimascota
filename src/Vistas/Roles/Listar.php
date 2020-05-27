@@ -27,7 +27,7 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <a href="/roles/crear" class="btn btn-sm btn-light">Regresar a crear roles</a>
+            <a href="/roles/crear" class="btn btn-sm btn-outline-success"> Crear roles</a>
         </div>
     </div>
 </section>

@@ -37,7 +37,6 @@
                 </tbody>                                  
             </table>
              <a href="/servicios/crear" class="btn btn-sm btn-outline-success">Crear servicios</a> 
-             <a href="/perfil" class="btn btn-sm btn-outline-success">Regresar a perfil</a>
         </div>
     </div>
 </section>
