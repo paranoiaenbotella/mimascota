@@ -94,4 +94,14 @@ class Anuncios extends Controlador
     public function postEliminar()
     {
     }
+
+    /**
+     * Mostrar ultimos 10 anuncios publicados
+     */
+    
+    public function getListarUltimosAnuncios(){
+        $anuncio = new Anuncio();
+        $anuncios = $anuncio->listarUltimosDiez();
+        $this->renderizar("Ultimos.php", ["anuncios"=>$anuncios]);
+    }
 }

@@ -542,6 +542,18 @@ switch (1) {
     }
         break;
     /**
+     * Ver ultimos 10 anuncios
+     */
+    case preg_match("`/anuncios/ultimos$`", $_SERVER["REQUEST_URI"]):
+         if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
+        } else {
+        $fichero = dirname(__DIR__) . "/src/Controladores/Anuncios.php";
+        $clase = "Anuncios";
+        $accion = "getListarUltimosAnuncios";
+    }
+        break;
+    /**
      * Crear anuncios
      */
     case preg_match("`/anuncios/crear$`", $_SERVER["REQUEST_URI"]):
