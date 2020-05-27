@@ -26,6 +26,7 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <a href="/animales/tipos/crear" class="btn btn-sm btn-outline-success">Crear tipos de animales</a>
         </div>
     </div>
 </section>

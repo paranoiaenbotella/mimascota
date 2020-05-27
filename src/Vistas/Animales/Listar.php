@@ -37,6 +37,7 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <a href="/animales/crear" class="btn btn-sm btn-outline-success">Crear animal</a>
         </div>
     </div>
 </section>
