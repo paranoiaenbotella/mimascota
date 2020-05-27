@@ -31,13 +31,13 @@
                         <?php if (Sesion::esCuidador()): ?>
                             <ul class="navbar-nav ml-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/direcciones">Direcciones</a>
+                                    <a class="nav-link" href="/direcciones">Direcci&oacute;n</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/servicios">Servicios</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/anuncios">Anuncios</a>
+                                    <a class="nav-link" href="/anuncios">Anuncio</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/perfil">Perfil</a>

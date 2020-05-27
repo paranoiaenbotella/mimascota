@@ -166,7 +166,7 @@ class Servicio extends Modelo
     public function listarPorUsuario($usuario)
     {
         $servicios = [];
-        $consulta = $this->conexion->prepare("SELECT * FROM `servicios` WHERE `id_usuarios` =?");
+        $consulta = $this->conexion->prepare("SELECT * FROM `servicios` WHERE `id_usuarios` = ?");
         $consulta->bind_param("i", $usuario);
         $consulta->execute();
         $resultado = $consulta->get_result();
