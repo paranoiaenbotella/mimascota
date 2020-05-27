@@ -20,8 +20,8 @@
 		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae turpis placerat, molestie justo et, porta dui. Donec quam ante, blandit et ipsum faucibus, commodo tempus risus. Maecenas eu orci tellus. Integer porta semper massa sit amet sagittis. Duis mollis leo id porta molestie. Nullam finibus, justo quis semper gravida, lorem ligula mattis est, eu sagittis quam diam vel odio. Integer sed ante sed mi elementum porttitor.</p>
 		<h4>Limitación de responsabilidad</h4>
 		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae turpis placerat, molestie justo et, porta dui. Donec quam ante, blandit et ipsum faucibus, commodo tempus risus. Maecenas eu orci tellus. Integer porta semper massa sit amet sagittis. Duis mollis leo id porta molestie. Nullam finibus, justo quis semper gravida, lorem ligula mattis est, eu sagittis quam diam vel odio. Integer sed ante sed mi elementum porttitor.</p>
-    </div>
-  </div>
-    </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
 </section>
