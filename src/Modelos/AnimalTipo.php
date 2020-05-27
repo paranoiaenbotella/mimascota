@@ -100,7 +100,7 @@ class AnimalTipo extends Modelo
    public function listarTiposAnimales()
    {
        $animalesTipo = [];
-       $resultado = $this->conexion->query("SELECT * FROM `animales_tipos` ORDER BY `id`");
+       $resultado = $this->conexion->query("SELECT * FROM `animales_tipos` ORDER BY `nombre`");
         while ($fila = $resultado->fetch_assoc()) {
             $animalTipo = new AnimalTipo();
             $animalTipo->definirId($fila["id"]);

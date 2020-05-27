@@ -11,16 +11,14 @@
                         </li>
                         <li class="nav-item">
                             <?php if (isset($datos["direccion"])): ?>
-                                <a class="nav-link" href="/direcciones">Dirección
-                                </a>
+                                <a class="nav-link" href="/direcciones">Dirección</a>
                             <?php else: ?>
                                 <a class="nav-link" href="/direcciones/crear">Crear Dirección</a>
                             <?php endif; ?>
                         </li>
                         <li class="nav-item">
-                            <?php if (isset($datos["servicios"])): ?>
-                                <a class="nav-link" href="/servicios">Servicios
-                                </a>
+                            <?php if (count($datos["servicios"]) > 0): ?>
+                                <a class="nav-link" href="/servicios">Servicios</a>
                             <?php else: ?>
                                 <a class="nav-link" href="/servicios/crear">Crear Servicios</a>
                             <?php endif; ?>
