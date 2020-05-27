@@ -13,7 +13,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group my-0">
                                         <label for="nombre" class="mb-0">Nombre del Anuncio:</label>
-                                        <input class="form-control form-control-sm" id="nombre" type="text">
+                                        <input class="form-control form-control-sm" id="nombre" name="nombre" type="text">
                                         <?php if (Sesion::existeError(
                                             "descripcionAnuncio"
                                         )): // IMPROVE: Change the error detection. ?>

@@ -13,9 +13,9 @@ class Anuncio extends Modelo
 
     private $id;
 
-    private $idAnimalesTipos;
+    private $idAnimalesTipos = [];
 
-    private $idServicios;
+    private $idServicios = [];
 
     private $imagen1;
 
@@ -56,6 +56,25 @@ class Anuncio extends Modelo
         $resultado = $consulta->execute();
         $consulta->close();
         return $resultado;
+    }
+
+    public function crearIdAnimalesTipos($animalTipo)
+    {
+        if ($animalTipo instanceof AnimalTipo) {
+            array_push($this->idAnimalesTipos, $animalTipo->obtenerId());
+        } else {
+            // TODO: Something went wrong.
+        }
+        return $this;
+    }
+
+    public function crearIdServicios($servicio)
+    {
+        if ($servicio instanceof Servicio) {
+            array_push($this->idServicios, $servicio->obtenerId());
+        } else {
+            // TODO: Something went wrong.
+        }
     }
 
     /**
@@ -198,11 +217,12 @@ class Anuncio extends Modelo
     public function insertar() // FIX: The query must be reviewed and improved.
     {
         $consulta = $this->conexion->prepare(
-            "INSERT INTO `anuncios` (`id_usuarios`, `descripcion`, `imagen1`, `imagen2`, `imagen3`, `imagen4`) VALUES (?, ?, ?, ?, ?, ?)"
+            "INSERT INTO `anuncios` (`id_usuarios`, `nombre`, `descripcion`, `imagen1`, `imagen2`, `imagen3`, `imagen4`) VALUES (?, ?, ?, ?, ?, ?, ?)"
         );
         $consulta->bind_param(
-            "isssss",
+            "issssss",
             $this->usuario,
+            $this->nombre,
             $this->descripcion,
             $this->imagen1,
             $this->imagen2,
@@ -211,6 +231,27 @@ class Anuncio extends Modelo
         );
         $resultado = $consulta->execute();
         $consulta->close();
+        $this->definirId($this->conexion->insert_id);
+        if ($resultado) {
+            $consulta2 = $this->conexion->prepare(
+                "insert into `anuncios_animales_tipos` (`id_anuncios`, `id_animales_tipos`) VALUES (?, ?)"
+            );
+            foreach ($this->idAnimalesTipos as $idServicio) {
+                $consulta2->bind_param("ii", $this->id, $idServicio);
+                $consulta2->execute();
+            }
+            $consulta2->close();
+            $consulta3 = $this->conexion->prepare(
+                "insert into `anuncios_servicios` (`id_anuncios`, `id_servicios`) VALUES (?, ?)"
+            );
+            foreach ($this->idServicios as $idServicio) {
+                $consulta3->bind_param("ii", $this->id, $idServicio);
+                $consulta3->execute();
+            }
+            $consulta3->close();
+        } else {
+            // TODO: Something went wrong.
+        }
         return $resultado;
     }
 
@@ -286,7 +327,7 @@ class Anuncio extends Modelo
      * Listar ultimos 10 anuncios
      */
     public function listarUltimosDiez()
-    {   
+    {
         $anuncios = [];
         $resultado = $this->conexion->query("SELECT * FROM `anuncios` ORDER BY `fecha_creacion` LIMIT 10");
         while ($fila = $resultado->fetch_assoc()) {
@@ -303,6 +344,7 @@ class Anuncio extends Modelo
         }
         return $anuncios;
     }
+
     /**
      * Método para obtener la descripción
      */
@@ -342,8 +384,8 @@ class Anuncio extends Modelo
     public function obtenerIdAnimalesTipos()
     {
         $animalesTipos = [];
+        $animalTipo = new AnimalTipo();
         foreach ($this->idAnimalesTipos as $idAnimalesTipo) {
-            $animalTipo = new AnimalTipo();
             array_push($animalesTipos, $animalTipo->listarPorId($idAnimalesTipo));
         }
         return $animalesTipos;

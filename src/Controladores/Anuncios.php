@@ -64,11 +64,26 @@ class Anuncios extends Controlador
     {
         $anuncio = new Anuncio();
         $anuncio->definirUsuario(Sesion::obtenerUsuario()->obtenerId());
+        $anuncio->definirNombre($_POST["nombre"]);
         $anuncio->definirDescripcion($_POST["descripcion"]);
         $anuncio->definirImagen1($_FILES["imagen1"]);
         $anuncio->definirImagen2($_FILES["imagen2"]);
         $anuncio->definirImagen3($_FILES["imagen3"]);
         $anuncio->definirImagen4($_FILES["imagen4"]);
+        if (isset($_POST["animal-tipos"])) {
+            foreach ($_POST["animal-tipos"] as $animalTipoId) {
+                $animalTipo = new AnimalTipo();
+                $animalTipo = $animalTipo->listarPorId($animalTipoId);
+                $anuncio->crearIdAnimalesTipos($animalTipo);
+            }
+        }
+        if (isset($_POST["servicios"])) {
+            foreach ($_POST["servicios"] as $servicioId) {
+                $servicio = new Servicio();
+                $servicio = $servicio->listarPorId($servicioId);
+                $anuncio->crearIdServicios($servicio);
+            }
+        }
         if ($anuncio->insertar()) {
             header("Location: /anuncios");
         } else {
@@ -82,7 +97,6 @@ class Anuncios extends Controlador
         $anuncio = new Anuncio();
         $anuncio = $anuncio->listarPorId($id);
         $anuncio->definirUsuario($usuario->obtenerId());
-        $anuncio->definirServicio($_POST["servicio"]);
         $anuncio->definirDescripcion($_POST["descripcion"]);
         $anuncio->definirImagen1($_FILES["imagen1"]);
         $anuncio->definirImagen2($_FILES["imagen2"]);
@@ -106,7 +120,6 @@ class Anuncios extends Controlador
     /**
      * Mostrar ultimos 10 anuncios publicados
      */
-    
     public function getListarUltimosAnuncios(){
         $anuncio = new Anuncio();
         $anuncios = $anuncio->listarUltimosDiez();
