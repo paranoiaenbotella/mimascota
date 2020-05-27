@@ -45,24 +45,23 @@
                                 <a class="nav-link" href="/salir">Salir</a>
                             </li>
                         </ul>
-                       
+
                       <?php elseif (Sesion::esPropietario()): ?>
                            <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
                                 <a class="nav-link" href="/opiniones">Opiniones</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/animales">Animales</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/perfil">Perfil</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/salir">Salir</a>
-                            </li>
-                        </ul> 
-
-                        <?php else: ?>
+                               <li class="nav-item">
+                                   <a class="nav-link" href="/animales">Animales</a>
+                               </li>
+                               <li class="nav-item">
+                                   <a class="nav-link" href="/perfil">Perfil</a>
+                               </li>
+                               <li class="nav-item">
+                                   <a class="nav-link" href="/salir">Salir</a>
+                               </li>
+                           </ul>
+                    <?php else: ?>
                             <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
                                 <a class="nav-link" href="/usuarios">Usuarios</a>
@@ -72,9 +71,6 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/roles">Roles</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/anuncios">Anuncios</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/anuncios/ultimos">Ultimos anuncios</a>
