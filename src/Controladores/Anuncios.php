@@ -44,6 +44,12 @@ class Anuncios extends Controlador
         $this->renderizar("Inicio.php", ["anuncios" => $anuncios]);
     }
 
+    public function getAnuncio($id){
+        $anuncio = new Anuncio ();
+        $anuncio = $anuncio->listarPorId($id);
+        $this->renderizar("Anuncio.php", ["anuncio"=>$anuncio]);
+    }
+
     /**
      * Mediante este método se muestra por pantalla el
      * formulario para editar el anuncio
