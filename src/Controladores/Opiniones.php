@@ -26,14 +26,11 @@ class Opiniones extends Controlador
  * Listar opiniones
  */
 	public function getListar(){
-        $usuario = new Usuario();
-        $usuario = $usuario->listarPorId(Sesion::obtenerUsuario()->obtenerId());
-        $anuncio = new Anuncio();
-        $anuncio = $anuncio->listarPorUsuario(Sesion::obtenerUsuario()->obtenerId());
+        $usuario = Sesion::obtenerUsuario();
         $opinion = new Opinion();
-        $opiniones = $opinion->listarPorUsuario(Sesion::obtenerUsuario()->obtenerId());
-		$this->renderizar("Listar.php", ["usuario"=>$usuario, "anuncio"=>$anuncio, "opiniones"=>$opinion]);
-	}
+        $opiniones = $opinion->listarPorUsuario($usuario->obtenerId());
+        $this->renderizar("Listar.php", ["usuario" => $usuario, "opiniones" => $opiniones]);
+    }
 
 /**
  * Mostrar formulario para

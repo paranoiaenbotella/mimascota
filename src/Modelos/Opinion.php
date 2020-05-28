@@ -199,20 +199,24 @@ public function listarPorId($id){
  */
     public function listarPorUsuario($usuario){
 
-        $consulta = $this->conexion->prepare( "SELECT * FROM opiniones WHERE $usuario = ?");
+        $consulta = $this->conexion->prepare("SELECT * FROM opiniones WHERE `id_usuarios` = ?");
         $consulta->bind_param("i", $usuario);
         $consulta->execute();
         $resultado = $consulta->get_result();
+        $consulta->close();
         if (empty($resultado->num_rows)){
-            throw new Exception("Opinion no encontrada.");
+            return false;
         } else {
-            $fila = $resultado->fetch_assoc();
-            $opinion = new Opinion();
-            $opinion->definirId($fila["id"]);
-            $opinion->definirAnuncio($fila["id_anuncios"]);
-            $opinion->definirUsuario($fila["id_usuarios"]);
-            $opinion->definirMensaje($fila["mensaje"]);
-            return $opinion;
+            $opiniones = [];
+            while ($fila = $resultado->fetch_assoc()) {
+                $opinion = new Opinion();
+                $opinion->definirId($fila["id"]);
+                $opinion->definirAnuncio($fila["id_anuncios"]);
+                $opinion->definirUsuario($fila["id_usuarios"]);
+                $opinion->definirMensaje($fila["mensaje"]);
+                array_push($opiniones, $opinion);
+            }
+            return $opiniones;
         }
     }
 
