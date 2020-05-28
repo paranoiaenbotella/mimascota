@@ -58,7 +58,7 @@ class Opinion extends Modelo
      */
     public function definirAnuncio($anuncio)
     {
-        $this->anuncio = int($anuncio);
+        $this->anuncio = (int)$anuncio;
     }
 
     /**
@@ -149,7 +149,7 @@ public function insertar(){
  * Método para listar opiniones por anuncio
  */
 public function listarPorAnuncio($anuncio){
-		
+
 		$consulta = $this->conexion->prepare("SELECT * FROM `opiniones` WHERE `anuncio` = ?");
         $consulta->bind_param("i", $anuncio);
         $consulta->execute();
@@ -158,24 +158,22 @@ public function listarPorAnuncio($anuncio){
 
         if (empty($resultado->num_rows)) {
         	throw new Exception("Opinion no encontrada");
-            
+
         } else{
             $opinion = new Opinion();
             $opinion->definirId($fila["id"]);
             $opinion->definirUsuario($fila["id_usuarios"]);
             $opinion->definirAnuncio($fila["id_anuncios"]);
-            $opinion->definirMensaje($fila["mensaje"]); 
+            $opinion->definirMensaje($fila["mensaje"]);
             return $opinion;
         }
-       
 }
 
 /**
  * Método para listar opiniones por anuncio
  */
 public function listarPorId($id){
-        
-        $consulta = $this->conexion->prepare("SELECT * FROM `opiniones` WHERE `id` = ?");
+    $consulta = $this->conexion->prepare("SELECT * FROM `opiniones` WHERE `id` = ?");
         $consulta->bind_param("i", $id);
         $consulta->execute();
         $resultado = $consulta->get_result();
@@ -183,16 +181,14 @@ public function listarPorId($id){
 
         if (empty($resultado->num_rows)) {
             throw new Exception("Opinión no encontrada");
-            
         } else{
             $opinion = new Opinion();
             $opinion->definirId($fila["id"]);
             $opinion->definirUsuario($fila["id_usuarios"]);
             $opinion->definirAnuncio($fila["id_anuncios"]);
-            $opinion->definirMensaje($fila["mensaje"]); 
+            $opinion->definirMensaje($fila["mensaje"]);
             return $opinion;
         }
-       
 }
 
 /**
@@ -204,7 +200,6 @@ public function listarPorId($id){
         $consulta->bind_param("i", $usuario);
         $consulta->execute();
         $resultado = $consulta->get_result();
-        
         if (empty($resultado->num_rows)){
             throw new Exception("Opinion no encontrada.");
         } else {

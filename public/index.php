@@ -201,11 +201,7 @@ switch (1) {
         if (Sesion::esInvitado()) {
             header("Location: /identificacion");
         } else {
-            if ($_SERVER["REQUEST_METHOD"] === "POST") {
-                $accion = "postCrear";
-            } else {
-                $accion = "getCrear";
-            }
+            $accion = "postCrear";
             $fichero = dirname(__DIR__) . "/src/Controladores/Opiniones.php";
             $clase = "Opiniones";
         }

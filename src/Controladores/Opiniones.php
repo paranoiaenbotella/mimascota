@@ -1,13 +1,12 @@
-<?php  
+<?php
 
 require_once(dirname(__DIR__) . "/Modelos/Opinion.php");
 require_once(dirname(__DIR__) . "/Modelos/Usuario.php");
 require_once(dirname(__DIR__) . "/Modelos/Anuncio.php");
 require_once(dirname(__DIR__) . "/Controlador.php");
 
-
 /**
- * Mediante esta clase se controla las operaciones sobre la tabla 'opiniones' 
+ * Mediante esta clase se controla las operaciones sobre la tabla 'opiniones'
  * y muestra por pantalla los resultados utilizando las vista correspondiente
  * para cada operación
  */
@@ -38,25 +37,13 @@ class Opiniones extends Controlador
 
 /**
  * Mostrar formulario para
- * crear opiniones
- */
-	public function getCrear()
-    {   
-        $usuario = Sesion::obtenerUsuario()->obtenerId();
-        $anuncio = new Anuncio();
-        $anuncios = $anuncio->listarAnuncios();
-        $this->renderizar("Crear.php", ["anuncios" => $anuncios]);
-    }
-
-/**
- * Mostrar formulario para
  * editar opiniones
  */
 public function getEditar($id)
     {
         $usuario = Sesion::obtenerUsuario()->obtenerId();
         $anuncio = new Anuncio();
-       
+
         $opinion = new Opinion();
         $opinion = $opinion->listarPorId($id);
         $this->renderizar("Editar.php", ["anuncios" => $anuncios, "usuario"=>$usuario, "opinion"=>$opinion]);
@@ -66,17 +53,16 @@ public function getEditar($id)
  * Crear opiniones
  */
 	public function postCrear()
-    {	
+    {
         $usuario = Sesion::obtenerUsuario();
-    	$anuncio = new Anuncio();
-    	$anuncio->listarAnuncios();
+        $anuncio = new Anuncio();
+        $anuncio = $anuncio->listarPorId($_POST["anuncio-id"]);
         $opinion = new Opinion();
         $opinion->definirMensaje($_POST["mensaje"]);
-        $opinion->crearUsuario($usuario->obtenerId());
+        $opinion->crearUsuario($usuario);
         $opinion->crearAnuncio($anuncio);
-        
         if ($opinion->insertar()) {
-            header("Location: /opiniones");
+            header(sprintf("Location: /ver-anuncios/%d", $anuncio->obtenerId()));
         } else {
             header("Location: /opiniones/crear");
         }
