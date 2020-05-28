@@ -29,7 +29,6 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <a href="/perfil" class="btn btn-sm btn-outline-success">Regresar a perfil</a>
         </div>
         <?php else: ?>
             <p>No tiene opiniones definidas.</p>

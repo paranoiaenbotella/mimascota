@@ -107,13 +107,14 @@
                     <?php $mostarFormulario = true;
                     if ($datos["opiniones"]): ?>
                         <?php foreach ($datos["opiniones"] as $opinion): ?>
-                            <?php if ($opinion->obtenerUsuario() === Sesion::obtenerUsuario()->obtenerId()): ?>
+                            <?php if (!Sesion::esInvitado() && $opinion->obtenerUsuario() === Sesion::obtenerUsuario()
+                                    ->obtenerId()): ?>
                                 <p>Ya ha dejado una opinion.</p>
                                 <?php $mostarFormulario = false; ?>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     <?php endif; ?>
-                    <?php if ($mostarFormulario): ?>
+                    <?php if ($mostarFormulario && !Sesion::esInvitado()): ?>
                         <div class="row">
                             <div class="col-sm-10 offset-sm-1 col-md-10 offset-md-1 col-lg-10 offset-lg-1">
                                 <form action="/opiniones/crear" method="post">
