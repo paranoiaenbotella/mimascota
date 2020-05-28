@@ -63,7 +63,7 @@
                                 <a class="nav-link" href="/salir">Salir</a>
                             </li>
                         </ul>
-                    <?php else: ?>
+                    <?php elseif (Sesion::esAdministrador()): ?>
                             <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
                                 <a class="nav-link" href="/usuarios">Usuarios</a>
