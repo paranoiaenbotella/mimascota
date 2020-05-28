@@ -539,10 +539,22 @@ switch (1) {
             $accion = "getListar";
         }
         break;
+    /**
+     * Ver anuncios resumen
+     */
     case preg_match("`^/ver-anuncios$`", $_SERVER["REQUEST_URI"]):
         $fichero = dirname(__DIR__) . "/src/Controladores/Anuncios.php";
         $clase = "Anuncios";
         $accion = "getInicio";
+        break;
+    /**
+     * Ver anuncio
+     */
+    case preg_match("`^/ver-anuncios/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
+        $fichero = dirname(__DIR__) . "/src/Controladores/Anuncios.php";
+        $clase = "Anuncios";
+        $accion = "getAnuncio";
+        $argumento = $matches["id"];
         break;
     /**
      * Ver ultimos 10 anuncios
@@ -599,7 +611,7 @@ switch (1) {
             $fichero = dirname(__DIR__) . "/src/Controladores/Anuncios.php";
             $clase = "Anuncios";
             $argumento = $matches["id"];
-            $accion = "getEditar";
+            $accion = "getEliminar";
         }
         break;
     default:
