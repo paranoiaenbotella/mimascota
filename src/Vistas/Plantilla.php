@@ -18,7 +18,7 @@
                     <?php if (Sesion::esInvitado()): ?>
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="/cuidadores">Ver Cuidadores</a>
+                                <a class="nav-link" href="/ver-anuncios">Ver Anuncios</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/registro">Registro</a>
