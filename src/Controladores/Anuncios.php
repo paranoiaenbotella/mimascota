@@ -2,8 +2,9 @@
 
 require_once(dirname(__DIR__) . "/Modelos/AnimalTipo.php");
 require_once(dirname(__DIR__) . "/Modelos/Anuncio.php");
-require_once(dirname(__DIR__) . "/Modelos/Usuario.php");
+require_once(dirname(__DIR__) . "/Modelos/Opinion.php");
 require_once(dirname(__DIR__) . "/Modelos/Servicio.php");
+require_once(dirname(__DIR__) . "/Modelos/Usuario.php");
 require_once(dirname(__DIR__) . "/Controlador.php");
 
 /**
@@ -44,10 +45,13 @@ class Anuncios extends Controlador
         $this->renderizar("Inicio.php", ["anuncios" => $anuncios]);
     }
 
-    public function getAnuncio($id){
+    public function getAnuncio($id)
+    {
         $anuncio = new Anuncio ();
         $anuncio = $anuncio->listarPorId($id);
-        $this->renderizar("Anuncio.php", ["anuncio"=>$anuncio]);
+        $opinion = new Opinion();
+        $opiniones = $opinion->listarPorAnuncio($anuncio->obtenerId());
+        $this->renderizar("Anuncio.php", ["anuncio" => $anuncio, "opiniones" => $opiniones]);
     }
 
     /**

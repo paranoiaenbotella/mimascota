@@ -104,33 +104,63 @@
                     <h4> Opiniones de los propietarios:</h4>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-10 offset-sm-1 col-md-10 offset-md-1 col-lg-10 offset-lg-1">
-                            <form action="/opiniones/crear" method="post">
-                                <input name="anuncio-id" type="hidden" value="<?php echo($datos["anuncio"]->obtenerId(
-                                )); ?>">
-                                <div class="form-group my-0">
-                                    <label for="mensaje" class="mb-0">Escribe tu opinión sobre el servicio recibido:</label>
-                                    <textarea class="form-control form-control-sm" id="mensaje" name="mensaje" rows="8"></textarea>
-                                </div>
-                                <div class="form-group my-2">
-                                    <input class="btn btn-block btn-success" type="submit" value="Guardar">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <!--OPINIÓN-->
-                    <div class="row">
-                        <div class="col-sm-10 offset-sm-1  col-md-10 offset-md-1  col-lg-10 offset-lg-1">
-                            <div class="media bg-light mb-3 border-bottom">
-                                <img src="" class="align-self-start mr-3 rounded img-thumbnail" alt="imagen de perfil">
-                                <div class="media-body">
-                                    <h5 class="mt-0">(Nombre del propietario) propietario de (nombre animal) dice:</h5>
-                                    <p class="font-italic">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis egestas fringilla aliquet. Etiam vulputate porttitor quam, et tincidunt risus aliquet ut. Pellentesque sit amet quam ac lacus facilisis aliquet ac ultrices eros. Proin volutpat ultrices turpis. Nunc malesuada volutpat lectus, id tincidunt nisl. Praesent varius est dolor, ut pharetra urna mollis quis. Etiam id vulputate mi. Sed eget libero vitae nulla mollis ullamcorper. Curabitur id tortor mi. Donec quis ultricies arcu. Donec sollicitudin, metus ut cursus vestibulum, mauris neque vestibulum nibh, in egestas orci ipsum at neque. Mauris pellentesque elit eu tortor faucibus vulputate.</p>
-                                </div>
+                    <?php $mostarFormulario = true;
+                    if ($datos["opiniones"]): ?>
+                        <?php foreach ($datos["opiniones"] as $opinion): ?>
+                            <?php if ($opinion->obtenerUsuario() === Sesion::obtenerUsuario()->obtenerId()): ?>
+                                <p>Ya ha dejado una opinion.</p>
+                                <?php $mostarFormulario = false; ?>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                    <?php if ($mostarFormulario): ?>
+                        <div class="row">
+                            <div class="col-sm-10 offset-sm-1 col-md-10 offset-md-1 col-lg-10 offset-lg-1">
+                                <form action="/opiniones/crear" method="post">
+                                    <input name="anuncio-id" type="hidden" value="<?php echo($datos["anuncio"]->obtenerId(
+                                    )); ?>">
+                                    <div class="form-group my-0">
+                                        <label for="mensaje" class="mb-0">Escribe tu opinión sobre el servicio recibido:</label>
+                                        <textarea class="form-control form-control-sm" id="mensaje" name="mensaje" rows="8"></textarea>
+                                    </div>
+                                    <div class="form-group my-2">
+                                        <input class="btn btn-block btn-success" type="submit" value="Guardar">
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                    </div>
+                    <?php endif; ?>
+                    <!--OPINIÓN-->
+                    <?php if ($datos["opiniones"]): ?>
+                        <?php foreach ($datos["opiniones"] as $opinion): ?>
+                            <div class="row">
+                                <div class="col-sm-10 offset-sm-1  col-md-10 offset-md-1  col-lg-10 offset-lg-1">
+                                    <?php
+                                    $propietario = new Usuario();
+                                    $propietario = $propietario->listarPorId($opinion->obtenerUsuario());
+                                    ?>
+                                    <div class="media bg-light mb-3 border-bottom">
+                                        <img src="<?php echo($propietario->obtenerImagen(
+                                        )); ?>" class="align-self-start mr-3 rounded img-thumbnail" alt="imagen de perfil">
+                                        <div class="media-body">
+                                            <h5 class="mt-0"><?php printf(
+                                                    "%s %s dice:",
+                                                    $propietario->obtenerNombre(),
+                                                    $propietario->obtenerApellidos()
+                                                ); ?></h5>
+                                            <p class="font-italic"><?php echo($opinion->obtenerMensaje()); ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="row">
+                            <div class="col-sm-10 offset-sm-1  col-md-10 offset-md-1  col-lg-10 offset-lg-1">
+                                <p>No hay opiniones sobre este anuncio.</p>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

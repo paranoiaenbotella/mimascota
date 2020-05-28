@@ -79,7 +79,7 @@ class Opinion extends Modelo
      */
     public function definirUsuario($usuario)
     {
-        $this->usuario = int($usuario);
+        $this->usuario = (int)$usuario;
     }
 
 /**
@@ -138,38 +138,41 @@ class Opinion extends Modelo
  */
 public function insertar(){
         $consulta = $this->conexion->prepare(
-            "INSERT INTO `opiniones` (`id_anuncios`, `id_usuarios`, `mensaje`) VALUES (?, ?, ?)");
-        $consulta->bind_param("iis", $this->anuncio, $this->usuario, $this->mensaje);
-        $resultado = $consulta->execute();
-        $consulta->close();
+            "INSERT INTO `opiniones` (`id_anuncios`, `id_usuarios`, `mensaje`) VALUES (?, ?, ?)"
+        );
+    $consulta->bind_param("iis", $this->anuncio, $this->usuario, $this->mensaje);
+    $resultado = $consulta->execute();
+    $consulta->close();
     return $resultado;
-	}
+}
 
-/**
- * Método para listar opiniones por anuncio
- */
-public function listarPorAnuncio($anuncio){
-
-		$consulta = $this->conexion->prepare("SELECT * FROM `opiniones` WHERE `anuncio` = ?");
+    /**
+     * Método para listar opiniones por anuncio
+     */
+    public function listarPorAnuncio($anuncio)
+    {
+        $consulta = $this->conexion->prepare("SELECT * FROM `opiniones` WHERE `id_anuncios` = ?");
         $consulta->bind_param("i", $anuncio);
         $consulta->execute();
         $resultado = $consulta->get_result();
         $consulta->close();
-
         if (empty($resultado->num_rows)) {
-        	throw new Exception("Opinion no encontrada");
-
-        } else{
-            $opinion = new Opinion();
-            $opinion->definirId($fila["id"]);
-            $opinion->definirUsuario($fila["id_usuarios"]);
-            $opinion->definirAnuncio($fila["id_anuncios"]);
-            $opinion->definirMensaje($fila["mensaje"]);
-            return $opinion;
+            return false;
+        } else {
+            $opiniones = [];
+            while ($fila = $resultado->fetch_assoc()) {
+                $opinion = new Opinion();
+                $opinion->definirId($fila["id"]);
+                $opinion->definirUsuario($fila["id_usuarios"]);
+                $opinion->definirAnuncio($fila["id_anuncios"]);
+                $opinion->definirMensaje($fila["mensaje"]);
+                array_push($opiniones, $opinion);
+            }
+            return $opiniones;
         }
-}
+    }
 
-/**
+    /**
  * Método para listar opiniones por anuncio
  */
 public function listarPorId($id){
