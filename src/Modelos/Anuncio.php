@@ -318,14 +318,35 @@ class Anuncio extends Modelo
             $anuncio = new Anuncio();
             $anuncio->definirId($fila["id"]);
             $anuncio->definirUsuario($fila["id_usuarios"]);
+            $anuncio->definirNombre($fila["nombre"]);
             $anuncio->definirDescripcion($fila["descripcion"]);
             $anuncio->definirFecha($fila["fecha_creacion"]);
             $anuncio->definirImagen1($fila["imagen1"]);
             $anuncio->definirImagen2($fila["imagen2"]);
             $anuncio->definirImagen3($fila["imagen3"]);
             $anuncio->definirImagen4($fila["imagen4"]);
-            return $anuncio;
+            $consulta2 = $this->conexion->prepare("SELECT * FROM `anuncios_animales_tipos` WHERE `id_anuncios` = ?");
+            $consulta2->bind_param("i", $anuncio->id);
+            $consulta2->execute();
+            $resultado2 = $consulta2->get_result();
+            $consulta2->close();
+            $idAnimalesTipos = [];
+            while ($fila2 = $resultado2->fetch_assoc()) {
+                array_push($idAnimalesTipos, $fila2["id_animales_tipos"]);
+            }
+            $anuncio->definirIdAnimalesTipos($idAnimalesTipos);
+            $consulta3 = $this->conexion->prepare("SELECT * FROM `anuncios_servicios` WHERE `id_anuncios` = ?");
+            $consulta3->bind_param("i", $anuncio->id);
+            $consulta3->execute();
+            $resultado2 = $consulta3->get_result();
+            $consulta3->close();
+            $idServicios = [];
+            while ($fila3 = $resultado2->fetch_assoc()) {
+                array_push($idServicios, $fila3["id_servicios"]);
+            }
+            $anuncio->definirIdServicios($idServicios);
         }
+        return $anuncio;
     }
 
     public function listarPorUsuario($usuario)
@@ -439,6 +460,16 @@ class Anuncio extends Modelo
             array_push($animalesTipos, $animalTipo->listarPorId($idAnimalesTipo));
         }
         return $animalesTipos;
+    }
+
+    public function obtenerIdServicios(){
+        $servicios = [];
+        $servicio = new Servicio();
+        foreach ($this->idServicios as $idServicio) {
+            array_push($servicios, $servicio->listarPorId($idServicio));
+        }
+        return $servicios;
+
     }
 
     /**
