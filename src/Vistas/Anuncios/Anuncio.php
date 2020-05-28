@@ -4,7 +4,7 @@
     <div class="col-sm-12  col-md-12 col-lg-12">
       <div class="card ">
         <div class="card-header">
-          <h4> Título del anuncio</h4>
+          <h4> <?php echo ($datos["anuncio"]->obtenernombre());?></h4>
         </div>
         <div class="card-body">
           <div class="row">
@@ -13,16 +13,16 @@
               <div id="carrousel" class="carousel slide mb-5" data-ride="carousel">
                 <div class="carousel-inner">
                   <div class="carousel-item active">
-                    <img src="" class="d-block w-100" alt="">
+                    <img src="<?php echo ($datos["anuncio"]->obtenerImagen1());?>" class="d-block w-100" alt="">
                   </div>
                   <div class="carousel-item">
-                    <img src="" class="d-block w-100" alt="">
+                    <img src="<?php echo ($datos["anuncio"]->obtenerImagen2());?>" class="d-block w-100" alt="">
                   </div>
                   <div class="carousel-item">
-                    <img src="" class="d-block w-100" alt="">
+                    <img src="<?php echo ($datos["anuncio"]->obtenerImagen3());?>" class="d-block w-100" alt="">
                   </div>
                   <div class="carousel-item">
-                    <img src="" class="d-block w-100" alt="">
+                    <img src="<?php echo ($datos["anuncio"]->obtenerImagen4());?>" class="d-block w-100" alt="">
                   </div>
                 </div>
                 <a class="carousel-control-prev" href="#carrousel" role="button" data-slide="prev">
@@ -37,27 +37,40 @@
             </div>
           </div>
           <!--DESCRIPCIÓN CUIDADOR-->
+          <?php
+          $usuario = new Usuario();
+          $usuario = $usuario->listarPorId($datos["anuncio"]->obtenerUsuario());?>
+          
           <div class="row">
             <div class="col-sm-10 offset-sm-1  col-md-10 offset-md-1 col-lg-10 offset-lg-1">
-              <h4> Sobre (Nombre del Cuidador)</h4>
-              <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in nisl eu mauris ullamcorper dictum sit amet rutrum diam. Suspendisse nec augue vitae augue convallis consequat. Nam dictum ex vel mauris aliquet sodales. In laoreet dui eget turpis efficitur ornare. Etiam diam purus, elementum scelerisque tellus vitae, dictum porta justo. In faucibus venenatis turpis, id bibendum ex mattis eu. Aliquam elementum libero nec viverra blandit. Etiam aliquet purus lectus, ut dictum turpis dignissim sit amet. Maecenas lobortis sodales sapien. Donec fermentum non leo a sagittis.
-              </p>
-              <p class="text-justify">Donec a varius augue. Duis velit ante, finibus quis nulla id, congue sollicitudin lacus. Pellentesque blandit justo eget dui ultricies varius. Morbi malesuada aliquet augue, id mattis nulla dapibus eget. Donec elementum euismod finibus. Sed finibus ligula odio, et dignissim neque ullamcorper sed. Phasellus aliquet aliquet tempus.
+              <h4> Sobre <?php echo ($usuario->obtenerNombre()); ?></h4>
+              <p class="text-justify"> <?php echo ($datos["anuncio"]->obtenerDescripcion());?>
               </p>
             </div>
           </div>
           <hr>
+          <?php 
+          $animalesTipos = [];
+          foreach ($datos["anuncio"]->obtenerIdAnimalesTipos() as $animalTipo) {
+            array_push($animalesTipos, $animalTipo->obtenerNombre());
+            }
+          $servicios = [];
+          foreach ($datos["anuncio"]->obtenerIdServicios() as $servicio) {
+            array_push($servicios, $servicio);
+            }
+          ?>
           <!--SERVICIOS-->
           <div class="row">
             <div class="col-sm-10 offset-sm-1  col-md-10 offset-md-1 col-lg-10 offset-lg-1 mb-3">
               <h4 class="text-success">Servicios y precios:</h4>
-              <div class="clearfix bg-light border-top border-bottom">
-                <p class="float-left pl-3"><strong>Alojamiento</strong><br>
-                  <small>Por noche desde las 20:00 las 11:00</small> <br>
-                <em>Tipos de animales: gatos y perros</em></p>
-                <p class="float-right pr-3 font-weight-bold">15&euro;</p>
+              <?php foreach ($servicios as $servicio):?>
+              <div class="clearfix bg-light border-top border-bottom">       
+                <p class="float-left pl-3"><strong><?php echo($servicio->obtenerNombre()) ?></strong><br>
+                  <small><?php echo($servicio->obtenerDescripcion()); ?></small> </p>
+                <p class="float-right pr-3 font-weight-bold"><?php echo($servicio->obtenerPrecio()) ?>&euro;</p>    
               </div>
-              
+              <?php endforeach; ?>
+              <em>Tipos de animales: <?php echo(implode(", ", $animalesTipos)); ?></em>
             </div>
           </div>
           <hr>
@@ -65,8 +78,8 @@
           <div class="row">
             <div class="col-sm-10 offset-sm-1  col-md-10 offset-md-1 col-lg-10 offset-lg-1 mb-3">
               <h4 class="text-success">Información de contacto: </h4>
-              <p>Móvil: 60000000</p>
-              <p>Correo Electrónico: mimascota@mascota.com</p>
+              <p class="mb-0">Móvil: <?php echo ($usuario->obtenerMovil()); ?></p>
+              <p class="mb-3">Correo Electrónico: <?php echo ($usuario->obtenerEmail()); ?></p>
             </div>
           </div>
         </div>
