@@ -8,9 +8,11 @@
         <title>MiMascota</title>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(67, 181, 48, 0.6);">
             <div class="container">
-                <a class="navbar-brand" href="/">MiMascota</a>
+                <a class="navbar-brand" href="/">
+                    <img alt="/Logo.svg" src="/Logo.svg" width="128">
+                </a>
                 <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
                     <span class="navbar-toggler-icon"></span>
                 </button>

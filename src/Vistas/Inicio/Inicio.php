@@ -8,7 +8,8 @@
     </head>
     <body>
         <nav>
-            <div class="logo"></div>
+            <div class="logo">
+            </div>
             <div class="enlaces">
                 <a href="/ver-anuncios">Ver Anuncios</a>
                 <a href="/registro">Registrarse</a>
