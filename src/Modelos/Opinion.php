@@ -183,8 +183,9 @@ public function listarPorId($id){
         $consulta->close();
 
         if (empty($resultado->num_rows)) {
-            throw new Exception("Opinión no encontrada");
+            return false;
         } else{
+            $fila = $resultado->fetch_assoc();
             $opinion = new Opinion();
             $opinion->definirId($fila["id"]);
             $opinion->definirUsuario($fila["id_usuarios"]);
@@ -204,16 +205,37 @@ public function listarPorId($id){
         $consulta->execute();
         $resultado = $consulta->get_result();
         if (empty($resultado->num_rows)){
-            throw new Exception("Opinion no encontrada.");
+            return false;
         } else {
-            $fila = $resultado->fetch_assoc();
+            $opiniones = [];
+            while($fila = $resultado->fetch_assoc()){
             $opinion = new Opinion();
             $opinion->definirId($fila["id"]);
             $opinion->definirAnuncio($fila["id_anuncios"]);
             $opinion->definirUsuario($fila["id_usuarios"]);
             $opinion->definirMensaje($fila["mensaje"]);
-            return $opinion;
+            array_push($opiniones, $opinion);
+            }
+            return $opiniones;
         }
+    }
+
+/**
+ * Listar opiniones
+ */
+public function listarOpiniones()
+    {
+        $opiniones = [];
+        $resultado = $this->conexion->query("SELECT * FROM `opiniones` ORDER BY `id`");
+        while ($fila = $resultado->fetch_assoc()) {
+            $opinion = new Opinion();
+            $opinion->definirId($fila["id"]);
+            $opinion->definirAnuncio($fila["id_anuncios"]);
+            $opinion->definirUsuario($fila["id_usuarios"]);
+            $opinion->definirMensaje($fila["mensaje"]);
+            array_push($opiniones, $opinion);
+        }
+        return $opiniones;
     }
 
 /**
