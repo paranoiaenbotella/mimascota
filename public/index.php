@@ -195,6 +195,22 @@ switch (1) {
         }
         break;
     /**
+     * Opiniones admin
+     */
+    case preg_match("`/opiniones/todas$`", $_SERVER["REQUEST_URI"]):
+        if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
+        } else {
+            if (!(Sesion::esAdministrador())) {
+                header("Location: /perfil");
+            } else {
+                $fichero = dirname(__DIR__) . "/src/Controladores/Opiniones.php";
+                $clase = "Opiniones";
+                $accion = "getOpiniones";
+            }
+        }
+        break;
+    /**
      * Crear opiniones
      */
     case preg_match("`^/opiniones/crear$`", $_SERVER["REQUEST_URI"]):
