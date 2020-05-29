@@ -5,6 +5,7 @@ h4, h5, h6
     
 }
 
+
 #anuncios 
 {
 text-align: center;
@@ -13,11 +14,7 @@ font-size: 2em;
 }
 
 
-.container {
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-}
+
 
 
 .carousel-inner > .carousel-item > img { height: 450px; width: 100% }
@@ -46,6 +43,7 @@ font-size: 2em;
     }
 }
 
+/* FORMULARIOS */
 .form-group label {
     font-size: 0.9rem;
     font-weight: bold;
@@ -80,9 +78,15 @@ font-size: 2em;
 {
   line-height: 1rem;
 }
-.navbar .container {
+
+/*NAVEGACIÓN*/
+.navbar .container 
+{
     padding: 0;
 }
+
+/*FOOTER*/
+
 
 /* RESUMENES ANUNCIOS*/
 
