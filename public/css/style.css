@@ -1,0 +1,123 @@
+h1, h2, h3,
+h4, h5, h6
+{
+    font-weight: bold;
+    
+}
+
+
+#anuncios 
+{
+text-align: center;
+font-family: "Segoe Print", sans-serif;
+font-size: 2em;
+}
+
+
+
+
+
+.carousel-inner > .carousel-item > img { height: 450px; width: 100% }
+
+@media (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1200px;
+    }
+}
+
+/* FORMULARIOS */
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+            input[type="email"],
+            input[type="password"] {
+    height: 1.5rem;
+    margin-bottom: 0.1rem;
+}
+
+.form-group select{
+    height: 1.5rem;
+    padding: 0.1rem;
+}
+.form-group small{
+    font-size: 0.7rem;
+}
+
+
+.error {
+    font-size: 0.9rem;
+    color: #920D0D;
+}
+.succes{
+    font-size: 0.9rem;
+    color: #0DC151;
+}
+
+.btn-sm
+{
+  line-height: 1rem;
+}
+
+/*NAVEGACIÓN*/
+.navbar .container 
+{
+    padding: 0;
+}
+
+/*FOOTER*/
+
+
+/* RESUMENES ANUNCIOS*/
+
+#resumen:hover
+{
+ box-shadow: 1px 1px 2px #928D8D;
+}
+#resumen a:link 
+{
+    color: #000;
+    text-decoration: none;
+}
+
+#resumen a:visited
+{
+    color: #000;
+    text-decoration: none;
+}
+
+#resumen a:hover 
+{
+    color: #000;
+    text-decoration: none;
+}
+
+#resumen a:active 
+{
+    color: #000;
+    text-decoration: none;
+}
+
+{
+   font-family: "Segoe Print", sans-serif; 
+}

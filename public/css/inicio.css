@@ -1,0 +1,52 @@
+body {
+    background: #ffffff url("/inicio.jpg") no-repeat center top;
+    cursor: default;
+    display: grid;
+    grid-template-rows: 8rem 1fr 6rem;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+footer {
+    background: rgba(67, 181, 48, 0.6);
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+}
+
+nav {
+    background: rgba(67, 181, 48, 0.6);
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+nav .enlaces {
+    align-items: flex-end;
+    display: flex;
+    flex-flow: row nowrap;
+    flex-grow: 1;
+    justify-content: space-around;
+}
+
+nav .enlaces a {
+    color: #000000;
+    font-family: "Segoe Print", sans-serif;
+    font-size: 2em;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+nav .enlaces a:hover {
+    text-decoration: underline;
+}
+
+nav .logo {
+    flex-grow: 8;
+}

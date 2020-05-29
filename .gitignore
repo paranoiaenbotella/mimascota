@@ -1,0 +1,8 @@
+# Ignoring directories.
+/.idea/
+/public/img/
+
+# Ignoring files.
+/*.sublime-project
+/*.sublime-workspace
+/config/basededatos.php

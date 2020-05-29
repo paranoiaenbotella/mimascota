@@ -1,0 +1,12 @@
+# CSS files.
+*.css text eol=lf
+
+# Git files.
+.gitattributes text eol=lf
+.gitignore text eol=lf
+
+# Image files.
+*.jpg binary
+
+# PHP files.
+*.php text eol=lf
