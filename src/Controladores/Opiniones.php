@@ -18,17 +18,14 @@ class Opiniones extends Controlador
 return dirname(__DIR__) . "/Vistas/Opiniones";
 }
 /**
-* Listar opiniones 
-*/
-  public function getListar(){
-$usuario = new Usuario();
-$usuario = $usuario->listarPorId(Sesion::obtenerUsuario()->obtenerId());
-$anuncio = new Anuncio();
-$anuncio = $anuncio->listarPorUsuario(Sesion::obtenerUsuario()->obtenerId());
-$opinion = new Opinion();
-$opiniones = $opinion->listarPorUsuario(Sesion::obtenerUsuario()->obtenerId());
-    $this->renderizar("Listar.php", ["usuario"=>$usuario, "anuncio"=>$anuncio, "opiniones"=>$opiniones]);
-  }
+ * Listar opiniones
+ */
+	public function getListar(){
+        $usuario = Sesion::obtenerUsuario();
+        $opinion = new Opinion();
+        $opiniones = $opinion->listarPorUsuario($usuario->obtenerId());
+        $this->renderizar("Listar.php", ["usuario" => $usuario, "opiniones" => $opiniones]);
+    }
 /**
 * Mostrar formulario para
 * editar opiniones

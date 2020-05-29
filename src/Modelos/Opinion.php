@@ -200,10 +200,11 @@ public function listarPorId($id){
  */
     public function listarPorUsuario($usuario){
 
-        $consulta = $this->conexion->prepare( "SELECT * FROM opiniones WHERE $usuario = ?");
+        $consulta = $this->conexion->prepare("SELECT * FROM opiniones WHERE `id_usuarios` = ?");
         $consulta->bind_param("i", $usuario);
         $consulta->execute();
         $resultado = $consulta->get_result();
+        $consulta->close();
         if (empty($resultado->num_rows)){
             return false;
         } else {

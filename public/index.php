@@ -37,6 +37,7 @@ switch (1) {
             $clase = "Acceso";
             $accion = "getIdentificacion";
         } else {
+            Sesion::limpiar();
             Sesion::cerrar();
         }
         break;
