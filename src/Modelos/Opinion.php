@@ -244,7 +244,9 @@ public function listarOpiniones()
  */
     public function actualizar(){
 
-        $consulta = $this->conexion->prepare("UPDATE opiniones SET usuario = ?, anuncio = ?, mensaje = ? WHERE id = ?");
+        $consulta = $this->conexion->prepare(
+            "UPDATE opiniones SET `id_usuarios` = ?, `id_anuncios` = ?, mensaje = ? WHERE id = ?"
+        );
         $consulta->bind_param("iisi", $this->usuario, $this->anuncio, $this->mensaje, $this->id);
         $resultado = $consulta->execute();
         $consulta->close();

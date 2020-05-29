@@ -13,18 +13,16 @@ switch (1) {
      * Página Inicio
      */
     case preg_match("`^/$`", $_SERVER["REQUEST_URI"]):
-        
+
             $fichero = dirname(__DIR__) . "/src/Controladores/Inicio.php";
             $clase = "Inicio";
             $accion = "getInicio";
-       
         break;
     /**
      * Aviso Legal
      */
     case preg_match("`^/aviso-legal$`", $_SERVER["REQUEST_URI"]):
-       
-            $fichero = dirname(__DIR__) . "/src/Controladores/Inicio.php";
+    $fichero = dirname(__DIR__) . "/src/Controladores/Inicio.php";
             $clase = "Inicio";
             $accion = "getAviso";
         break;
@@ -263,14 +261,13 @@ switch (1) {
             header("Location: /identificacion", 301);
         } else {
             if ($_SERVER["REQUEST_METHOD"] === "POST") {
-                $accion = "postCrear";
+                $accion = "postEditar";
             } else {
                 $accion = "getEditar";
             }
             $fichero = dirname(__DIR__) . "/src/Controladores/Opiniones.php";
             $clase = "Opiniones";
             $argumento = $matches["id"];
-            $accion = "getEditar";
         }
         break;
     /**
