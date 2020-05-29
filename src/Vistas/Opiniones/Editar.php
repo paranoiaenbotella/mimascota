@@ -6,8 +6,9 @@
             <form method="POST">
                 <!--NOMBRE-->
                 <div class="form-group my-0">
-                    <label for="mensaje" class="mb-0">Escribe tu opinión</label>
-                    <textarea class="form-control form-control-sm" id="mensaje" name="mensaje" rows="10" ></textarea>
+                    <input type="text" name="anuncio" id="anuncio" value="<?php echo ($datos["opinion"]->obtenerAnuncio()); ?>" hidden>
+                    <label for="mensaje" class="mb-0">Edita tu opinión</label>
+                    <textarea class="form-control form-control-sm" id="mensaje" name="mensaje" rows="10" ><?php echo ($datos["opinion"]->obtenerMensaje()); ?></textarea>
                     <?php if (Sesion::existeError("mensaje")): ?>
                         <div>
                             <p class="error"><?php echo(Sesion::obtenerError("mensaje")); ?></p>

@@ -13,13 +13,20 @@ switch (1) {
      * Página Inicio
      */
     case preg_match("`^/$`", $_SERVER["REQUEST_URI"]):
-        if (Sesion::esInvitado()) {
+        
             $fichero = dirname(__DIR__) . "/src/Controladores/Inicio.php";
             $clase = "Inicio";
             $accion = "getInicio";
-        } else {
-            header("Location: /perfil", 301);
-        }
+       
+        break;
+    /**
+     * Aviso Legal
+     */
+    case preg_match("`^/aviso-legal$`", $_SERVER["REQUEST_URI"]):
+       
+            $fichero = dirname(__DIR__) . "/src/Controladores/Inicio.php";
+            $clase = "Inicio";
+            $accion = "getAviso";
         break;
     /**
      * Deslogueo
@@ -192,6 +199,22 @@ switch (1) {
                 $clase = "Roles";
                 $argumento = $matches["id"];
                 $accion = "getEliminar";
+            }
+        }
+        break;
+    /**
+     * Opiniones admin
+     */
+    case preg_match("`/opiniones/todas$`", $_SERVER["REQUEST_URI"]):
+        if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
+        } else {
+            if (!(Sesion::esAdministrador())) {
+                header("Location: /perfil");
+            } else {
+                $fichero = dirname(__DIR__) . "/src/Controladores/Opiniones.php";
+                $clase = "Opiniones";
+                $accion = "getOpiniones";
             }
         }
         break;

@@ -2,7 +2,7 @@
 <section class="container">
     <div class="row">
         <div class="col-sm-12 col-md-12  col-lg-12  shadow-sm p-3 mb-5 rounded">
-            <h6 class="mb-3">Anuncios:</h6>
+            <h6 class="mb-3">Anuncio:</h6>
             <?php if ($datos["anuncio"]): ?>
                 <table class="table table-sm table-hover border border-success">
                     <thead>
@@ -32,7 +32,7 @@
                     </tbody>
                 </table>
             <?php else: ?>
-                <p>No hay anuncios definidos.</p>
+                <p>No hay anuncio definidos.</p>
                 <a href="/anuncios/crear" class="btn btn-sm btn-outline-success">Crear anuncio</a>
             <?php endif; ?>
         </div>

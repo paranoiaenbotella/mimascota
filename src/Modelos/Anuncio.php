@@ -417,6 +417,18 @@ class Anuncio extends Modelo
     }
 
     /**
+     * Eliminar Anuncio
+     */
+    public function eliminar()
+    {
+        $consulta = $this->conexion->prepare("DELETE FROM `anuncios` WHERE `id` = ?");
+        $consulta->bind_param("i", $this->id);
+        $resultado = $consulta->execute();
+        $consulta->close();
+        return $resultado;
+    }
+
+    /**
      * Método para obtener la descripción
      */
     public function obtenerDescripcion()

@@ -1,9 +1,9 @@
-<!--Tabla con opiniones-->
+<!--Tabla con todas las opiniones-->
 <section class="container">
   <div class="row">
     <div class="col-sm-12 col-md-12  col-lg-12  shadow-sm p-3 mb-5 rounded">
       <h6 class="mb-1 mt-3"> Opiniones:</h6>
-      <?php if (($datos["opiniones"])):?>
+      <?php if ($datos["opiniones"]):?>
       <table class="table table-sm table-hover border border-success">
         <thead>
           <tr class="bg-success text-white">
@@ -15,12 +15,7 @@
         <tbody>
           <?php foreach ($datos["opiniones"] as $opinion): ?>
           <tr>
-            <td class="text-break"><?php echo $opinion->obtenerMensaje(); ?></td>
-            <td>
-              <a href="/opiniones/editar/<?php echo($opinion->obtenerId(
-                )); ?>" class="btn btn-sm btn-info">Editar
-              </a>
-            </td>
+           <td class="text-break"><?php printf("%s...", substr($opinion->obtenerMensaje(),0,256)); ?></td>
             <td>
               <a href="/opiniones/eliminar/<?php echo($opinion->obtenerId(
                 )); ?>" class="btn btn-sm btn-danger">Eliminar
