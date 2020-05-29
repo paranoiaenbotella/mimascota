@@ -8,6 +8,9 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="#">Perfil</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/opiniones/todas">Opiniones</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="card-body">
