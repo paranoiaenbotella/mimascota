@@ -63,8 +63,13 @@ class Anuncios extends Controlador
         $anuncio = new Anuncio();
         $anuncio = $anuncio->listarPorId($id);
         $servicio = new Servicio();
+        $animalTipo = new AnimalTipo();
+        $animalTipos = $animalTipo->listarTiposAnimales();
         $servicios = $servicio->listarPorUsuario(Sesion::obtenerUsuario()->obtenerId());
-        $this->renderizar("Editar.php", ["anuncio" => $anuncio, "servicios" => $servicios]);
+        $this->renderizar(
+            "Editar.php",
+            ["anuncio" => $anuncio, "servicios" => $servicios, "animalTipos" => $animalTipos]
+        );
     }
 
     public function getListar()
@@ -115,10 +120,16 @@ class Anuncios extends Controlador
         $anuncio = $anuncio->listarPorId($id);
         $anuncio->definirUsuario($usuario->obtenerId());
         $anuncio->definirDescripcion($_POST["descripcion"]);
-        $anuncio->definirImagen1($_FILES["imagen1"]);
-        $anuncio->definirImagen2($_FILES["imagen2"]);
-        $anuncio->definirImagen3($_FILES["imagen3"]);
-        $anuncio->definirImagen4($_FILES["imagen4"]);
+        $anuncio->definirIdServicios($_POST["servicio"]);
+        $anuncio->definirIdAnimalesTipos($_POST["animal-tipos"]);
+        foreach ($_FILES as $titulo => $imagen) {
+            if ($imagen["size"] > 0) {
+                $metodo = sprintf("definir%s", ucfirst($titulo));
+                $anuncio->$metodo($imagen);
+            } else {
+                continue;
+            }
+        }
         if ($anuncio->actualizar()) {
             header("Location: /anuncios");
         } else {
@@ -140,7 +151,7 @@ class Anuncios extends Controlador
             }
 
         } else {header("Location: /");}
-        header("Location: /anuncios"); 
+        header("Location: /anuncios");
     }
 
     /**

@@ -61,7 +61,7 @@
               </div>
               <?php endif; ?>
             </div>
-           
+
           </div>
           <!--IMAGENES-->
           <div class="col-sm-6 col-md-6 col-lg-6">
@@ -89,43 +89,41 @@
             </div>
             <!--CUARTA IMAGEN CARROUSEL-->
            <div class="input-group input-group-sm">
-              <div class="input-group-prepend">
-                <span class="input-group-text mb-4" id="imagen4">Imagen 4:</span>
+               <div class="input-group-prepend">
+                   <span class="input-group-text mb-4" id="imagen4">Imagen 4:</span>
+               </div>
+               <input type="file" class="form-control" name="imagen4" aria-label="Imagen 4" aria-describedby="file">
+           </div>
+              <div class="row">
+                  <!--TIPOS ANIMALES-->
+                  <div class="col-sm-6 col-md-6 col-lg-6">
+                      <div class="form-group my-0">
+                          <label for="animal-tipos" class="mb-0">Tipos de Animales:</label>
+                          <select class="form-control form-control-sm" multiple name="animal-tipos[]" id="animal-tipos">
+                              <?php foreach ($datos["animalTipos"] as $animalTipo): ?>
+                                  <option value="<?php echo($animalTipo->obtenerId(
+                                  )); ?>"><?php echo($animalTipo->obtenerNombre()); ?></option>
+                              <?php endforeach; ?>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="col-sm-6 col-md-6 col-lg-6">
+                      <!--SERVICIOS-->
+                      <div class="form-group my-0">
+                          <label for="servicio" class="mb-0">Servicios:</label>
+                          <select class="form-control form-control-sm" multiple name="servicio[]" id="servicio">
+                              <?php foreach ($datos["servicios"] as $servicio): ?>
+                                  <option value="<?php echo($servicio->obtenerId(
+                                  )); ?>"><?php echo($servicio->obtenerNombre()); ?></option>
+                              <?php endforeach; ?>
+                          </select>
+                      </div>
+                  </div>
               </div>
-              <input type="file" class="form-control" name="imagen4" aria-label="Imagen 4" aria-describedby="file">
-            </div>
-             <div class="row">
-              <!--TIPOS ANIMALES-->
-              <div class="col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group my-0">
-                  <label for="animal-tipos" class="mb-0">Tipos de Animales:</label>
-                </div>
+              <!--GUARDAR-->
+              <div class="input-group my-2">
+                  <button class="btn btn-success" type="submit">Guardar</button>
               </div>
-              <div class="col-sm-6 col-md-6 col-lg-6">
-                <!--SERVICIOS-->
-                <div class="form-group my-0">
-                  <label for="servicio" class="mb-0">Servicios:</label>
-                  <select class="form-control form-control-sm" multiple name="servicio" id="servicio">
-                    <?php foreach ($datos["servicios"] as $servicio): ?>
-                    <?php foreach ($datos["anuncio"]->obtenerIdServicios(
-                    ) as $anuncioServicio): ?>
-                    <?php if ($anuncioServicio->obtenerId() === $servicio->obtenerId()): ?>
-                    <option selected value="<?php echo($servicio->obtenerId(
-                    )); ?>"><?php echo($servicio->obtenerNombre()); ?></option>
-                    <?php else: ?>
-                    <option value="<?php echo($servicio->obtenerId(
-                    )); ?>"><?php echo($servicio->obtenerNombre()); ?></option>
-                    <?php endif; ?>
-                    <?php endforeach; ?>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-              </div>
-            </div>
-          <!--GUARDAR-->
-            <div class="input-group my-2">
-              <button class="btn btn-success" type="submit">Guardar</button>
-            </div>
           </div>
         </form>
       </div>

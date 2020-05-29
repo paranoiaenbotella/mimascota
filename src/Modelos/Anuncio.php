@@ -38,7 +38,7 @@ class Anuncio extends Modelo
         $this->id = (int)$id;
     }
 
-    public function actualizar() // FIX: The query must be reviewed and improved.
+    public function actualizar()
     {
         $consulta = $this->conexion->prepare(
             "UPDATE `anuncios` SET `id_usuarios` = ?, `descripcion` = ?, `imagen1` = ?, `imagen2` = ?, `imagen3` = ?, `imagen4` = ? WHERE `id` = ?"
@@ -55,6 +55,32 @@ class Anuncio extends Modelo
         );
         $resultado = $consulta->execute();
         $consulta->close();
+        if ($resultado) {
+            $consulta2 = $this->conexion->prepare("DELETE FROM `anuncios_servicios` WHERE `id_anuncios` = ?");
+            $consulta2->bind_param("i", $this->id);
+            $consulta2->execute();
+            $consulta2->close();
+            $consulta3 = $this->conexion->prepare(
+                "INSERT INTO `anuncios_servicios` (`id_anuncios`, `id_servicios`) VALUES (?, ?)"
+            );
+            foreach ($this->idServicios as $idServicio) {
+                $consulta3->bind_param("ii", $this->id, $idServicio);
+                $consulta3->execute();
+            }
+            $consulta3->close();
+            $consulta4 = $this->conexion->prepare("DELETE FROM `anuncios_animales_tipos` WHERE `id_anuncios` = ?");
+            $consulta4->bind_param("i", $this->id);
+            $consulta4->execute();
+            $consulta4->close();
+            $consulta5 = $this->conexion->prepare(
+                "INSERT INTO `anuncios_animales_tipos` (`id_anuncios`, `id_animales_tipos`) VALUES (?, ?)"
+            );
+            foreach ($this->idAnimalesTipos as $idAnimalesTipo) {
+                $consulta5->bind_param("ii", $this->id, $idAnimalesTipo);
+                $consulta5->execute();
+            }
+            $consulta5->close();
+        }
         return $resultado;
     }
 
