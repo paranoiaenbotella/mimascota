@@ -130,8 +130,17 @@ class Anuncios extends Controlador
      * Mediante este método se controla la eliminación
      * del anuncio
      */
-    public function postEliminar()
+    public function getEliminar($id)
     {
+    if ((Sesion::esCuidador()) || (Sesion::esAdministrador())) {
+        $anuncio = new Anuncio();
+        $anuncio = $anuncio->listarPorId($id);
+        if (isset($anuncio) && $anuncio->obtenerId() === (int)$id) {
+        $anuncio->eliminar();
+            }
+
+        } else {header("Location: /");}
+        header("Location: /anuncios"); 
     }
 
     /**
