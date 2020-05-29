@@ -13,13 +13,20 @@ switch (1) {
      * Página Inicio
      */
     case preg_match("`^/$`", $_SERVER["REQUEST_URI"]):
-        if (Sesion::esInvitado()) {
+        
             $fichero = dirname(__DIR__) . "/src/Controladores/Inicio.php";
             $clase = "Inicio";
             $accion = "getInicio";
-        } else {
-            header("Location: /perfil", 301);
-        }
+       
+        break;
+    /**
+     * Aviso Legal
+     */
+    case preg_match("`^/aviso-legal$`", $_SERVER["REQUEST_URI"]):
+       
+            $fichero = dirname(__DIR__) . "/src/Controladores/Inicio.php";
+            $clase = "Inicio";
+            $accion = "getAviso";
         break;
     /**
      * Deslogueo
