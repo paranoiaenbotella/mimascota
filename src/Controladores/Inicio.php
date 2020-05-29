@@ -14,4 +14,9 @@ class Inicio extends Controlador
     {
         $this->mostrar("Inicio.php");
     }
+
+    public function getAviso()
+    {
+    	$this->renderizar("Aviso.php");
+    }
 }
