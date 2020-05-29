@@ -97,43 +97,43 @@
 </section>
 <!--PAGINA CON OPINIONES-->
 <section class="container">
-  <div class="row">
-    <div class="col-sm-12  col-md-12 col-lg-12">
-      <div class="card ">
-        <div class="card-header">
-          <h4> Opiniones de los propietarios:</h4>
-        </div>
-        <div class="card-body">
-          <?php $mostarFormulario = true;
-          if ($datos["opiniones"]): ?>
-          <?php foreach ($datos["opiniones"] as $opinion): ?>
-          <?php if ($opinion->obtenerUsuario() === Sesion::obtenerUsuario()->obtenerId()): ?>
-          <p class="text-center">Ya ha dejado una opinion.</p>
-          <?php $mostarFormulario = false; ?>
-          <?php endif; ?>
-          <?php endforeach; ?>
-          <?php endif; ?>
-          <?php if ($mostarFormulario): ?>
-          <div class="row">
-            <div class="col-sm-10 offset-sm-1 col-md-10 offset-md-1 col-lg-10 offset-lg-1">
-              <form action="/opiniones/crear" method="post">
-                <input name="anuncio-id" type="hidden" value="<?php echo($datos["anuncio"]->obtenerId(
-                )); ?>">
-                  <div class="form-group my-0">
-                      <label for="mensaje" class="mb-0">Escribe tu opinión sobre el servicio recibido:</label>
-                      <textarea class="form-control form-control-sm" id="mensaje" name="mensaje" rows="8"></textarea>
-                  </div>
-                  <div class="form-group my-2">
-                      <input class="btn btn-block btn-success" type="submit" value="Guardar">
-                  </div>
-              </form>
-            </div>
-          </div>
-          <?php endif; ?>
-          <!--OPINIÓN-->
-          <?php if ($datos["opiniones"]): ?>
-          <?php foreach ($datos["opiniones"] as $opinion): ?>
-          <div class="row">
+    <div class="row">
+        <div class="col-sm-12  col-md-12 col-lg-12">
+            <div class="card ">
+                <div class="card-header">
+                    <h4> Opiniones de los propietarios:</h4>
+                </div>
+                <div class="card-body">
+                    <?php $mostarFormulario = true;
+                    if ($datos["opiniones"] && !Sesion::esInvitado()): ?>
+                        <?php foreach ($datos["opiniones"] as $opinion): ?>
+                            <?php if ($opinion->obtenerUsuario() === Sesion::obtenerUsuario()->obtenerId()): ?>
+                                <p class="text-center">Ya ha dejado una opinion.</p>
+                                <?php $mostarFormulario = false; ?>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                    <?php if ($mostarFormulario && !Sesion::esInvitado()): ?>
+                        <div class="row">
+                            <div class="col-sm-10 offset-sm-1 col-md-10 offset-md-1 col-lg-10 offset-lg-1">
+                                <form action="/opiniones/crear" method="post">
+                                    <input name="anuncio-id" type="hidden" value="<?php echo($datos["anuncio"]->obtenerId(
+                                    )); ?>">
+                                    <div class="form-group my-0">
+                                        <label for="mensaje" class="mb-0">Escribe tu opinión sobre el servicio recibido:</label>
+                                        <textarea class="form-control form-control-sm" id="mensaje" name="mensaje" rows="8"></textarea>
+                                    </div>
+                                    <div class="form-group my-2">
+                                        <input class="btn btn-block btn-success" type="submit" value="Guardar">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <!--OPINIÓN-->
+                    <?php if ($datos["opiniones"]): ?>
+                        <?php foreach ($datos["opiniones"] as $opinion): ?>
+                            <div class="row">
             <div class="col-sm-10 offset-sm-1  col-md-10 offset-md-1  col-lg-10 offset-lg-1">
               <?php
               $propietario = new Usuario();
