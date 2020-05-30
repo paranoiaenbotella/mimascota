@@ -4,18 +4,26 @@ h4, h5, h6
     font-weight: bold;
     
 }
+/*CUERPO*/
 
+body {
+    height: 100%;   
+    margin: 0;
+    padding: 0;
+    background: #000 url("/overlay.png") repeat;
+}
 
+#vista{
+    min-height:100vh;
+    padding-bottom: 3rem;
+    background:#fff;
+}
 #anuncios 
 {
 text-align: center;
 font-family: "Segoe Print", sans-serif;
-font-size: 2em;
+font-size: 1.6em;
 }
-
-
-
-
 
 .carousel-inner > .carousel-item > img { height: 450px; width: 100% }
 
@@ -80,11 +88,37 @@ font-size: 2em;
 }
 
 /*NAVEGACIÓN*/
+ nav {
+    background-color: #2b8f03;
+    border-bottom: 1px solid #000;
+}
+.navbar-toggler {
+    background:green;
+}
+
 .navbar .container 
 {
     padding: 0;
 }
 
+nav a:link {
+    color: #fff;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+nav a:visited{
+    color: #fff;
+}
+
+nav a:hover{
+    color: #fff;
+    text-decoration: underline;
+}
+
+nav a:active{
+
+}
 /*FOOTER*/
 
 
@@ -92,7 +126,7 @@ font-size: 2em;
 
 #resumen:hover
 {
- box-shadow: 1px 1px 2px #928D8D;
+ box-shadow: 3px 3px 2px #E5DEDE;
 }
 #resumen a:link 
 {
@@ -118,6 +152,21 @@ font-size: 2em;
     text-decoration: none;
 }
 
-{
-   font-family: "Segoe Print", sans-serif; 
+footer {
+    position: fixed;
+    bottom: 0rem;
+    background: #2b8f03;
+    height: 2.5rem;
+    width: 100%;
+}
+
+footer a {
+    color: #fff;
+    font-size: 0.8rem;
+    text-decoration: none;
+    padding-left: 4rem;
+}
+
+footer a:visited{
+    color: #fff;
 }

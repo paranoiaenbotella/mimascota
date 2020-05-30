@@ -1,30 +1,29 @@
+
+
+
 body {
-    background: #ffffff url("/inicio.jpg") no-repeat center top;
-    cursor: default;
-    display: grid;
-    grid-template-rows: 8rem 1fr 6rem;
-    height: 100vh;
+    height: 100%;   
     margin: 0;
     padding: 0;
+    background: #000 url("/overlay.png") repeat;
+}
+nav {
+    background-color: #2b8f03
 }
 
-footer {
-    background: rgba(67, 181, 48, 0.6);
-    text-align: center;
-}
-
-footer a {
-    color: #000000;
-    display: inline-block;
+.navbar-text {
+    font-size: 1.5rem;
     font-family: "Segoe Print", sans-serif;
-    font-size: 1.6em;
-    font-weight: bold;
-    margin: 8px 32px;
-    text-decoration: none;
+    padding-left: 2rem;
 }
 
-footer a:hover {
-    text-decoration: underline;
+.fondo{
+    width: 100%;
+    height: auto;
+}
+#bg{
+    
+    height: 100%;
 }
 
 h1, h2, h3, h4, h5, h6, p {
@@ -36,37 +35,46 @@ html {
     font-size: 16px;
 }
 
-nav {
-    background: rgba(67, 181, 48, 0.6);
-    display: flex;
-    flex-flow: row nowrap;
-}
 
-nav .enlaces {
-    align-items: flex-end;
-    display: flex;
-    flex-flow: row nowrap;
-    flex-grow: 1;
-    justify-content: space-around;
-}
-
-nav .enlaces a {
-    color: #000000;
-    font-family: "Segoe Print", sans-serif;
-    font-size: 2em;
-    font-weight: bold;
+nav a:link {
+    color: #fff;
+    font-size: 1.2rem;
     text-decoration: none;
 }
 
-nav .enlaces a:hover {
+nav a:visited{
+    color: #fff;
+}
+
+nav a:hover{
+    color: #fff;
     text-decoration: underline;
+}
+
+nav a:active{
+
 }
 
 nav .logo {
     flex-grow: 8;
 }
+/* PÍE DE PÁGINA*/
 
-nav .logo img {
-    padding: 12px 32px;
-    width: 240px;
+footer {
+    position: fixed;
+    bottom: 0;
+    background: #2b8f03;
+    width: 100%;
+}
+
+
+footer a {
+    color: #fff;
+    font-size: 0.8rem;
+    text-decoration: none;
+    padding-left: 4rem;
+}
+
+footer a:visited{
+    color: #fff;
 }

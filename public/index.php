@@ -26,6 +26,15 @@ switch (1) {
             $clase = "Inicio";
             $accion = "getAviso";
         break;
+   /**
+     * Contacto
+     */
+    case preg_match("`^/contacto$`", $_SERVER["REQUEST_URI"]):
+    $fichero = dirname(__DIR__) . "/src/Controladores/Inicio.php";
+            $clase = "Inicio";
+            $accion = "getContacto";
+        break;
+
     /**
      * Deslogueo
      */
@@ -213,6 +222,23 @@ switch (1) {
                 $fichero = dirname(__DIR__) . "/src/Controladores/Opiniones.php";
                 $clase = "Opiniones";
                 $accion = "getOpiniones";
+            }
+        }
+        break;
+    /**
+     * Eliminar opinión como admin
+     */
+    case preg_match("`/opiniones/todas/eliminar/(?<id>\d+)$`", $_SERVER["REQUEST_URI"], $matches):
+        if (Sesion::esInvitado()) {
+            header("Location: /identificacion", 301);
+        } else {
+            if (!(Sesion::esAdministrador())) {
+                header("Location: /perfil");
+            } else {
+                $fichero = dirname(__DIR__) . "/src/Controladores/Opiniones.php";
+                $clase = "Opiniones";
+                $accion = "getEliminarAdmin";
+                $argumento = $matches["id"];
             }
         }
         break;

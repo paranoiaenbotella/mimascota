@@ -163,7 +163,9 @@
           <?php else: ?>
           <div class="row">
             <div class="col-sm-10 offset-sm-1  col-md-10 offset-md-1  col-lg-10 offset-lg-1">
-              <p>No hay opiniones sobre este anuncio.</p>
+              <p class="mb-0">Para dejar una opinión inicie sesión.</p>
+              <p class="mb-0">No hay opiniones sobre este anuncio.</p>
+
             </div>
           </div>
           <?php endif; ?>

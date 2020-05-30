@@ -50,6 +50,23 @@ class Opiniones extends Controlador
     }
 
     /**
+     * Eliminar opiniones como admin
+     */
+    public function getEliminarAdmin($id)
+    {
+        if (Sesion::esAdministrador()) {
+            $opinion = new Opinion();
+            $opinion = $opinion->listarPorId($id);
+            if (isset($opinion) && $opinion->obtenerId() === (int)$id) {
+                $opinion->eliminar();
+            }
+        } else {
+            header("Location: /");
+        }
+        header("Location: /opiniones/todas");
+    }
+
+    /**
      * Listar opiniones
      */
     public function getListar()
