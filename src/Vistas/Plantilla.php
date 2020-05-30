@@ -32,6 +32,9 @@
                     <?php elseif (Sesion::esCuidador()): ?>
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
+                            <a class="nav-link" href="/ver-anuncios">Ver Anuncios</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/direcciones">Direcciones</a>
                         </li>
                         <li class="nav-item">
