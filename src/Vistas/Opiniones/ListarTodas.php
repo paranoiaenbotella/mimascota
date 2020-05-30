@@ -17,7 +17,7 @@
           <tr>
            <td class="text-break"><?php printf("%s...", substr($opinion->obtenerMensaje(),0,256)); ?></td>
             <td>
-              <a href="/opiniones/eliminar/<?php echo($opinion->obtenerId(
+              <a href="/opiniones/todas/eliminar/<?php echo($opinion->obtenerId(
                 )); ?>" class="btn btn-sm btn-danger">Eliminar
               </a>
             </td>
