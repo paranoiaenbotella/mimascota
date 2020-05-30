@@ -19,4 +19,9 @@ class Inicio extends Controlador
     {
     	$this->renderizar("Aviso.php");
     }
+
+    public function getContacto()
+    {
+        $this->renderizar("Contacto.php");
+    }
 }
