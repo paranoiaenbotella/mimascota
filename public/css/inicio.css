@@ -10,6 +10,21 @@ body {
 
 footer {
     background: rgba(67, 181, 48, 0.6);
+    text-align: center;
+}
+
+footer a {
+    color: #000000;
+    display: inline-block;
+    font-family: "Segoe Print", sans-serif;
+    font-size: 1.6em;
+    font-weight: bold;
+    margin: 8px 32px;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
 }
 
 h1, h2, h3, h4, h5, h6, p {
@@ -49,4 +64,9 @@ nav .enlaces a:hover {
 
 nav .logo {
     flex-grow: 8;
+}
+
+nav .logo img {
+    padding: 12px 32px;
+    width: 240px;
 }

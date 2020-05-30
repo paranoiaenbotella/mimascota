@@ -9,6 +9,7 @@
     <body>
         <nav>
             <div class="logo">
+                <img alt="/Logo.svg" src="/Logo.svg">
             </div>
             <div class="enlaces">
                 <a href="/ver-anuncios">Ver Anuncios</a>
