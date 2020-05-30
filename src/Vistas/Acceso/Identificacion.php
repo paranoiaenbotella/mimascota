@@ -5,12 +5,12 @@
             <!-- EMAIL -->
             <div class="form-group my-0">
                 <label for="email" class="mb-0">Correo electrónico:</label>
-                <input class=" form-control form-control-sm" id="email" name="email" type="email">
+                <input class=" form-control" id="email" name="email" type="email">
             </div>
             <!-- CONTRASEÑA -->
             <div class="form-group my-0">
                 <label for="contrasena" class="mb-0">Contraseña:</label>
-                <input class=" form-control form-control-sm" id="contrasena" name="contrasena" type="password">
+                <input class=" form-control" id="contrasena" name="contrasena" type="password">
             </div>
             <?php if (Sesion::existeError("cuenta")): ?>
                 <div>
