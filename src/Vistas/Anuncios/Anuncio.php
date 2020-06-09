@@ -105,7 +105,7 @@
                 </div>
                 <div class="card-body">
                     <?php $mostarFormulario = true;
-                    if ($datos["opiniones"] && !Sesion::esInvitado()): ?>
+                    if ($datos["opiniones"] && !Sesion::esInvitado() && !Sesion::esCuidador()): ?>
                         <?php foreach ($datos["opiniones"] as $opinion): ?>
                             <?php if ($opinion->obtenerUsuario() === Sesion::obtenerUsuario()->obtenerId()): ?>
                                 <p class="text-center">Ya ha dejado una opinion.</p>
@@ -113,7 +113,7 @@
                             <?php endif; ?>
                         <?php endforeach; ?>
                     <?php endif; ?>
-                    <?php if ($mostarFormulario && !Sesion::esInvitado()): ?>
+                    <?php if ($mostarFormulario && !Sesion::esInvitado() && !Sesion::esCuidador()): ?>
                         <div class="row">
                             <div class="col-sm-10 offset-sm-1 col-md-10 offset-md-1 col-lg-10 offset-lg-1">
                                 <form action="/opiniones/crear" method="post">

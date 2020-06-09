@@ -4,14 +4,14 @@
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
         <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" rel="stylesheet">
-        <link href="/css/style.css" rel="stylesheet">
+        <link href="/public/css/style.css" rel="stylesheet">
         <title>MiMascota</title>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <a class="navbar-brand" href="/">
-                    <img alt="/Logo.svg" src="/Logo.svg" width="140">
+                    <img alt="/public/Logo.svg" src="/public/Logo.svg" width="140">
                 </a>
                 <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler btn-light " data-target="#navbarSupportedContent" data-toggle="collapse" type="button" >
                 <span class="navbar-toggler-icon"> <small>Menu </small></span>
